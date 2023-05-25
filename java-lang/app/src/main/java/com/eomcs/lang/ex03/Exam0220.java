@@ -12,8 +12,8 @@ public class Exam0220 {
     System.out.println(12_783_406);
 
     //숫자 맨 앞 또는 맨 뒤에 삽입할 수 없다.
-    //System.out.println(_12783406); 
-    //System.out.println(12783406_);
+    // System.out.println(_12783406); 
+    // System.out.println(12783406_);
     
     //## 8진수에 _ 문자를 삽입하기
     System.out.println(077);
