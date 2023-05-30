@@ -18,6 +18,10 @@ public class Exam0580 {
     
     // 새 배열 인스턴스의 값 출력하기
     System.out.println(arr1[0]);
+    System.out.println(arr1[1]);
+    System.out.println(arr1[2]);
+    System.out.println(arr1[3]); 
+    System.out.println(arr1[4]);
   }
 }
 
