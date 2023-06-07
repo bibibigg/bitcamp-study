@@ -62,3 +62,4 @@ public class GymMemberHandler {
     return length < MAX_SIZE;
   }
 }
+
