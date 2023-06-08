@@ -60,6 +60,6 @@ public class GymMemberHandler {
 
   public static boolean available() {
     return length < MAX_SIZE;
+    }
   }
 }
-
