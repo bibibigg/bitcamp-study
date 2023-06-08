@@ -1,17 +1,14 @@
 package bitcamp.myapp.handler;
 
 import bitcamp.util.GymPrompt;
+import bitcamp.myapp.vo.Member;
 
 public class GymMemberHandler {
 
   static final int MAX_SIZE = 100;
+  static Member[] members = new Member[MAX_SIZE];
   static int userId = 1;
   static int length = 0;
-  static int[] no = new int[MAX_SIZE];
-  static String[] name = new String[MAX_SIZE];
-  static String[] phone_number = new String[MAX_SIZE];
-  static String[] age = new String[MAX_SIZE];
-  static char[] per = new char[MAX_SIZE];
 
   static final char ONE_MONTH = '1';
   static final char THREE_MONTH = '3';
@@ -24,13 +21,13 @@ public class GymMemberHandler {
       return;
     }
 
-    name[length] = GymPrompt.inputString("이름 ");
-    age[length] = GymPrompt.inputString("나이 ");
-    phone_number[length] = GymPrompt.inputString("핸드폰번호 ");
-    per[length] = inputPer((char)0);
-    
-    no[length] = userId++;
-    length++;
+    Member m = new Member();
+    m.name = GymPrompt.inputString("이름 ");
+    m.age = GymPrompt.inputString("나이 ");
+    m.phone_number = GymPrompt.inputString("핸드폰번호 ");
+    m.per = inputPer((char)0);
+    m.no = userId++;
+    members[length++] = m;
   }
 
   public static void printGymMember() {
@@ -39,20 +36,22 @@ public class GymMemberHandler {
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < length; i++) {
+      Member m = members[i];
     System.out.printf("%d, %s, %s, %s, %s\n",
-     no[i], name[i], age[i], phone_number[i],
-      toperString(per[i]));
+     m.no, m.name, m.age, m.phone_number,
+      toperString(m.per));
   }
 }
 
   public static void viewGymMember() {
     String memberNo = GymPrompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
-      if (no[i] == Integer.parseInt(memberNo)) {
-        System.out.printf("이름: %s\n", name[i]);
-        System.out.printf("나이: %s\n", age[i]);
-        System.out.printf("핸드폰번호: %s\n", phone_number[i]);
-        System.out.printf("등록개월: %s\n", toperString(per[i]));
+      Member m = members[i];
+      if (m.no == Integer.parseInt(memberNo)) {
+        System.out.printf("이름: %s\n", m.name);
+        System.out.printf("나이: %s\n", m.age);
+        System.out.printf("핸드폰번호: %s\n", m.phone_number);
+        System.out.printf("등록개월: %s\n", toperString(m.per));
         return;
     }
   }
@@ -72,14 +71,15 @@ public class GymMemberHandler {
   public static void updateGymMember() {
     String memberNo = GymPrompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
-      if (no[i] == Integer.parseInt(memberNo)) {
-        System.out.printf("이름(%s)? ", name[i]);
-        name[i] = GymPrompt.inputString("");
-        System.out.printf("나이(%s)? ", age[i]);
-        age[i] = GymPrompt.inputString("");
+      Member m = members[i];
+      if (m.no == Integer.parseInt(memberNo)) {
+        System.out.printf("이름(%s)? ", m.name);
+        m.name = GymPrompt.inputString("");
+        System.out.printf("나이(%s)? ", m.age);
+        m.age = GymPrompt.inputString("");
         System.out.printf("핸드폰번호? ");
-        phone_number[i] = GymPrompt.inputString("");
-        per[i] = inputPer(per[i]);
+        m.phone_number = GymPrompt.inputString("");
+        m.per = inputPer(m.per);
         return;
       }
     }
@@ -123,25 +123,15 @@ public class GymMemberHandler {
     }
 
     for (int i = deletedIndex; i < length -1; i++) {
-      no[i] = no[i + 1];
-      name[i] = name[i + 1];
-      phone_number[i] = phone_number[i + 1];
-      age[i] = age[i + 1];
-      per[i] = per[i + 1];
+      members[i] = members[i + 1];
     }
-
-    no[length - 1] = 0;
-    name[length - 1] = null;
-    phone_number[length - 1] = null;
-    age[length - 1] = null;
-    per[length - 1] = (char) 0;
-
-    length--;
+    members[--length] = null;
   }
 
   private static int indexOf(int memberNo) {
     for (int i = 0; i < length; i++) {
-      if (no[i] == memberNo) {
+      Member m = members[i];
+      if (m.no == memberNo) {
         return i;
       }
     }

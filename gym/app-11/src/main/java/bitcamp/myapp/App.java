@@ -15,8 +15,6 @@ public class App {
         String menuNo = GymPrompt.inputString("메인> ");
         if (menuNo.equals("6")) {
           break;
-        } else if (menuNo.equals("menu")) {
-          printMenu();
         } else if (menuNo.equals("1")) {
           GymMemberHandler.InputGymMember();
         } else if (menuNo.equals("2")) {
