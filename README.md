@@ -137,13 +137,11 @@
 - 프로젝트 실습
   - 10. 메뉴 구성 및 CRUD 구현
 - 과제(개인) 발표
-  - 개인 프로젝트 시연(14:10)
-  - 프로그래머스 일별 점수 보고
-    - 6/5(점수), 6/6(점수) 
-  - github.com 잔디 확인
-    - 개인별 github.com 의 bitcamp-study 저장소 주소 제출
-      - 이름, url
-    - to: jinyoung.eom@gmail.com
-      
-
-
+    - 개인 프로젝트 시연
+    - 프로그래머스 일별 점수 보고
+    - 현재 점수 : 1015
+    - 6/5(점수), 6/6(점수)
+    - github.com 잔디 확인
+      - 개인별 github.com 의 bitcamp-study 저장소 주소 제출
+        -이름, url
+      - jinyoung.eom@gmail.com
