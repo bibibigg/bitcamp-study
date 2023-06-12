@@ -145,3 +145,6 @@
       - 개인별 github.com 의 bitcamp-study 저장소 주소 제출
         -이름, url
       - jinyoung.eom@gmail.com
+
+### 14일(6/12,월)
+
