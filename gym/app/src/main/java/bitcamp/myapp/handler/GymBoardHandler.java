@@ -1,23 +1,20 @@
 package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Board;
-import bitcamp.util.Prompt;
+import bitcamp.util.GymPrompt;
 
-public class BoardHandler {
+public class GymBoardHandler {
 
-  // 인스턴스에 상관없이 공통으로 사용하는 필드라면 스태틱 필드로 선언한다.
   private static final int MAX_SIZE = 100;
 
-  // 인스턴스 마다 별개로 관리해야 할 데이터라면 논스태틱 필드(인스턴스 필드)로 선언한다.
-  private Prompt prompt;
+  private GymPrompt prompt;
   private Board[] boards = new Board[MAX_SIZE];
   private int length = 0;
 
-  public BoardHandler(Prompt prompt) {
+  public GymBoardHandler(GymPrompt prompt) {
     this.prompt = prompt;
   }
 
-  // 인스턴스 멤버(필드나 메서드)를 사용하는 경우 인스턴스 메서드로 정의해야 한다.
   public void inputBoard() {
     if (!this.available()) {
       System.out.println("더이상 입력할 수 없습니다!");
@@ -43,7 +40,6 @@ public class BoardHandler {
 
       System.out.printf("%d, %s, %s, %d, %tY-%5$tm-%5$td\n", board.getNo(), board.getTitle(),
           board.getWriter(), board.getViewCount(), board.getCreatedDate());
-
     }
   }
 
@@ -81,15 +77,14 @@ public class BoardHandler {
     System.out.println("해당 번호의 게시글이 없습니다!");
   }
 
-
   public void deleteBoard() {
-    int deletedindex = indexOf(this.prompt.inputInt("번호? "));
-    if (deletedindex == -1) {
-      System.out.print("해당 번호의 게시글이 없습니다!");
+    int deletedIndex = indexOf(this.prompt.inputInt("번호? "));
+    if (deletedIndex == -1) {
+      System.out.println("해당 번호의 게시글이 없습니다!");
       return;
     }
 
-    for (int i = deletedindex; i < this.length - 1; i++) {
+    for (int i = deletedIndex; i < this.length - 1; i++) {
       this.boards[i] = this.boards[i + 1];
     }
     this.boards[--this.length] = null;
@@ -105,7 +100,7 @@ public class BoardHandler {
     return -1;
   }
 
-  private boolean available() {
+  public boolean available() {
     return this.length < MAX_SIZE;
   }
 }

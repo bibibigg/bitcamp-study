@@ -5,38 +5,43 @@ import bitcamp.util.GymPrompt;
 
 public class GymMemberHandler {
 
-  static final int MAX_SIZE = 100;
-  static Member[] members = new Member[MAX_SIZE];
-  static int length = 0;
+  private static final int MAX_SIZE = 100;
+  private GymPrompt prompt;
+  private Member[] members = new Member[MAX_SIZE];
+  private int length;
 
-  public static void InputGymMember() {
-    if (!available()) {
+  public GymMemberHandler(GymPrompt prompt) {
+    this.prompt = prompt;
+  }
+
+  public void InputGymMember() {
+    if (!this.available()) {
       System.out.println("더이상 입력할 수 없습니다!");
       return;
     }
 
     Member m = new Member();
-    m.setName(GymPrompt.inputString("이름? "));
-    m.setAge(GymPrompt.inputInt("나이? "));
-    m.setPhone_number(GymPrompt.inputString("핸드폰번호? "));
+    m.setName(this.prompt.inputString("이름? "));
+    m.setAge(this.prompt.inputInt("나이? "));
+    m.setPhone_number(this.prompt.inputString("핸드폰번호? "));
     m.setPer(inputPer(0));
     members[length++] = m;
   }
 
-  public static void printGymMember() {
+  public void printGymMember() {
     System.out.println("---------------------------------------");
     System.out.println("번호, 이름, 나이, 핸드폰번호, 등록개월");
     System.out.println("---------------------------------------");
 
-    for (int i = 0; i < length; i++) {
-      Member m = members[i];
+    for (int i = 0; i < this.length; i++) {
+      Member m = this.members[i];
       System.out.printf("%d, %s, %d, %s, %s\n", m.getNo(), m.getName(), m.getAge(),
           m.getPhone_number(), toperString(m.getPer()));
     }
   }
 
-  public static void viewGymMember() {
-    String memberNo = GymPrompt.inputString("번호? ");
+  public void viewGymMember() {
+    String memberNo = this.prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Member m = members[i];
       if (m.getNo() == Integer.parseInt(memberNo)) {
@@ -60,17 +65,17 @@ public class GymMemberHandler {
     }
   }
 
-  public static void updateGymMember() {
-    String memberNo = GymPrompt.inputString("번호? ");
+  public void updateGymMember() {
+    String memberNo = this.prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Member m = members[i];
       if (m.getNo() == Integer.parseInt(memberNo)) {
         System.out.printf("이름(%s) ", m.getName());
-        m.setName(GymPrompt.inputString(""));
+        m.setName(this.prompt.inputString(""));
         System.out.printf("나이(%d) ", m.getAge());
-        m.setAge(GymPrompt.inputInt(""));
+        m.setAge(this.prompt.inputInt(""));
         System.out.printf("핸드폰번호 ");
-        m.setPhone_number(GymPrompt.inputString(""));
+        m.setPhone_number(this.prompt.inputString(""));
         m.setPer(inputPer(m.getPer()));
         return;
       }
@@ -78,7 +83,7 @@ public class GymMemberHandler {
     System.out.println("해당 번호의 회원이 없습니다!");
   }
 
-  private static int inputPer(int per) {
+  private int inputPer(int per) {
     String label;
     if (per == 0) {
       label = "등록개월?\n";
@@ -86,7 +91,7 @@ public class GymMemberHandler {
       label = String.format("등록개월(%s)\n", toperString(per));
     }
     while (true) {
-      String perNo = GymPrompt.inputString(label + " 1. 1개월\n" + " 2. 3개월\n" + " 3. 6개월\n" + "> ");
+      String perNo = this.prompt.inputString(label + " 1. 1개월\n" + " 2. 3개월\n" + " 3. 6개월\n" + "> ");
 
       switch (perNo) {
         case "1":
@@ -101,8 +106,8 @@ public class GymMemberHandler {
     }
   }
 
-  public static void deleteGymMember() {
-    int memberNo = GymPrompt.inputInt("번호? ");
+  public void deleteGymMember() {
+    int memberNo = this.prompt.inputInt("번호? ");
     int deletedIndex = indexOf(memberNo);
 
     if (deletedIndex == -1) {
@@ -116,8 +121,8 @@ public class GymMemberHandler {
     members[--length] = null;
   }
 
-  private static int indexOf(int memberNo) {
-    for (int i = 0; i < length; i++) {
+  private int indexOf(int memberNo) {
+    for (int i = 0; i < this.length; i++) {
       Member m = members[i];
       if (m.getNo() == memberNo) {
         return i;
@@ -126,8 +131,7 @@ public class GymMemberHandler {
     return -1;
   }
 
-
-  public static boolean available() {
-    return length < MAX_SIZE;
+  public boolean available() {
+    return this.length < MAX_SIZE;
   }
 }
