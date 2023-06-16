@@ -7,7 +7,7 @@ import bitcamp.util.Prompt;
 public class MemberHandler implements Handler {
 
 
-  private MemberList list = new MemberList();
+  private ArrayList list = new ArrayList();
   private Prompt prompt;
   private String title;
 
@@ -59,7 +59,9 @@ public class MemberHandler implements Handler {
     m.setPassword(this.prompt.inputString("암호? "));
     m.setGender(inputGender((char) 0));
 
-    this.list.add(m);
+    if (!this.list.add(m)) {
+      System.out.println("입력 실패입니다!");
+    }
   }
 
   private void printMembers() {
@@ -67,8 +69,9 @@ public class MemberHandler implements Handler {
     System.out.println("번호, 이름, 이메일, 성별");
     System.out.println("---------------------------------------");
 
-    Member[] arr = list.list();
-    for (Member m : arr) {
+    Object[] arr = this.list.list();
+    for (Object obj : arr) {
+      Member m = (Member) obj;
       System.out.printf("%d, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(),
           toGenderString(m.getGender()));
     }
@@ -76,8 +79,9 @@ public class MemberHandler implements Handler {
 
   private void viewMember() {
     int memberNo = this.prompt.inputInt("번호? ");
-    // 입력받은 번호를 가지고 배열에서 해당 회원을 찾아야 한다.
-    Member m = list.get(memberNo);
+
+    Member m = (Member) this.list.get(new Member(memberNo));
+
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -95,7 +99,8 @@ public class MemberHandler implements Handler {
   private void updateMember() {
     int memberNo = this.prompt.inputInt("번호? ");
 
-    Member m = list.get(memberNo);
+    Member m = (Member) this.list.get(new Member(memberNo));
+
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -128,9 +133,7 @@ public class MemberHandler implements Handler {
   }
 
   private void deleteMember() {
-    int memberNo = this.prompt.inputInt("번호? ");
-
-    if (!this.list.delete(memberNo)) {
+    if (!this.list.delete(new Member(this.prompt.inputInt("번호? ")))) {
       System.out.print("해당 번호의 회원이 없습니다!");
     }
   }

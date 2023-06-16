@@ -18,6 +18,27 @@ public class Member {
     this.no = userId++;
   }
 
+  public Member(int no) {
+    this.no = no;
+  }
+
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+
+    if (this.getClass() != obj.getClass()) {
+      return false;
+    }
+    Member m = (Member) obj;
+
+    if (this.getNo() != m.getNo()) {
+      return false;
+    }
+
+    return true;
+  }
+
   public int getNo() {
     return no;
   }

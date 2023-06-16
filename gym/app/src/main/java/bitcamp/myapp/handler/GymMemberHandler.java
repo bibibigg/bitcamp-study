@@ -5,7 +5,7 @@ import bitcamp.util.GymPrompt;
 
 public class GymMemberHandler implements Handler {
 
-  private GymMemberList list = new GymMemberList();
+  private ArrayList list = new ArrayList();
   private GymPrompt prompt;
   private String title;
 
@@ -56,7 +56,9 @@ public class GymMemberHandler implements Handler {
     m.setPhone_number(this.prompt.inputString("핸드폰번호? "));
     m.setPer(inputPer(0));
 
-    this.list.add(m);
+    if (!this.list.add(m)) {
+      System.out.println("입력 실패입니다!");
+    }
   }
 
   private void printGymMember() {
@@ -64,8 +66,9 @@ public class GymMemberHandler implements Handler {
     System.out.println("번호, 이름, 나이, 핸드폰번호, 등록개월");
     System.out.println("---------------------------------------");
 
-    Member[] arr = list.list();
-    for (Member m : arr) {
+    Object[] arr = this.list.list();
+    for (Object obj : arr) {
+      Member m = (Member) obj;
       System.out.printf("%d, %s, %d, %s, %s\n", m.getNo(), m.getName(), m.getAge(),
           m.getPhone_number(), toperString(m.getPer()));
     }
@@ -75,7 +78,7 @@ public class GymMemberHandler implements Handler {
 
   private void viewGymMember() {
     int memberNo = this.prompt.inputInt("번호? ");
-    Member m = list.get(memberNo);
+    Member m = (Member) this.list.get(new Member(memberNo));
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -99,7 +102,7 @@ public class GymMemberHandler implements Handler {
   private void updateGymMember() {
     int memberNo = this.prompt.inputInt("번호? ");
 
-    Member m = list.get(memberNo);
+    Member m = (Member) this.list.get(new Member(memberNo));
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -136,9 +139,7 @@ public class GymMemberHandler implements Handler {
   }
 
   private void deleteGymMember() {
-    int memberNo = this.prompt.inputInt("번호? ");
-
-    if (!this.list.delete(memberNo)) {
+    if (!this.list.delete(new Member(this.prompt.inputInt("번호? ")))) {
       System.out.println("해당 번호의 회원이 없습니다!");
     }
   }

@@ -5,7 +5,7 @@ import bitcamp.util.GymPrompt;
 
 public class GymBoardHandler implements Handler {
 
-  private GymBoardList list = new GymBoardList();
+  private ArrayList list = new ArrayList();
   private GymPrompt prompt;
   private String title;
 
@@ -64,8 +64,9 @@ public class GymBoardHandler implements Handler {
     System.out.println("번호, 제목, 작성자, 조회수, 등록일");
     System.out.println("---------------------------------------");
 
-    Board[] arr = this.list.list();
-    for (Board board : arr) {
+    Object[] arr = this.list.list();
+    for (Object obj : arr) {
+      Board board = (Board) obj;
       System.out.printf("%d, %s, %s, %d, %tY-%5$tm-%5$td\n", board.getNo(), board.getTitle(),
           board.getWriter(), board.getViewCount(), board.getCreatedDate());
     }
@@ -73,7 +74,7 @@ public class GymBoardHandler implements Handler {
 
   private void viewBoard() {
     int boardNo = this.prompt.inputInt("번호? ");
-    Board board = list.get(boardNo);
+    Board board = (Board) this.list.get(new Board(boardNo));
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다!");
       return;
@@ -89,7 +90,8 @@ public class GymBoardHandler implements Handler {
 
   private void updateBoard() {
     int boardNo = this.prompt.inputInt("번호? ");
-    Board board = list.get(boardNo);
+
+    Board board = (Board) this.list.get(new Board(boardNo));
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다!");
       return;
@@ -103,7 +105,7 @@ public class GymBoardHandler implements Handler {
   }
 
   private void deleteBoard() {
-    if (!this.list.delete(this.prompt.inputInt("번호? "))) {
+    if (!this.list.delete(new Board(this.prompt.inputInt("번호? ")))) {
       System.out.println("해당 번호의 게시글이 없습니다!");
     }
   }
