@@ -3,9 +3,7 @@ package bitcamp.myapp;
 import bitcamp.myapp.handler.GymBoardHandler;
 import bitcamp.myapp.handler.GymMemberHandler;
 import bitcamp.myapp.handler.Handler;
-import bitcamp.util.ArrayList;
 import bitcamp.util.GymPrompt;
-import bitcamp.util.LinkedList;
 
 public class App {
 
@@ -13,8 +11,8 @@ public class App {
 
     GymPrompt prompt = new GymPrompt();
 
-    Handler memberHandler = new GymMemberHandler(prompt, "회원", new ArrayList());
-    Handler boardHandler = new GymBoardHandler(prompt, "게시글", new LinkedList());
+    Handler memberHandler = new GymMemberHandler(prompt, "회원");
+    Handler boardHandler = new GymBoardHandler(prompt, "게시글");
 
     GymprintTitle();
 

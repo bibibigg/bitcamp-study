@@ -1,19 +1,18 @@
 package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Member;
+import bitcamp.util.ArrayList;
 import bitcamp.util.GymPrompt;
-import bitcamp.util.List;
 
 public class GymMemberHandler implements Handler {
 
-  private List list;
+  private ArrayList list = new ArrayList();
   private GymPrompt prompt;
   private String title;
 
-  public GymMemberHandler(GymPrompt prompt, String title, List list) {
+  public GymMemberHandler(GymPrompt prompt, String title) {
     this.prompt = prompt;
     this.title = title;
-    this.list = list;
   }
 
   public void execute() {
@@ -55,10 +54,12 @@ public class GymMemberHandler implements Handler {
     Member m = new Member();
     m.setName(this.prompt.inputString("이름? "));
     m.setAge(this.prompt.inputInt("나이? "));
-    m.setPhoneNumber(this.prompt.inputString("핸드폰번호? "));
+    m.setPhone_number(this.prompt.inputString("핸드폰번호? "));
     m.setPer(inputPer(0));
 
-    this.list.add(m);
+    if (!this.list.add(m)) {
+      System.out.println("입력 실패입니다!");
+    }
   }
 
   private void printGymMember() {
@@ -66,11 +67,11 @@ public class GymMemberHandler implements Handler {
     System.out.println("번호, 이름, 나이, 핸드폰번호, 등록개월");
     System.out.println("---------------------------------------");
 
-
-    for (int i = 0; i < this.list.size(); i++) {
-      Member m = (Member) this.list.get(i);
+    Object[] arr = this.list.list();
+    for (Object obj : arr) {
+      Member m = (Member) obj;
       System.out.printf("%d, %s, %d, %s, %s\n", m.getNo(), m.getName(), m.getAge(),
-          m.getPhoneNumber(), toperString(m.getPer()));
+          m.getPhone_number(), toperString(m.getPer()));
     }
   }
 
@@ -78,14 +79,14 @@ public class GymMemberHandler implements Handler {
 
   private void viewGymMember() {
     int memberNo = this.prompt.inputInt("번호? ");
-    Member m = this.findBy(memberNo);
+    Member m = (Member) this.list.get(new Member(memberNo));
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
     }
     System.out.printf("이름: %s\n", m.getName());
     System.out.printf("나이: %d\n", m.getAge());
-    System.out.printf("핸드폰번호: %s\n", m.getPhoneNumber());
+    System.out.printf("핸드폰번호: %s\n", m.getPhone_number());
     System.out.printf("등록개월: %s\n", toperString(m.getPer()));
   }
 
@@ -102,7 +103,7 @@ public class GymMemberHandler implements Handler {
   private void updateGymMember() {
     int memberNo = this.prompt.inputInt("번호? ");
 
-    Member m = this.findBy(memberNo);
+    Member m = (Member) this.list.get(new Member(memberNo));
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -110,7 +111,7 @@ public class GymMemberHandler implements Handler {
 
     m.setName(this.prompt.inputString("이름(%s) ", m.getName()));
     m.setAge(this.prompt.inputInt("나이(%d) ", m.getAge()));
-    m.setPhoneNumber(this.prompt.inputString("핸드폰번호 ", m.getPhoneNumber()));
+    m.setPhone_number(this.prompt.inputString("핸드폰번호 ", m.getPhone_number()));
     m.setPer(inputPer(m.getPer()));
   }
 
@@ -139,19 +140,8 @@ public class GymMemberHandler implements Handler {
   }
 
   private void deleteGymMember() {
-    if (!this.list.remove(new Member(this.prompt.inputInt("번호? ")))) {
+    if (!this.list.delete(new Member(this.prompt.inputInt("번호? ")))) {
       System.out.println("해당 번호의 회원이 없습니다!");
     }
   }
-
-  private Member findBy(int no) {
-    for (int i = 0; i < this.list.size(); i++) {
-      Member m = (Member) this.list.get(i);
-      if (m.getNo() == no) {
-        return m;
-      }
-    }
-    return null;
-  }
-
 }
