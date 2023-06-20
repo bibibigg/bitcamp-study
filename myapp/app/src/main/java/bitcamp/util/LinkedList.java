@@ -53,8 +53,8 @@ public class LinkedList implements List {
     Node node = new Node(); // node인 레퍼런스 변수에 Node의 인스턴스 저장
     node.value = value; // node가 가리키는 value에 value값 저장
 
-    if (head == null) {
-      head = node;
+    if (this.head == null) {
+      this.head = node;
     } else if (this.tail != null) {
       this.tail.next = node; // 두번째 node생성시 처음node tail에 주소가 저장되어 있기에
                              // tail이 가리키는 next에 두번째 주소를 저장
@@ -101,17 +101,17 @@ public class LinkedList implements List {
       if (cursor.value.equals(value)) {
         if (prev == null) {
           // 삭제할 노드가 시작 노드라면
-          head = cursor.next;
+          this.head = cursor.next;
 
           // 삭제할 노드가 끝 노드라면
-          if (head == null) {
-            tail = null;
+          if (this.head == null) {
+            this.tail = null;
           }
 
         } else if (cursor.next == null) {
           // 삭제할 노드가 끝 노드라면
-          tail = prev;
-          tail.next = null;
+          this.tail = prev;
+          this.tail.next = null;
         } else {
           // 중간 노드라면, 다음 노드의 주소를 이전 노드에 저장한다.
           prev.next = cursor.next;
@@ -152,13 +152,13 @@ public class LinkedList implements List {
     Object old = cursor.value;
 
     if (prev == null) {
-      head = cursor.next;
-      if (head == null) {
-        tail = null;
+      this.head = cursor.next;
+      if (this.head == null) {
+        this.tail = null;
       }
     } else if (cursor.next == null) {
-      tail = prev;
-      tail.next = null;
+      this.tail = prev;
+      this.tail.next = null;
     } else {
       prev.next = cursor.next; // 현재 커서의 다음 노드를 현재 커서의 이전 노드와 연결한다.
     }
@@ -171,7 +171,7 @@ public class LinkedList implements List {
 
   @Override
   public int size() {
-    return this.size();
+    return this.size;
   }
 
   private boolean isValid(int index) {

@@ -1,54 +1,49 @@
 package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.GymPrompt;
 import bitcamp.util.List;
+import bitcamp.util.MenuPrompt;
 
 public class GymMemberHandler implements Handler {
 
   private List list;
-  private GymPrompt prompt;
+  private MenuPrompt prompt;
   private String title;
 
-  public GymMemberHandler(GymPrompt prompt, String title, List list) {
+  public GymMemberHandler(MenuPrompt prompt, String title, List list) {
     this.prompt = prompt;
     this.title = title;
     this.list = list;
   }
 
   public void execute() {
-    printMenu();
+
+    prompt.appendBreadcrumb(this.title, getMenu());
+
+    prompt.printMenu();
 
     while (true) {
-      String menuNo = prompt.inputString("%s> ", this.title);
-      if (menuNo.equals("0")) {
-        break;
-      } else if (menuNo.equals("menu")) {
-        printMenu();
-      } else if (menuNo.equals("1")) {
-        this.InputGymMember();
-      } else if (menuNo.equals("2")) {
-        this.printGymMember();
-      } else if (menuNo.equals("3")) {
-        this.viewGymMember();
-      } else if (menuNo.equals("4")) {
-        this.updateGymMember();
-      } else if (menuNo.equals("5")) {
-        this.deleteGymMember();
-      } else {
-        System.out.println("메뉴 번호가 옳지 않습니다!");
+      String menuNo = prompt.inputMenu();
+      switch (menuNo) {
+        case "0": prompt.removeBreadcrumb(); return;
+        case "1": this.InputGymMember(); break;
+        case "2": this.printGymMember(); break;
+        case "3": this.viewGymMember(); break;
+        case "4": this.updateGymMember(); break;
+        case "5": this.deleteGymMember(); break;
       }
     }
-
   }
 
-  private static void printMenu() {
-    System.out.println("1. 등록");
-    System.out.println("2. 목록");
-    System.out.println("3. 조회");
-    System.out.println("4. 변경");
-    System.out.println("5. 삭제");
-    System.out.println("0. 메인");
+  private static String getMenu() {
+    StringBuilder menu = new StringBuilder();
+    menu.append("1. 등록\n");
+    menu.append("2. 목록\n");
+    menu.append("3. 조회\n");
+    menu.append("4. 변경\n");
+    menu.append("5. 삭제\n");
+    menu.append("0. 메인\n");
+    return menu.toString();
   }
 
   private void InputGymMember() {
