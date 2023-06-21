@@ -1,50 +1,58 @@
 package bitcamp.myapp;
 
-import bitcamp.myapp.handler.GymBoardHandler;
-import bitcamp.myapp.handler.GymMemberHandler;
-import bitcamp.myapp.handler.Handler;
+import bitcamp.myapp.handler.GymBoardAddListener;
+import bitcamp.myapp.handler.GymBoardDeleteListener;
+import bitcamp.myapp.handler.GymBoardDetailListener;
+import bitcamp.myapp.handler.GymBoardListListener;
+import bitcamp.myapp.handler.GymBoardUpdateListener;
+import bitcamp.myapp.handler.GymMemberAddListener;
+import bitcamp.myapp.handler.GymMemberDateListener;
+import bitcamp.myapp.handler.GymMemberDeleteListener;
+import bitcamp.myapp.handler.GymMemberDetailListener;
+import bitcamp.myapp.handler.GymMemberListListener;
+import bitcamp.myapp.handler.GymMemberUpdateListener;
 import bitcamp.util.ArrayList;
+import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.LinkedList;
-import bitcamp.util.MenuPrompt;
+import bitcamp.util.Menu;
+import bitcamp.util.MenuGroup;
 
 public class App {
 
   public static void main(String[] args) {
 
-    MenuPrompt prompt = new MenuPrompt();
+    ArrayList memberList = new ArrayList();
+    LinkedList boardList = new LinkedList();
 
-    prompt.appendBreadcrumb("메인", getMenu());
+    BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
-    Handler memberHandler = new GymMemberHandler(prompt, "회원", new ArrayList());
-    Handler boardHandler = new GymBoardHandler(prompt, "게시글", new LinkedList());
+    MenuGroup mainMenu = new MenuGroup("메인");
+
+    MenuGroup memberMenu = new MenuGroup("회원");
+    memberMenu.add(new Menu("등록", new GymMemberAddListener(memberList)));
+    memberMenu.add(new Menu("목록", new GymMemberListListener(memberList)));
+    memberMenu.add(new Menu("조회", new GymMemberDetailListener(memberList)));
+    memberMenu.add(new Menu("변경", new GymMemberUpdateListener(memberList)));
+    memberMenu.add(new Menu("남은 기간", new GymMemberDateListener(memberList)));
+    memberMenu.add(new Menu("삭제", new GymMemberDeleteListener(memberList)));
+    mainMenu.add(memberMenu);
+
+    MenuGroup boardMenu = new MenuGroup("게시글");
+    boardMenu.add(new Menu("등록", new GymBoardAddListener(boardList)));
+    boardMenu.add(new Menu("목록", new GymBoardListListener(boardList)));
+    boardMenu.add(new Menu("조회", new GymBoardDetailListener(boardList)));
+    boardMenu.add(new Menu("변경", new GymBoardUpdateListener(boardList)));
+    boardMenu.add(new Menu("삭제", new GymBoardDeleteListener(boardList)));
+    mainMenu.add(boardMenu);
 
     GymprintTitle();
 
-    prompt.printMenu();
+    mainMenu.execute(prompt);
 
-    loop: while (true) {
-      String menuNo = prompt.inputMenu();
-      switch (menuNo) {
-        case "0":
-          break loop;
-        case "1":
-          memberHandler.execute();
-          break;
-        case "2":
-          boardHandler.execute();
-          break;
-      }
-    }
     prompt.close();
   }
 
-  static String getMenu() {
-    StringBuilder menu = new StringBuilder();
-    menu.append("1. 회원\n");
-    menu.append("2. 게시글\n");
-    menu.append("0. 종료\n");
-    return menu.toString();
-  }
+
 
   static void GymprintTitle() {
     System.out.println("헬스장 회원 정보 등록 시스템");
