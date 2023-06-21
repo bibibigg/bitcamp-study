@@ -1,0 +1,22 @@
+package bitcamp.myapp.handler;
+
+import bitcamp.myapp.vo.Member;
+import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.List;
+
+public class GymMemberAddListener extends AbstractMemberListener {
+
+  public GymMemberAddListener(List list) {
+    super(list);
+  }
+
+  public void service(BreadcrumbPrompt prompt) {
+    Member m = new Member();
+    m.setName(prompt.inputString("이름? "));
+    m.setAge(prompt.inputInt("나이? "));
+    m.setPhoneNumber(prompt.inputString("핸드폰번호? "));
+    m.setPer(inputPer(0, prompt));
+
+    this.list.add(m);
+  }
+}

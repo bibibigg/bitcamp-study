@@ -226,3 +226,10 @@
 - 프로젝트 실습
   - 22. Stack, Queue 자료구조 구현하기
 
+### 21일(6/21,수)
+
+- 자바 프로그래밍(com.eomcs.oop)
+  - 상속: Specialization vs Generalization
+  - 추상 클래스와 추상 메서드
+- 프로젝트 실습
+  - 23. Composite, Command, Observer 디자인 패턴, 추상 클래스/메서드 활용하기
