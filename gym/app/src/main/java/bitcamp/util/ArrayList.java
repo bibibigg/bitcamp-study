@@ -1,12 +1,14 @@
 package bitcamp.util;
 
-public class ArrayList implements List {
+import java.lang.reflect.Array;
+
+public class ArrayList<E> implements List<E> {
   private static final int DEFAULT_SIZE = 3;
   private Object[] list = new Object[DEFAULT_SIZE];
   private int length;
 
   @Override
-  public boolean add(Object obj) {
+  public boolean add(E obj) {
     if (this.length == list.length) {
       increase();
     }
@@ -33,16 +35,34 @@ public class ArrayList implements List {
     return arr;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
-  public Object get(int index) {
+  public <T> T[] toArray(T[] arr) {
+    T[] values = null;
+
+    if (arr.length < this.length) {
+      values = (T[]) Array.newInstance(arr.getClass().getComponentType(), this.length);
+    } else {
+      values = arr;
+    }
+
+    for (int i = 0; i < this.length; i++) {
+      values[i] = (T) list[i];
+    }
+    return values;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public E get(int index) {
     if (!isValid(index)) {
       return null;
     }
-    return this.list[index];
+    return (E) this.list[index];
   }
 
   @Override
-  public boolean remove(Object obj) {
+  public boolean remove(E obj) {
     int deletedIndex = indexOf(obj);
     if (deletedIndex == -1) {
       return false;
@@ -55,8 +75,9 @@ public class ArrayList implements List {
     return true;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
-  public Object remove(int index) {
+  public E remove(int index) {
     if (!isValid(index)) {
       return null;
     }
@@ -67,7 +88,7 @@ public class ArrayList implements List {
       this.list[i] = this.list[i + 1];
     }
     this.list[--this.length] = null;
-    return old;
+    return (E) old;
   }
 
   public int size() {

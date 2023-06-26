@@ -11,6 +11,8 @@ import bitcamp.myapp.handler.GymMemberDeleteListener;
 import bitcamp.myapp.handler.GymMemberDetailListener;
 import bitcamp.myapp.handler.GymMemberListListener;
 import bitcamp.myapp.handler.GymMemberUpdateListener;
+import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.Member;
 import bitcamp.util.ArrayList;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.LinkedList;
@@ -21,8 +23,8 @@ public class App {
 
   public static void main(String[] args) {
 
-    ArrayList memberList = new ArrayList();
-    LinkedList boardList = new LinkedList();
+    ArrayList<Member> memberList = new ArrayList<>();
+    LinkedList<Board> boardList = new LinkedList<>();
 
     BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 

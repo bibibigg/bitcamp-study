@@ -8,7 +8,7 @@ import bitcamp.util.List;
 public class GymMemberDateListener extends AbstractMemberListener {
 
 
-  public GymMemberDateListener(List list) {
+  public GymMemberDateListener(List<Member> list) {
     super(list);
   }
 

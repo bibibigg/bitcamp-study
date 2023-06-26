@@ -7,7 +7,7 @@ import bitcamp.util.List;
 public class GymMemberUpdateListener extends AbstractMemberListener {
 
 
-  public GymMemberUpdateListener(List list) {
+  public GymMemberUpdateListener(List<Member> list) {
     super(list);
   }
 

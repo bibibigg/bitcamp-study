@@ -6,7 +6,7 @@ import bitcamp.util.List;
 
 public class GymBoardDetailListener extends AbstractBoardListener {
 
-  public GymBoardDetailListener(List list) {
+  public GymBoardDetailListener(List<Board> list) {
     super(list);
   }
 

@@ -6,7 +6,7 @@ import bitcamp.util.List;
 
 public class GymMemberListListener extends AbstractMemberListener {
 
-  public GymMemberListListener(List list) {
+  public GymMemberListListener(List<Member> list) {
     super(list);
   }
 
@@ -16,7 +16,7 @@ public class GymMemberListListener extends AbstractMemberListener {
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < this.list.size(); i++) {
-      Member m = (Member) this.list.get(i);
+      Member m = this.list.get(i);
       System.out.printf("%d, %s, %d, %s, %s\n", m.getNo(), m.getName(), m.getAge(),
           m.getPhoneNumber(), toperString(m.getPer()));
     }

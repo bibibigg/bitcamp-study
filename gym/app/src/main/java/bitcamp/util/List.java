@@ -1,15 +1,17 @@
 package bitcamp.util;
 
-public interface List {
-  boolean add(Object value);
+public interface List<E> {
+  boolean add(E value);
 
-  Object get(int index);
+  E get(int index);
 
   Object[] toArray();
 
-  boolean remove(Object value);
+  <T> T[] toArray(T[] arr);
 
-  Object remove(int index);
+  boolean remove(E value);
+
+  E remove(int index);
 
   int size();
 }
