@@ -1,5 +1,7 @@
 package bitcamp.myapp;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import bitcamp.myapp.handler.GymBoardAddListener;
 import bitcamp.myapp.handler.GymBoardDeleteListener;
 import bitcamp.myapp.handler.GymBoardDetailListener;
@@ -13,9 +15,7 @@ import bitcamp.myapp.handler.GymMemberListListener;
 import bitcamp.myapp.handler.GymMemberUpdateListener;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.ArrayList;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.LinkedList;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
