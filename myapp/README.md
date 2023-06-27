@@ -180,5 +180,10 @@
 
 - 목록을 다루는 기존 클래스를 자바 컬렉션 API 로 교체
 
+## 27. file I/O API를 이용하여 데이터를 바이너리 형식으로 입출력하기
+
+- FileInputStream/FileOutputStream 사용법
+- 바이너리 형식으로 데이터를 입출력하는 방법
+
 
   
