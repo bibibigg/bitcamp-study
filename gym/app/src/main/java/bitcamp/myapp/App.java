@@ -1,10 +1,10 @@
 package bitcamp.myapp;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import bitcamp.io.DataInputStream;
+import bitcamp.io.DataOutputStream;
 import bitcamp.myapp.handler.GymBoardAddListener;
 import bitcamp.myapp.handler.GymBoardDeleteListener;
 import bitcamp.myapp.handler.GymBoardDetailListener;
@@ -85,31 +85,19 @@ public class App {
 
   private void loadMember() {
     try {
-      FileInputStream in = new FileInputStream("member.data");
-      int size = in.read() << 8;
-      size |= in.read();
-
-      byte[] buf = new byte[1000];
+      DataInputStream in = new DataInputStream("member.data");
+      int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
         Member member = new Member();
-        member.setNo(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
 
-        int length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        member.setName(new String(buf, 0, length, "UTF-8"));
-
-        member.setAge(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        member.setPhoneNumber(new String(buf, 0, length, "UTF-8"));
-
-        member.setPer(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
+        member.setNo(in.readInt());
+        member.setName(in.readUTF());
+        member.setAge(in.readInt());
+        member.setPhoneNumber(in.readUTF());
+        member.setPer(in.readInt());
         memberList.add(member);
       }
-
       Member.userId = memberList.get(memberList.size() - 1).getNo() + 1;
 
       in.close();
@@ -121,86 +109,41 @@ public class App {
 
   private void loadBoard(String filename, List<Board> list) {
     try {
-      FileInputStream in = new FileInputStream(filename);
-      int size = in.read() << 8;
-      size |= in.read();
-
-      byte[] buf = new byte[1000];
+      DataInputStream in = new DataInputStream(filename);
+      int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
         Board board = new Board();
-        board.setNo(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        int length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        board.setTitle(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        board.setContent(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        board.setWriter(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        board.setPassword(new String(buf, 0, length, "UTF-8"));
-
-        board.setViewCount(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        board.setCreatedDate((long) in.read() << 54 | (long) in.read() << 48
-            | (long) in.read() << 40 | (long) in.read() << 32 | (long) in.read() << 24
-            | (long) in.read() << 16 | (long) in.read() << 8 | in.read());
-
-        boardList.add(board);
+        board.setNo(in.readInt());
+        board.setTitle(in.readUTF());
+        board.setContent(in.readUTF());
+        board.setWriter(in.readUTF());
+        board.setPassword(in.readUTF());
+        board.setViewCount(in.readInt());
+        board.setCreatedDate(in.readLong());
+        list.add(board);
       }
-
-      Board.boardNo = Math.max(Board.boardNo, boardList.get(boardList.size() - 1).getNo() + 1);
+      Board.boardNo = Math.max(Board.boardNo, list.get(list.size() - 1).getNo() + 1);
 
       in.close();
 
     } catch (Exception e) {
-      System.out.println("게시글 정보를 읽는 중 오류 발생!");
+      System.out.println(filename + "파일을 읽는 중 오류 발생!");
     }
   }
 
   private void saveMember() {
     try {
-      FileOutputStream out = new FileOutputStream("member.data");
+      DataOutputStream out = new DataOutputStream("member.data");
 
-      int size = memberList.size();
-      out.write(size >> 8);
-      out.write(size);
+      out.writeShort(memberList.size());
 
       for (Member member : memberList) {
-        int no = member.getNo();
-        out.write(no >> 24);
-        out.write(no >> 16);
-        out.write(no >> 8);
-        out.write(no);
-
-        byte[] bytes = member.getName().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        int Age = member.getAge();
-        out.write(Age >> 24);
-        out.write(Age >> 16);
-        out.write(Age >> 8);
-        out.write(Age);
-
-        bytes = member.getPhoneNumber().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        int Per = member.getPer();
-        out.write(Per >> 24);
-        out.write(Per >> 16);
-        out.write(Per >> 8);
-        out.write(Per);
+        out.writeInt(member.getNo());
+        out.writeUTF(member.getName());
+        out.writeInt(member.getAge());
+        out.writeUTF(member.getPhoneNumber());
+        out.writeInt(member.getPer());
       }
       out.close();
     } catch (Exception e) {
@@ -210,58 +153,22 @@ public class App {
 
   private void saveBoard(String filename, List<Board> list) {
     try {
-      FileOutputStream out = new FileOutputStream(filename);
+      DataOutputStream out = new DataOutputStream(filename);
 
-      int size = boardList.size();
-      out.write(size >> 8);
-      out.write(size);
+      out.writeShort(list.size());
 
-      for (Board board : boardList) {
-        int no = board.getNo();
-        out.write(no >> 24);
-        out.write(no >> 16);
-        out.write(no >> 8);
-        out.write(no);
-
-        byte[] bytes = board.getTitle().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = board.getContent().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = board.getWriter().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = board.getPassword().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        int ViewCount = board.getViewCount();
-        out.write(ViewCount >> 24);
-        out.write(ViewCount >> 16);
-        out.write(ViewCount >> 8);
-        out.write(ViewCount);
-
-        long CreatedDate = board.getCreatedDate();
-        out.write((int) CreatedDate >> 56);
-        out.write((int) CreatedDate >> 48);
-        out.write((int) CreatedDate >> 40);
-        out.write((int) CreatedDate >> 32);
-        out.write((int) CreatedDate >> 24);
-        out.write((int) CreatedDate >> 16);
-        out.write((int) CreatedDate >> 8);
-        out.write((int) CreatedDate);
+      for (Board board : list) {
+        out.writeInt(board.getNo());
+        out.writeUTF(board.getTitle());
+        out.writeUTF(board.getContent());
+        out.writeUTF(board.getWriter());
+        out.writeUTF(board.getPassword());
+        out.writeInt(board.getViewCount());
+        out.writeLong(board.getCreatedDate());
       }
       out.close();
     } catch (Exception e) {
-      System.out.println("게시글 정보를 저장하는 중 오류 발생!");
+      System.out.println(filename + "파일을 저장하는 중 오류 발생!");
     }
   }
 }
