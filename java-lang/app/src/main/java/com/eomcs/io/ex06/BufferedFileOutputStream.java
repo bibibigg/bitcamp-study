@@ -21,7 +21,7 @@ public class BufferedFileOutputStream extends FileOutputStream {
     }
 
     // 1바이트 출력하라고 하면 일단 버퍼에 저장할 것이다.
-    buf[cursor++] = (byte) b;
+    buf[cursor++] = (byte) b; // 버퍼에 빈 공간이 있다면 버퍼에 저장한다.
   }
 
   // 버퍼를 사용할 때는 특히 주의해야 한다.
