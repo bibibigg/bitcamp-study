@@ -1,6 +1,10 @@
 package bitcamp.myapp.vo;
 
-public class Member {
+import java.io.Serializable;
+
+public class Member implements Serializable, CsvObject {
+
+  private static final long serialVersionUID = 1L;
 
   public static int userId = 1;
 
@@ -20,6 +24,26 @@ public class Member {
 
   public Member(int no) {
     this.no = no;
+  }
+
+  public static Member fromCsv(String csv) {
+    String[] values = csv.split(",");
+
+    Member member = new Member(Integer.parseInt(values[0]));
+    member.setName(values[1]);
+    member.setAge(Integer.parseInt(values[2]));
+    member.setPhoneNumber(values[3]);
+    member.setPer(Integer.parseInt(values[4]));
+
+    if (Member.userId <= member.getNo()) {
+      Member.userId = member.getNo() + 1;
+    }
+    return member;
+  }
+
+  public String toCsvString() {
+    return String.format("%d,%s,%d,%s,%d", this.getNo(), this.getName(), this.getAge(),
+        this.getPhoneNumber(), this.getPer());
   }
 
   public boolean equals(Object obj) {

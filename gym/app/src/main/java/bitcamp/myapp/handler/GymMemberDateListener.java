@@ -25,8 +25,6 @@ public class GymMemberDateListener extends AbstractMemberListener {
     int inputDate = m.getPer(); // 입력한 개월 수,
 
     // 현재 날짜에서 입력한 개월 수를 더하여 종료일 계산
-    // 이렇게 하면 매일마다 종료일이 늘어남
-    // 수정해야함!!!!!
     LocalDate resultDate = currentDate.plusMonths(inputDate);
 
     System.out.println("현재 날짜: " + currentDate);
