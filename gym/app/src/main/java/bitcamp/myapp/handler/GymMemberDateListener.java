@@ -7,7 +7,6 @@ import bitcamp.util.BreadcrumbPrompt;
 
 public class GymMemberDateListener extends AbstractMemberListener {
 
-
   public GymMemberDateListener(List<Member> list) {
     super(list);
   }
@@ -21,14 +20,21 @@ public class GymMemberDateListener extends AbstractMemberListener {
       return;
     }
 
-    LocalDate currentDate = LocalDate.now(); // 현재 날짜 입력
+    long createdDate = m.getCreatedDate(); // 등록일
     int inputDate = m.getPer(); // 입력한 개월 수,
 
-    // 현재 날짜에서 입력한 개월 수를 더하여 종료일 계산
-    LocalDate resultDate = currentDate.plusMonths(inputDate);
+    System.out.println(inputDate);
 
-    System.out.println("현재 날짜: " + currentDate);
-    System.out.println("종료일: " + resultDate);
+    int year = LocalDate.ofEpochDay(createdDate / (24 * 60 * 60 * 1000)).getYear();
+    int month = LocalDate.ofEpochDay(createdDate / (24 * 60 * 60 * 1000)).getMonthValue();
+    int day = LocalDate.ofEpochDay(createdDate / (24 * 60 * 60 * 1000)).getDayOfMonth();
+    LocalDate createDate = LocalDate.of(year, month, day);
+
+    // 등록일에서 입력한 개월 수를 더하여 종료일 계산
+    LocalDate endDate = createDate.plusMonths(inputDate);
+
+    System.out.printf("등록일: %tY-%<tm-%<td\n", createDate);
+    System.out.printf("종료일: %tY-%<tm-%<td\n", endDate);
 
 
   }
