@@ -301,3 +301,11 @@
   - 32. 인스턴스를 통째로 입출력하기(객체 직렬화)
   - 33. character stream API를 사용하여 CSV 텍스트 형식으로 입출력하기
   - 34. 리팩토링: Factory Method 패턴(GoF), Information Expert 패턴(GRASP)
+
+  ### 29일(7/03,월)
+
+- 자바 프로그래밍(com.eomcs.openapi.json)
+  - Gson 라이브러리 사용법
+  - Jackson 라이브러리 사용법
+- 프로젝트 실습
+  - 35. JSON 형식으로 입출력하기
