@@ -76,7 +76,7 @@ public class App {
     memberMenu.add(new Menu("목록", new GymMemberListListener(memberList)));
     memberMenu.add(new Menu("조회", new GymMemberDetailListener(memberList)));
     memberMenu.add(new Menu("변경", new GymMemberUpdateListener(memberList)));
-    memberMenu.add(new Menu("기간 조회", new GymMemberDateListener(memberList)));
+    memberMenu.add(new Menu("남은 기간", new GymMemberDateListener(memberList)));
     memberMenu.add(new Menu("삭제", new GymMemberDeleteListener(memberList)));
     mainMenu.add(memberMenu);
 

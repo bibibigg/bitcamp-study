@@ -1,4 +1,4 @@
-// 객체 --> JSON 문자열 : 객체의 필드 값을 json 형식의 문자열로 만들기
+// 객체 --> JSON 문자열 : 객체의 필드 값을 json 형식의 문자열로 만들기 익명 클래스 생성
 package com.eomcs.openapi.json.gson;
 
 import java.lang.reflect.Type;

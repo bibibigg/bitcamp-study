@@ -14,6 +14,7 @@ public class Exam0121 {
 
     // 2) JSON 처리 객체 준비
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    // 2023-07-03 날짜를 문자열로 받기 준비
 
     // 3) JSON 문자열을 가지고 객체 만들기
     Member m = gson.fromJson(jsonStr, Member.class);

@@ -1,4 +1,4 @@
-// 객체 --> JSON 문자열 : 객체의 필드 값을 json 형식의 문자열로 만들기
+// 객체 --> JSON 문자열 chaining call 0113과 비교하여 확인
 package com.eomcs.openapi.json.gson;
 
 import java.lang.reflect.Type;
@@ -26,14 +26,12 @@ public class Exam0114 {
     m.setRegisteredDate(new Date(System.currentTimeMillis()));
 
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Gson gson = new GsonBuilder()
-        .registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
+    Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
       @Override
       public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
         return new JsonPrimitive(dateFormat.format(src));
       }
-    })
-    .create();
+    }).create();
 
     // 3) 객체의 값을 JSON 문자열로 얻기
     String jsonStr = gson.toJson(m);
