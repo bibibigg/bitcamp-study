@@ -14,13 +14,7 @@ public abstract class AbstractMemberListener implements ActionListener {
   }
 
   protected static String toperString(int per) {
-    if (per == 1) {
-      return "1개월";
-    } else if (per == 3) {
-      return "3개월";
-    } else {
-      return "6개월";
-    }
+    return (per == 1) ? "1개월" : (per == 3) ? "3개월" : "6개월";
   }
 
 
