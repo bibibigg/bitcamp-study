@@ -1,25 +1,26 @@
 package bitcamp.myapp.handler;
 
-import java.util.List;
+import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
+import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
-public class GymBoardAddListener extends AbstractBoardListener {
+public class GymBoardAddListener implements ActionListener {
 
-  public GymBoardAddListener(List<Board> list) {
-    super(list);
+  BoardDao boardDao;
+
+  public GymBoardAddListener(BoardDao boardDao) {
+    this.boardDao = boardDao;
   }
 
 
   public void service(BreadcrumbPrompt prompt) {
 
     Board board = new Board();
-    board.setNo(Board.boardNo++);
     board.setTitle(prompt.inputString("제목? "));
     board.setContent(prompt.inputString("내용? "));
     board.setWriter(prompt.inputString("작성자? "));
     board.setPassword(prompt.inputString("암호? "));
-    board.setCreatedDate(System.currentTimeMillis());
-    this.list.add(board);
+    boardDao.insert(board);
   }
 }

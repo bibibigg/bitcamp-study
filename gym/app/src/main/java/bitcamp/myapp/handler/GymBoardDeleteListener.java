@@ -1,18 +1,19 @@
 package bitcamp.myapp.handler;
 
-import java.util.List;
-import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.dao.BoardDao;
+import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
-public class GymBoardDeleteListener extends AbstractBoardListener {
+public class GymBoardDeleteListener implements ActionListener {
 
+  BoardDao boardDao;
 
-  public GymBoardDeleteListener(List<Board> list) {
-    super(list);
+  public GymBoardDeleteListener(BoardDao boardDao) {
+    this.boardDao = boardDao;
   }
 
   public void service(BreadcrumbPrompt prompt) {
-    if (!this.list.remove(new Board(prompt.inputInt("번호? ")))) {
+    if (boardDao.delete(prompt.inputInt("번호? ")) == 0) {
       System.out.println("해당 번호의 게시글이 없습니다!");
     }
   }

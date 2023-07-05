@@ -1,20 +1,23 @@
 package bitcamp.myapp.handler;
 
 import java.time.LocalDate;
-import java.util.List;
+import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
+import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
-public class GymMemberDateListener extends AbstractMemberListener {
+public class GymMemberDateListener implements ActionListener {
 
-  public GymMemberDateListener(List<Member> list) {
-    super(list);
+  MemberDao memberDao;
+
+  public GymMemberDateListener(MemberDao memberDao) {
+    this.memberDao = memberDao;
   }
 
   public void service(BreadcrumbPrompt prompt) {
     int memberNo = prompt.inputInt("번호? ");
 
-    Member m = this.findBy(memberNo);
+    Member m = memberDao.findBy(memberNo);
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -23,7 +26,6 @@ public class GymMemberDateListener extends AbstractMemberListener {
     long createdDate = m.getCreatedDate(); // 등록일
     int inputDate = m.getPer(); // 입력한 개월 수,
 
-    System.out.println(inputDate);
 
     int year = LocalDate.ofEpochDay(createdDate / (24 * 60 * 60 * 1000)).getYear();
     int month = LocalDate.ofEpochDay(createdDate / (24 * 60 * 60 * 1000)).getMonthValue();

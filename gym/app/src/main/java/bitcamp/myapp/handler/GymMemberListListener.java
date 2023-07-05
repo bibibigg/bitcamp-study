@@ -1,14 +1,17 @@
 package bitcamp.myapp.handler;
 
-import java.util.Iterator;
 import java.util.List;
+import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
+import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
-public class GymMemberListListener extends AbstractMemberListener {
+public class GymMemberListListener implements ActionListener {
 
-  public GymMemberListListener(List<Member> list) {
-    super(list);
+  MemberDao memberDao;
+
+  public GymMemberListListener(MemberDao memberDao) {
+    this.memberDao = memberDao;
   }
 
   public void service(BreadcrumbPrompt prompt) {
@@ -16,12 +19,11 @@ public class GymMemberListListener extends AbstractMemberListener {
     System.out.println("번호, 이름, 나이, 핸드폰번호, 등록개월");
     System.out.println("---------------------------------------");
 
-    Iterator<Member> iterator = list.iterator();
+    List<Member> list = memberDao.list();
 
-    while (iterator.hasNext()) {
-      Member m = iterator.next();
+    for (Member m : list) {
       System.out.printf("%d, %s, %d, %s, %s\n", m.getNo(), m.getName(), m.getAge(),
-          m.getPhoneNumber(), toperString(m.getPer()));
+          m.getPhoneNumber(), m.getPer() == 1 ? "1개월" : m.getPer() == 3 ? "3개월" : "6개월");
     }
   }
 }
