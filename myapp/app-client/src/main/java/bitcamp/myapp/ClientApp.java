@@ -20,6 +20,7 @@ import bitcamp.myapp.handler.MemberDeleteListener;
 import bitcamp.myapp.handler.MemberDetailListener;
 import bitcamp.myapp.handler.MemberListListener;
 import bitcamp.myapp.handler.MemberUpdateListener;
+import bitcamp.net.RequestEntity;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
@@ -39,6 +40,7 @@ public class ClientApp {
   MenuGroup mainMenu = new MenuGroup("메인");
 
   public ClientApp(String ip, int port) throws Exception {
+
     this.socket = new Socket(ip, port);
     this.out = new DataOutputStream(socket.getOutputStream());
     this.in = new DataInputStream(socket.getInputStream());
@@ -46,8 +48,8 @@ public class ClientApp {
     this.memberDao = new MemberNetworkDao("member", in, out);
     this.boardDao = new BoardNetworkDao("board", in, out);
     this.readingDao = new BoardNetworkDao("reading", in, out);
-    prepareMenu();
 
+    prepareMenu();
   }
 
   public void close() throws Exception {
@@ -59,7 +61,7 @@ public class ClientApp {
 
   public static void main(String[] args) throws Exception {
     if (args.length < 2) {
-      System.out.println("실행 예) java -cp bin/main bitcamp.myapp.ClientApp 서버주소 포트번호");
+      System.out.println("실행 예) java ... bitcamp.myapp.ClientApp 서버주소 포트번호");
       return;
     }
 
@@ -67,8 +69,6 @@ public class ClientApp {
     app.execute();
     app.close();
   }
-
-
 
   static void printTitle() {
     System.out.println("나의 목록 관리 시스템");
@@ -80,7 +80,8 @@ public class ClientApp {
     mainMenu.execute(prompt);
 
     try {
-      out.writeUTF("quit");
+      out.writeUTF(new RequestEntity().command("quit").toJson());
+
     } catch (Exception e) {
       System.out.println("종료 오류!");
       e.printStackTrace();
@@ -119,5 +120,3 @@ public class ClientApp {
     mainMenu.add(helloMenu);
   }
 }
-
-

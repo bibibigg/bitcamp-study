@@ -5,10 +5,10 @@ import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
 public class MemberDeleteListener implements ActionListener {
+
   MemberDao memberDao;
 
   public MemberDeleteListener(MemberDao memberDao) {
-
     this.memberDao = memberDao;
   }
 
@@ -18,4 +18,5 @@ public class MemberDeleteListener implements ActionListener {
       System.out.println("해당 번호의 회원이 없습니다!");
     }
   }
+
 }

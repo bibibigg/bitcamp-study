@@ -3,6 +3,7 @@ package bitcamp.util;
 import java.util.ArrayList;
 
 public class Menu {
+
   private String title;
   private ArrayList<ActionListener> listeners = new ArrayList<>();
 
@@ -33,5 +34,4 @@ public class Menu {
       listener.service(prompt);
     }
   }
-
 }

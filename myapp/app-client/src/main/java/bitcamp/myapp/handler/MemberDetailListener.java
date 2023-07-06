@@ -13,8 +13,7 @@ public class MemberDetailListener implements ActionListener {
     this.memberDao = memberDao;
   }
 
-
-
+  @Override
   public void service(BreadcrumbPrompt prompt) {
     int memberNo = prompt.inputInt("번호? ");
 

@@ -10,7 +10,6 @@ public class BoardUpdateListener implements ActionListener {
   BoardDao boardDao;
 
   public BoardUpdateListener(BoardDao boardDao) {
-
     this.boardDao = boardDao;
   }
 
@@ -31,7 +30,18 @@ public class BoardUpdateListener implements ActionListener {
 
     board.setTitle(prompt.inputString("제목(%s)? ", board.getTitle()));
     board.setContent(prompt.inputString("내용(%s)? ", board.getContent()));
+
+    boardDao.update(board);
   }
 }
+
+
+
+
+
+
+
+
+
 
 

@@ -4,7 +4,6 @@ import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
 
 public class HelloListener implements ActionListener {
-
   @Override
   public void service(BreadcrumbPrompt prompt) {
     String name = prompt.inputString("이름은? ");

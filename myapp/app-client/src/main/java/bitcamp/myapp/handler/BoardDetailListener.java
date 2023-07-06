@@ -31,7 +31,15 @@ public class BoardDetailListener implements ActionListener {
     board.setViewCount(board.getViewCount() + 1);
     boardDao.update(board);
   }
-
-
 }
+
+
+
+
+
+
+
+
+
+
 
