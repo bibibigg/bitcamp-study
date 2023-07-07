@@ -23,7 +23,7 @@
     "content": "3",
     "writer": "3",
     "password": "3",
-    "viewCount": 0,
+    "viewCount": 1,
     "createdDate": 1688009037687
   },
   {
@@ -43,12 +43,6 @@
     "password": "1111",
     "viewCount": 0,
     "createdDate": 1688023186454
-  },
-  {
-    "no": 10,
-    "password": "222",
-    "viewCount": 0,
-    "createdDate": 0
   },
   {
     "no": 16,
@@ -94,5 +88,14 @@
     "password": "1111",
     "viewCount": 0,
     "createdDate": 1688622408796
+  },
+  {
+    "no": 31,
+    "title": "qweqwe",
+    "content": "qweqwe",
+    "writer": "asdasd",
+    "password": "111",
+    "viewCount": 2,
+    "createdDate": 1688710803324
   }
 ]

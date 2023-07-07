@@ -72,7 +72,7 @@ public class GymServerApp {
         case "board/findBy":
           Board board = boardDao.findBy(request.getObject(Integer.class));
           if (board == null) {
-            response.status(ResponseEntity.FAILURE).result("해당 번호의 게시글이 없습니다!");
+            response.status(ResponseEntity.SUCCESS);
           } else {
             response.status(ResponseEntity.SUCCESS).result(board);
           }
@@ -95,7 +95,7 @@ public class GymServerApp {
         case "member/findBy":
           Member member = memberDao.findBy(request.getObject(Integer.class));
           if (member == null) {
-            response.status(ResponseEntity.FAILURE).result("해당 번호의 게시글이 없습니다!");
+            response.status(ResponseEntity.SUCCESS);
           } else {
             response.status(ResponseEntity.SUCCESS).result(member);
           }
