@@ -7,24 +7,10 @@
     "gender": "M"
   },
   {
-    "no": 2,
-    "name": "2",
-    "email": "2",
-    "password": "2",
-    "gender": "W"
-  },
-  {
     "no": 3,
     "name": "3",
     "email": "3",
     "password": "3",
-    "gender": "W"
-  },
-  {
-    "no": 4,
-    "name": "aa",
-    "email": "aa@test.com",
-    "password": "1111",
     "gender": "W"
   },
   {
@@ -56,10 +42,24 @@
     "gender": "M"
   },
   {
-    "no": 10,
-    "name": "abab",
-    "email": "abab",
-    "password": "111",
+    "no": 11,
+    "name": "hh",
+    "email": "hh@test.com",
+    "password": "1111",
+    "gender": "M"
+  },
+  {
+    "no": 12,
+    "name": "iix",
+    "email": "iix@test.com",
+    "password": "1111",
     "gender": "W"
+  },
+  {
+    "no": 14,
+    "name": "hahax",
+    "email": "hahax@test.com",
+    "password": "1111",
+    "gender": "M"
   }
 ]

@@ -1,4 +1,4 @@
-package bitcamp.Dao;
+package bitcamp.dao;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,7 +11,6 @@ import bitcamp.net.ResponseEntity;
 
 public class DaoBuilder {
 
-  String dataName;
   DataInputStream in;
   DataOutputStream out;
 
@@ -22,10 +21,8 @@ public class DaoBuilder {
 
   @SuppressWarnings("unchecked")
   public <T> T build(String dataName, Class<T> type) {
-
     return (T) Proxy.newProxyInstance(ClientApp.class.getClassLoader(), new Class[] {type},
         (proxy, method, args) -> {
-
           // 요청 정보 준비
           RequestEntity requestEntity = new RequestEntity();
           requestEntity.command(dataName + "/" + method.getName());
@@ -34,6 +31,7 @@ public class DaoBuilder {
           }
 
           System.out.println(requestEntity.toJson());
+
           // 요청 정보 전송
           out.writeUTF(requestEntity.toJson());
 
@@ -49,14 +47,13 @@ public class DaoBuilder {
           if (returnType == int.class) {
             return response.getObject(int.class);
 
-          } else if (returnType == Void.class) {
+          } else if (returnType == void.class) {
             return null;
 
           } else if (returnType == List.class) {
             ParameterizedType paramType = (ParameterizedType) method.getGenericReturnType();
             Class<?> itemType = (Class<?>) paramType.getActualTypeArguments()[0];
             return response.getList(itemType);
-
           } else {
             return response.getObject(returnType);
           }
