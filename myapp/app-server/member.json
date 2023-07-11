@@ -61,5 +61,12 @@
     "email": "hahax@test.com",
     "password": "1111",
     "gender": "M"
+  },
+  {
+    "no": 15,
+    "name": "test1",
+    "email": "test1@test.com",
+    "password": "111",
+    "gender": "W"
   }
 ]
