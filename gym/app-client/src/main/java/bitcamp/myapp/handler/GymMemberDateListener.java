@@ -1,6 +1,7 @@
 package bitcamp.myapp.handler;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.ActionListener;
@@ -25,7 +26,7 @@ public class GymMemberDateListener implements ActionListener {
 
     long createdDate = m.getCreatedDate(); // 등록일
     int inputDate = m.getPer(); // 입력한 개월 수,
-
+    // 남은날짜 출력방법 현재일 - 종료일
 
     int year = LocalDate.ofEpochDay(createdDate / (24 * 60 * 60 * 1000)).getYear();
     int month = LocalDate.ofEpochDay(createdDate / (24 * 60 * 60 * 1000)).getMonthValue();
@@ -35,9 +36,13 @@ public class GymMemberDateListener implements ActionListener {
     // 등록일에서 입력한 개월 수를 더하여 종료일 계산
     LocalDate endDate = createDate.plusMonths(inputDate);
 
+    LocalDate currentDate = LocalDate.now();
+    long remainingDays = ChronoUnit.DAYS.between(currentDate, endDate);
+
+
     System.out.printf("등록일: %tY-%<tm-%<td\n", createDate);
     System.out.printf("종료일: %tY-%<tm-%<td\n", endDate);
-
+    System.out.printf("남은기간: %d일\n", remainingDays);
 
   }
 }

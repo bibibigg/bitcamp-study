@@ -69,7 +69,7 @@ public class GymClientApp {
     memberMenu.add(new Menu("목록", new GymMemberListListener(memberDao)));
     memberMenu.add(new Menu("조회", new GymMemberDetailListener(memberDao)));
     memberMenu.add(new Menu("변경", new GymMemberUpdateListener(memberDao)));
-    memberMenu.add(new Menu("남은 기간", new GymMemberDateListener(memberDao)));
+    memberMenu.add(new Menu("기간 조회", new GymMemberDateListener(memberDao)));
     memberMenu.add(new Menu("삭제", new GymMemberDeleteListener(memberDao)));
     mainMenu.add(memberMenu);
 
