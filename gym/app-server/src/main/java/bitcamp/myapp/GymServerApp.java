@@ -78,47 +78,42 @@ public class GymServerApp {
       System.out.printf("%s:%s 클라이언트가 접속했습니다\n", socketAddress.getHostString(),
           socketAddress.getPort());
 
-      while (true) {
-        RequestEntity request = RequestEntity.fromJson(in.readUTF());
+      RequestEntity request = RequestEntity.fromJson(in.readUTF());
 
-        String command = request.getCommand();
-        System.out.println(command);
+      String command = request.getCommand();
+      System.out.println(command);
 
-        if (command.equals("quit")) {
-          break;
-        }
+      String[] values = command.split("/");
+      String dataName = values[0];
+      String methodName = values[1];
 
-        String[] values = command.split("/");
-        String dataName = values[0];
-        String methodName = values[1];
-
-        Object dao = daoMap.get(dataName);
-        if (dao == null) {
-          out.writeUTF(
-              new ResponseEntity().status(ResponseEntity.ERROR).result("데이터를 찾을 수 없습니다.").toJson());
-          continue;
-        }
-
-        Method method = findMethod(dao, methodName);
-        if (method == null) {
-          out.writeUTF(
-              new ResponseEntity().status(ResponseEntity.ERROR).result("데이터를 찾을 수 없습니다.").toJson());
-          continue;
-        }
-
-        try {
-          Object result = call(dao, method, request);
-          ResponseEntity response = new ResponseEntity();
-          response.status(ResponseEntity.SUCCESS);
-          response.result(result);
-          out.writeUTF(response.toJson());
-        } catch (Exception e) {
-          ResponseEntity response = new ResponseEntity();
-          response.status(ResponseEntity.ERROR);
-          response.result(e.getMessage());
-          out.writeUTF(response.toJson());
-        }
+      Object dao = daoMap.get(dataName);
+      if (dao == null) {
+        out.writeUTF(
+            new ResponseEntity().status(ResponseEntity.ERROR).result("데이터를 찾을 수 없습니다.").toJson());
+        return;
       }
+
+      Method method = findMethod(dao, methodName);
+      if (method == null) {
+        out.writeUTF(
+            new ResponseEntity().status(ResponseEntity.ERROR).result("데이터를 찾을 수 없습니다.").toJson());
+        return;
+      }
+
+      try {
+        Object result = call(dao, method, request);
+        ResponseEntity response = new ResponseEntity();
+        response.status(ResponseEntity.SUCCESS);
+        response.result(result);
+        out.writeUTF(response.toJson());
+      } catch (Exception e) {
+        ResponseEntity response = new ResponseEntity();
+        response.status(ResponseEntity.ERROR);
+        response.result(e.getMessage());
+        out.writeUTF(response.toJson());
+      }
+
 
     } catch (Exception e) {
       System.out.println(e.getMessage());
