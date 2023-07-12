@@ -42,11 +42,24 @@ public class GymServerApp {
   }
 
   public void excute() throws Exception {
+    class RequestAgentThread extends Thread {
+      Socket socket;
+
+      public RequestAgentThread(Socket socket) {
+        this.socket = socket;
+      }
+
+      @Override
+      public void run() {
+        processRequest(socket);
+      }
+
+    }
     System.out.println("[bitcamp Gym 강남점]");
     this.serverSocket = new ServerSocket(port);
     System.out.println("서버 실행중...");
     while (true) {
-      processRequest(serverSocket.accept());
+      new RequestAgentThread(serverSocket.accept()).start();
     }
   }
 
