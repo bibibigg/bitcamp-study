@@ -14,7 +14,7 @@ public class CalcClient1 {
   static Pattern pattern = Pattern.compile("[0-9]+|\\p{Punct}");
 
   public static void main(String[] args) {
-    try (Socket socket = new Socket("localhost", 8888);
+    try (Socket socket = new Socket("localhost", 8888); // 소켓을 연결을 맺고 연결을 유지한 채로 여러번의 계산식을 처리
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
         DataInputStream in = new DataInputStream(socket.getInputStream());
         Scanner keyscan = new Scanner(System.in);) {
