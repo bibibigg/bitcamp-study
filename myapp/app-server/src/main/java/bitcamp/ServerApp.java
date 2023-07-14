@@ -12,6 +12,8 @@ import bitcamp.myapp.dao.BoardListDao;
 import bitcamp.myapp.dao.MemberListDao;
 import bitcamp.net.RequestEntity;
 import bitcamp.net.ResponseEntity;
+import bitcamp.util.ManagedThread;
+import bitcamp.util.ThreadPool;
 
 // 1) 클라이언트가 보낸 명령을 데이터이름과 메서드 이름으로 분리한다.
 // 2) 클라이언트가 요청한 DAO 객체와 메서드를 찾는다.
@@ -23,6 +25,9 @@ public class ServerApp {
 
   int port;
   ServerSocket serverSocket;
+
+  // 스레드를 리턴해 줄 스레드풀 준비
+  ThreadPool threadPool = new ThreadPool();
 
   HashMap<String, Object> daoMap = new HashMap<>();
 
@@ -49,25 +54,15 @@ public class ServerApp {
   }
 
   public void execute() throws Exception {
-    class RequestAgentThread extends Thread {
-      Socket socket;
-
-      public RequestAgentThread(Socket socket) {
-        this.socket = socket;
-      }
-
-      @Override
-      public void run() {
-        processRequest(socket);
-      }
-    }
     System.out.println("[MyList 서버 애플리케이션]");
 
     this.serverSocket = new ServerSocket(port);
     System.out.println("서버 실행 중...");
 
     while (true) {
-      new RequestAgentThread(serverSocket.accept()).start();;
+      Socket socket = serverSocket.accept();
+      ManagedThread t = threadPool.getResource();
+      t.setJob(() -> processRequest(socket));
     }
   }
 
