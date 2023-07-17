@@ -27,6 +27,7 @@ public class GymClientApp {
 
   MenuGroup mainMenu = new MenuGroup("메인");
 
+
   public GymClientApp(String ip, int port) throws Exception {
 
     DaoBuilder daoBuilder = new DaoBuilder(ip, port);
