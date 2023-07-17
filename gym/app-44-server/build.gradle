@@ -1,5 +1,5 @@
 plugins {
-    id 'java-library'
+    id 'application'
     id 'eclipse'
 }
 
@@ -8,6 +8,7 @@ repositories {
 }
 
 dependencies {
+  implementation project(':app-common')
     implementation 'com.google.code.gson:gson:2.10.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     implementation 'com.google.guava:guava:31.1-jre'
@@ -19,7 +20,9 @@ java {
     }
 }
 
-
+application {
+    mainClass = 'bitcamp.myapp.ServerApp'
+}
 
 tasks.named('test') {
     useJUnitPlatform()
@@ -41,7 +44,7 @@ tasks.withType(JavaCompile) {
 // eclipse 프로젝트 이름을 설정하기
 eclipse {
     project {
-        name = "gym-common"
+        name = "gym-server"
     }
     jdt {
       sourceCompatibility = 17

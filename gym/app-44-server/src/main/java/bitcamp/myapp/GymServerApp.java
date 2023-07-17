@@ -12,6 +12,9 @@ import bitcamp.myapp.dao.BoardListDao;
 import bitcamp.myapp.dao.MemberListDao;
 import bitcamp.myapp.net.RequestEntity;
 import bitcamp.myapp.net.ResponseEntity;
+import bitcamp.util.Job;
+import bitcamp.util.ManagedThread;
+import bitcamp.util.ThreadPool;
 
 public class GymServerApp {
 
@@ -19,6 +22,8 @@ public class GymServerApp {
   ServerSocket serverSocket;
 
   HashMap<String, Object> daoMap = new HashMap<>();
+
+  ThreadPool threadPool = new ThreadPool();
 
   public GymServerApp(int port) throws Exception {
     this.port = port;
@@ -42,15 +47,15 @@ public class GymServerApp {
   }
 
   public void excute() throws Exception {
-    class RequestAgentThread extends Thread {
+    class RequestProcessJob implements Job {
       Socket socket;
 
-      public RequestAgentThread(Socket socket) {
+      public RequestProcessJob(Socket socket) {
         this.socket = socket;
       }
 
       @Override
-      public void run() {
+      public void execute() {
         processRequest(socket);
       }
 
@@ -58,8 +63,11 @@ public class GymServerApp {
     System.out.println("[bitcamp Gym 강남점]");
     this.serverSocket = new ServerSocket(port);
     System.out.println("서버 실행중...");
+
     while (true) {
-      new RequestAgentThread(serverSocket.accept()).start();
+      Socket socket = serverSocket.accept();
+      ManagedThread t = threadPool.getResource();
+      t.setJob(new RequestProcessJob(socket));
     }
   }
 
@@ -90,6 +98,7 @@ public class GymServerApp {
       InetSocketAddress socketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
       System.out.printf("%s:%s 클라이언트가 접속했습니다\n", socketAddress.getHostString(),
           socketAddress.getPort());
+      Thread.sleep(15000);
 
       RequestEntity request = RequestEntity.fromJson(in.readUTF());
 
