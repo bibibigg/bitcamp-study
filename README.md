@@ -414,3 +414,10 @@
   - JDBC 프로그래밍(com.eomcs.jdbc)
     - SQL - DML 사용법
     - SQL - DQL 사용법
+  
+
+### 42일(7/20,목)
+
+- 자바 프로그래밍
+  - JDBC 프로그래밍(com.eomcs.jdbc)
+    - SQL - DQL 사용법: 조인, 서브쿼리, 그룹 
