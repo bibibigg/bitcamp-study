@@ -14,7 +14,8 @@ public class CalcClient1 {
   static Pattern pattern = Pattern.compile("[0-9]+|\\p{Punct}");
 
   public static void main(String[] args) {
-    try (Socket socket = new Socket("localhost", 8888); // 소켓을 연결을 맺고 연결을 유지한 채로 여러번의 계산식을 처리
+    try (
+        Socket socket = new Socket("localhost", 8888);
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
         DataInputStream in = new DataInputStream(socket.getInputStream());
         Scanner keyscan = new Scanner(System.in);) {
@@ -29,15 +30,18 @@ public class CalcClient1 {
 
         try {
           Expression expr = parseExpression(input);
+
           out.writeUTF(expr.op);
           out.writeInt(expr.value);
 
           String result = in.readUTF();
           System.out.printf("결과: %s\n", result);
+
         } catch (ExpressionParseException e) {
-          System.out.println("계산식이 옳지 않습니다!");
+          System.out.println(e.getMessage());
         }
       }
+
     } catch (Exception e) {
       System.out.println("서버 통신 오류!");
     }
@@ -61,8 +65,9 @@ public class CalcClient1 {
       obj.value = Integer.parseInt(values.get(1));
 
       return obj;
+
     } catch (Exception e) {
-      throw new ExpressionParseException();
+      throw new ExpressionParseException(e);
     }
   }
 
@@ -70,6 +75,11 @@ public class CalcClient1 {
     String op;
     int value;
   }
-
-
 }
+
+
+
+
+
+
+

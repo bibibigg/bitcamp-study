@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// Stateless 방식 + Sesstion 으로 통신하기
+// Stateless 방식 + Session 으로 통신하기
 public class CalcClient3 {
 
   static Pattern pattern = Pattern.compile("[0-9]+|\\p{Punct}");
@@ -16,8 +16,7 @@ public class CalcClient3 {
   public static void main(String[] args) {
     String uuid = "";
 
-    try (Scanner keyscan = new Scanner(System.in);) {
-
+    try (Scanner keyscan = new Scanner(System.in)) {
       while (true) {
         System.out.print("계산식(예: + 3)> ");
         String input = keyscan.nextLine();
@@ -29,13 +28,14 @@ public class CalcClient3 {
         try {
           expr = parseExpression(input);
         } catch (ExpressionParseException e) {
-          System.out.println("계산식이 옳지 않습니다!");
+          System.out.println(e.getMessage());
           continue;
         }
 
-        try (Socket socket = new Socket("localhost", 8888);
+        try (
+            Socket socket = new Socket("localhost", 8888);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            DataInputStream in = new DataInputStream(socket.getInputStream());) {
+            DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
           out.writeUTF(uuid);
           out.writeUTF(expr.op);
@@ -71,8 +71,9 @@ public class CalcClient3 {
       obj.value = Integer.parseInt(values.get(1));
 
       return obj;
+
     } catch (Exception e) {
-      throw new ExpressionParseException();
+      throw new ExpressionParseException(e);
     }
   }
 
@@ -80,6 +81,11 @@ public class CalcClient3 {
     String op;
     int value;
   }
-
-
 }
+
+
+
+
+
+
+
