@@ -38,6 +38,7 @@ public class MySQLBoardDao implements BoardDao {
         b.setViewCount(rs.getInt("view_count"));
         b.setCreatedDate(rs.getLong("create_date"));
 
+
         list.add(b);
       }
 
