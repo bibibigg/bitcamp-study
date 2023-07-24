@@ -2,6 +2,7 @@ package bitcamp.test;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,7 +12,7 @@ import java.util.UUID;
 public class CalcServer3x {
 
   // 클라이언트 작업 결과를 보관할 저장소
-  static HashMap<String, Integer> resultMap = new HashMap<>();
+  static HashMap<String,Integer> resultMap = new HashMap<>();
 
   public static void main(String[] args) throws Exception {
     class RequestAgent extends Thread {
@@ -23,10 +24,9 @@ public class CalcServer3x {
 
       @Override
       public void run() {
-        //
+        // main 스레드와 별개로 동작할 작업을 두는 곳
         processRequest(socket);
       }
-
     }
 
 
@@ -34,7 +34,7 @@ public class CalcServer3x {
       System.out.println("서버 실행!");
 
       while (true) {
-        System.out.println("클라이언트 연결을 기다리는 중");
+        System.out.println("클라이언트 요청을 기다리는 중");
         new RequestAgent(serverSocket.accept()).start();
         System.out.println("클라이언트 요청을 RequestAgent에게 위임함!");
       }
@@ -42,8 +42,9 @@ public class CalcServer3x {
   }
 
   static void processRequest(Socket socket) {
-    InetSocketAddress socketAddr = (InetSocketAddress) socket.getRemoteSocketAddress();
-    System.out.printf("%s(%s) 클라이언트 접속!\n", socketAddr.getHostString(), socketAddr.getPort());
+    InetSocketAddress sockAddr = (InetSocketAddress) socket.getRemoteSocketAddress();
+    System.out.printf("%s(%d) 클라이언트 접속!\n",
+        sockAddr.getHostString(), sockAddr.getPort());
 
     try (Socket s = socket;
         DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -51,6 +52,7 @@ public class CalcServer3x {
 
       int result = 0;
       String uuid = in.readUTF();
+
       if (uuid.length() == 0) {
         // 클라이언트가 처음 접속했다면, 클라이언트 식별 번호를 생성한다.
         uuid = UUID.randomUUID().toString();
@@ -63,35 +65,54 @@ public class CalcServer3x {
       if (op.equals("quit")) {
         return;
       }
+
       int value = in.readInt();
 
       switch (op) {
-        case "+":
-          result += value;
-          break;
-        case "-":
-          result -= value;
-          break;
+        case "+": result += value; break;
+        case "-": result -= value; break;
         case "*":
           result *= value;
+          try {
+            FileInputStream temp = new FileInputStream("temp/jls17.pdf");
+            int b;
+            while ((b = temp.read()) != -1) {
+              Math.random();Math.random();Math.random();Math.random();Math.random();
+            }
+            temp.close();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
           break;
-        case "/":
-          result /= value;
-          break;
-        case "%":
-          result %= value;
-          break;
-        default:
-          out.writeUTF("지원하지 않는 연산자 입니다!");
+        case "/": result /= value; break;
+        case "%": result %= value; break;
+        default: out.writeUTF("지원하지 않는 연산자입니다!");
       }
 
-      // 작업 결과를 저장소에 보관한다
+      // 작업 결과를 저장소에 보관한다.
       resultMap.put(uuid, result);
 
       out.writeUTF(uuid);
       out.writeUTF(String.format("%d", result));
+
     } catch (Exception e) {
-      System.out.printf("%s(%d) 클라이언트 통신 오류!\n", socketAddr.getHostString(), socketAddr.getPort());
+      System.out.printf("%s(%d) 클라이언트 통신 오류!\n",
+          sockAddr.getHostString(), sockAddr.getPort());
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,6 @@
 package bitcamp.test;
 
 public class ExpressionParseException extends Exception {
-
   private static final long serialVersionUID = 1L;
 
   public ExpressionParseException() {
@@ -24,5 +23,4 @@ public class ExpressionParseException extends Exception {
   public ExpressionParseException(Throwable cause) {
     super(cause);
   }
-
 }

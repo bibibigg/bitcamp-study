@@ -2,7 +2,10 @@ package bitcamp.myapp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+<<<<<<< HEAD
 import bitcamp.dao.MySQLBoardDao;
+=======
+>>>>>>> a2d5e80f777e7e289e43b38904d2414776944cfb
 import bitcamp.dao.MySQLMemberDao;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
@@ -35,11 +38,20 @@ public class ClientApp {
 
   public ClientApp(String ip, int port) throws Exception {
 
+<<<<<<< HEAD
     Connection con = DriverManager.getConnection("jdbc:mysql://study:1111@localhost:3306/studydb"); // JDBC
                                                                                                     // URL
 
     this.memberDao = new MySQLMemberDao(con);
     this.boardDao = new MySQLBoardDao(con);
+=======
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://study:1111@localhost:3306/studydb" // JDBC URL
+        );
+
+    this.memberDao = new MySQLMemberDao(con);
+    this.boardDao = null;
+>>>>>>> a2d5e80f777e7e289e43b38904d2414776944cfb
     this.readingDao = null;
 
     prepareMenu();
@@ -68,7 +80,6 @@ public class ClientApp {
   public void execute() {
     printTitle();
     mainMenu.execute(prompt);
-
   }
 
   private void prepareMenu() {
