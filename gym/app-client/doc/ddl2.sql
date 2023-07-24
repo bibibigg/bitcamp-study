@@ -26,9 +26,6 @@ alter table gym_member
   add constraint primary key (member_no),
   modify column member_no int not null auto_increment;
 
-alter table gym_member
-  add constraint gym_member_uk unique (phone_number);
-  
 -- 게시판 작성자에 대해 외부키 설정
 alter table gym_board
   add constraint gym_board_fk foreign key (writer) references gym_member (member_no);

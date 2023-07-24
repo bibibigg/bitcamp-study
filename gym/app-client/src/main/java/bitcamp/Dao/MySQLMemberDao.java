@@ -1,8 +1,8 @@
 package bitcamp.Dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import bitcamp.myapp.dao.MemberDao;
@@ -18,11 +18,16 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public void insert(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "insert into gym_member(name,age,password,per)" + " values(?,?,sha1(?),?)")) {
 
-      stmt.executeUpdate(String.format(
-          "insert into gym_member(name,age,password,per)" + " values('%s',%d,'%s',%d)",
-          member.getName(), member.getAge(), member.getPassword(), member.getPer()));
+      stmt.setString(1, member.getName());
+      stmt.setInt(2, member.getAge());
+      stmt.setString(3, member.getPassword());
+      stmt.setInt(4, member.getPer());
+
+
+      stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -31,9 +36,10 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public List<Member> list() {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt
-            .executeQuery("select member_no, name, age, per from gym_member order by name asc")) {
+    try (
+        PreparedStatement stmt = con
+            .prepareStatement("select member_no, name, age, per from gym_member order by name asc");
+        ResultSet rs = stmt.executeQuery()) {
 
       List<Member> list = new ArrayList<>();
 
@@ -56,22 +62,23 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public Member findBy(int no) {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select member_no, name, age, per from gym_member where member_no=" + no)) {
+    try (PreparedStatement stmt = con
+        .prepareStatement("select member_no, name, age, per from gym_member where member_no=?")) {
 
+      stmt.setInt(1, no);
 
-      if (rs.next()) {
-        Member m = new Member();
-        m.setNo(rs.getInt("member_no"));
-        m.setName(rs.getString("name"));
-        m.setAge(rs.getInt("age"));
-        m.setPer(rs.getInt("per"));
-        return m;
+      try (ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) {
+          Member m = new Member();
+          m.setNo(rs.getInt("member_no"));
+          m.setName(rs.getString("name"));
+          m.setAge(rs.getInt("age"));
+          m.setPer(rs.getInt("per"));
+          return m;
+        }
+
+        return null;
       }
-
-      return null;
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -79,13 +86,16 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int update(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement("update gym_member set" + " name=?,"
+        + " age=?," + " password=sha1(?)," + " per=?" + " where member_no=?")) {
 
-      return stmt.executeUpdate(String.format(
-          "update gym_member set" + " name='%s'," + " age=%d," + " password='%s'," + " per=%d"
-              + " where member_no=%d",
-          member.getName(), member.getAge(), member.getPassword(), member.getPer(),
-          member.getNo()));
+      stmt.setString(1, member.getName());
+      stmt.setInt(2, member.getAge());
+      stmt.setString(3, member.getPassword());
+      stmt.setInt(4, member.getPer());
+      stmt.setInt(5, member.getNo());
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -94,9 +104,12 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int delete(int no) {
-    try (Statement stmt = con.createStatement()) {
+    try (
+        PreparedStatement stmt = con.prepareStatement("delete from gym_member where member_no=?")) {
 
-      return stmt.executeUpdate(String.format("delete from gym_member where member_no=%d", no));
+      stmt.setInt(1, no);
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
