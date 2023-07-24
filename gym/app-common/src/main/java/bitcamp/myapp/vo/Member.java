@@ -15,6 +15,7 @@ public class Member implements Serializable {
   private int no;
   private String name;
   private int age;
+  private String phoneNumber;
   private String password;
   private int per;
   private Date createdDate;
@@ -85,5 +86,15 @@ public class Member implements Serializable {
   public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
   }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+
 
 }
