@@ -23,6 +23,7 @@ public class GymMemberDetailListener implements ActionListener {
     }
     System.out.printf("이름: %s\n", m.getName());
     System.out.printf("나이: %d\n", m.getAge());
+    System.out.printf("핸드폰번호: %s\n", m.setPhoneNumber());
     System.out.printf("등록개월: %s\n", m.getPer() == 1 ? "1개월" : m.getPer() == 3 ? "3개월" : "6개월");
     System.out.printf("가입일: %s\n", m.getCreatedDate());
   }
