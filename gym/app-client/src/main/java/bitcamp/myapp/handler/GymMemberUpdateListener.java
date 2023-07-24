@@ -23,7 +23,7 @@ public class GymMemberUpdateListener implements MemberActionListener {
 
     m.setName(prompt.inputString("이름(%s) ", m.getName()));
     m.setAge(prompt.inputInt("나이(%d) ", m.getAge()));
-    m.setPhoneNumber(prompt.inputString("핸드폰번호 ", m.getPhoneNumber()));
+    m.setPassword(prompt.inputString("새암호? "));
     m.setPer(MemberActionListener.inputPer(m.getPer(), prompt));
     memberDao.update(m);
   }

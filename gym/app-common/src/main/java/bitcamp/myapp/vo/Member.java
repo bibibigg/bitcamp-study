@@ -1,12 +1,11 @@
 package bitcamp.myapp.vo;
 
 import java.io.Serializable;
+import java.sql.Date;
 
-public class Member implements Serializable, CsvObject, AutoIncrement {
+public class Member implements Serializable {
 
   private static final long serialVersionUID = 1L;
-
-  public static int userId = 1;
 
   public static final int ONE_MONTH = 1;
   public static final int THREE_MONTH = 3;
@@ -15,42 +14,14 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
   private int no;
   private String name;
   private int age;
-  private String phoneNumber;
+  private String password;
   private int per;
-  private long createdDate;
+  private Date createdDate;
 
   public Member() {}
 
   public Member(int no) {
     this.no = no;
-  }
-
-  public static Member fromCsv(String csv) {
-    String[] values = csv.split(",");
-
-    Member member = new Member(Integer.parseInt(values[0]));
-    member.setName(values[1]);
-    member.setAge(Integer.parseInt(values[2]));
-    member.setPhoneNumber(values[3]);
-    member.setPer(Integer.parseInt(values[4]));
-
-
-    if (Member.userId <= member.getNo()) {
-      Member.userId = member.getNo() + 1;
-    }
-    return member;
-  }
-
-  public String toCsvString() {
-    return String.format("%d,%s,%d,%s,%d", this.getNo(), this.getName(), this.getAge(),
-        this.getPhoneNumber(), this.getPer());
-  }
-
-  @Override
-  public void updatekey() {
-    if (Member.userId <= this.no) {
-      Member.userId = this.no + 1;
-    }
   }
 
   public boolean equals(Object obj) {
@@ -94,12 +65,13 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
     this.age = age;
   }
 
-  public String getPhoneNumber() {
-    return phoneNumber;
+
+  public String getPassword() {
+    return password;
   }
 
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public int getPer() {
@@ -110,11 +82,11 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
     this.per = per;
   }
 
-  public long getCreatedDate() {
+  public Date getCreatedDate() {
     return createdDate;
   }
 
-  public void setCreatedDate(long createdDate) {
+  public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
   }
 

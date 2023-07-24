@@ -17,7 +17,7 @@ public class GymMemberAddListener implements MemberActionListener {
     Member m = new Member();
     m.setName(prompt.inputString("이름? "));
     m.setAge(prompt.inputInt("나이? "));
-    m.setPhoneNumber(prompt.inputString("핸드폰번호? "));
+    m.setPassword(prompt.inputString("암호? "));
     m.setPer(MemberActionListener.inputPer(0, prompt));
     memberDao.insert((m));
   }

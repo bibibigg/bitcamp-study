@@ -1,6 +1,9 @@
 package bitcamp.myapp;
 
-import bitcamp.Dao.DaoBuilder;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import bitcamp.Dao.MySQLBoardDao;
+import bitcamp.Dao.MySQLMemberDao;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.handler.GymBoardAddListener;
@@ -22,6 +25,7 @@ public class GymClientApp {
 
   MemberDao memberDao;
   BoardDao boardDao;
+  BoardDao readingDao;
 
   BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
@@ -30,10 +34,14 @@ public class GymClientApp {
 
   public GymClientApp(String ip, int port) throws Exception {
 
-    DaoBuilder daoBuilder = new DaoBuilder(ip, port);
+    Connection con = DriverManager.getConnection("jdbc:mysql://study:1111@localhost:3306/studydb" // JDBC
+    // URL
+    );
 
-    this.memberDao = daoBuilder.build("member", MemberDao.class);
-    this.boardDao = daoBuilder.build("board", BoardDao.class);
+    this.memberDao = new MySQLMemberDao(con);
+    this.boardDao = new MySQLBoardDao(con, 1);
+    this.readingDao = new MySQLBoardDao(con, 2);
+
     prepareMenu();
   }
 
@@ -81,6 +89,14 @@ public class GymClientApp {
     boardMenu.add(new Menu("변경", new GymBoardUpdateListener(boardDao)));
     boardMenu.add(new Menu("삭제", new GymBoardDeleteListener(boardDao)));
     mainMenu.add(boardMenu);
+
+    MenuGroup readingMenu = new MenuGroup("운동일지");
+    readingMenu.add(new Menu("등록", new GymBoardAddListener(readingDao)));
+    readingMenu.add(new Menu("목록", new GymBoardListListener(readingDao)));
+    readingMenu.add(new Menu("조회", new GymBoardDetailListener(readingDao)));
+    readingMenu.add(new Menu("변경", new GymBoardUpdateListener(readingDao)));
+    readingMenu.add(new Menu("삭제", new GymBoardDeleteListener(readingDao)));
+    mainMenu.add(readingMenu);
 
   }
 }

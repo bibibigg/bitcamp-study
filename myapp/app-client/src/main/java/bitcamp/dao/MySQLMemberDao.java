@@ -1,8 +1,8 @@
 package bitcamp.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import bitcamp.myapp.dao.MemberDao;
@@ -18,14 +18,16 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public void insert(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "insert into myapp_member(name,email,password,gender)" + " values(?, ?, sha1(?), ?)")) {
 
-      stmt.executeUpdate(String.format(
-          "insert into myapp_member(name,email,password,gender) values('%s','%s','%s','%c')",
-          member.getName(),
-          member.getEmail(),
-          member.getPassword(),
-          member.getGender()));
+
+      stmt.setString(1, member.getName());
+      stmt.setString(2, member.getEmail());
+      stmt.setString(3, member.getPassword());
+      stmt.setString(4, String.valueOf(member.getGender()));
+
+      stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -34,9 +36,10 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public List<Member> list() {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select member_no, name, email, gender from myapp_member order by name asc")) {
+    try (
+        PreparedStatement stmt = con.prepareStatement(
+            "select member_no, name, email, gender" + " from myapp_member" + " order by name asc");
+        ResultSet rs = stmt.executeQuery()) {
 
       List<Member> list = new ArrayList<>();
 
@@ -59,20 +62,54 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public Member findBy(int no) {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select member_no, name, email, gender from myapp_member where member_no=" + no)) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("select member_no, name, email, gender, created_date"
+            + " from myapp_member" + " where member_no=?")) {
 
-      if (rs.next()) {
-        Member m = new Member();
-        m.setNo(rs.getInt("member_no"));
-        m.setName(rs.getString("name"));
-        m.setEmail(rs.getString("email"));
-        m.setGender(rs.getString("gender").charAt(0));
-        return m;
+      stmt.setInt(1, no);
+
+      try (ResultSet rs = stmt.executeQuery()) {
+
+        if (rs.next()) {
+          Member m = new Member();
+          m.setNo(rs.getInt("member_no"));
+          m.setName(rs.getString("name"));
+          m.setEmail(rs.getString("email"));
+          m.setGender(rs.getString("gender").charAt(0));
+          m.setCreatedDate(rs.getDate("created_date"));
+
+          return m;
+        }
+        return null;
       }
 
-      return null;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public Member findByEmailAndPassword(Member param) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("select member_no, name, email, gender, created_date"
+            + " from myapp_member" + " where email=? and password=sha1(?)")) {
+
+      stmt.setString(1, param.getEmail());
+      stmt.setString(2, param.getPassword());
+
+      try (ResultSet rs = stmt.executeQuery()) {
+
+        if (rs.next()) {
+          Member m = new Member();
+          m.setNo(rs.getInt("member_no"));
+          m.setName(rs.getString("name"));
+          m.setEmail(rs.getString("email"));
+          m.setGender(rs.getString("gender").charAt(0));
+          m.setCreatedDate(rs.getDate("created_date"));
+
+          return m;
+        }
+        return null;
+      }
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -81,20 +118,16 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int update(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement("update myapp_member set" + " name=?,"
+        + " email=?," + " password=sha1(?)," + " gender=?" + " where member_no=?")) {
 
-      return stmt.executeUpdate(String.format(
-          "update myapp_member set"
-              + " name='%s',"
-              + " email='%s',"
-              + " password='%s',"
-              + " gender='%c'"
-              + " where member_no=%d",
-              member.getName(),
-              member.getEmail(),
-              member.getPassword(),
-              member.getGender(),
-              member.getNo()));
+      stmt.setString(1, member.getName());
+      stmt.setString(2, member.getEmail());
+      stmt.setString(3, member.getPassword());
+      stmt.setString(4, String.valueOf(member.getGender()));
+      stmt.setInt(5, member.getNo());
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -103,11 +136,12 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int delete(int no) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("delete from myapp_member where member_no=?")) {
 
-      return stmt.executeUpdate(String.format(
-          "delete from myapp_member where member_no=%d",
-          no));
+      stmt.setInt(1, no);
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
