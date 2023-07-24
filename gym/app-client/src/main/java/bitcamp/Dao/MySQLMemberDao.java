@@ -1,4 +1,4 @@
-package bitcamp.Dao;
+package bitcamp.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,7 +97,7 @@ public class MySQLMemberDao implements MemberDao {
             + "where phone_number=? and password=sha1(?)")) {
 
       stmt.setString(1, param.getPhoneNumber());
-      stmt.setString(1, param.getPassword());
+      stmt.setString(2, param.getPassword());
 
       try (ResultSet rs = stmt.executeQuery()) {
         if (rs.next()) {
