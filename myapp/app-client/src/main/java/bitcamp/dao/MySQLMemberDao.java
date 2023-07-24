@@ -21,11 +21,7 @@ public class MySQLMemberDao implements MemberDao {
     try (Statement stmt = con.createStatement()) {
 
       stmt.executeUpdate(String.format(
-<<<<<<< HEAD
-          "insert into myapp_member(name,email,password,gender) values('%s', '%s', '%s', '%c')",
-=======
           "insert into myapp_member(name,email,password,gender) values('%s','%s','%s','%c')",
->>>>>>> a2d5e80f777e7e289e43b38904d2414776944cfb
           member.getName(),
           member.getEmail(),
           member.getPassword(),
@@ -67,20 +63,12 @@ public class MySQLMemberDao implements MemberDao {
         ResultSet rs = stmt.executeQuery(
             "select member_no, name, email, gender from myapp_member where member_no=" + no)) {
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a2d5e80f777e7e289e43b38904d2414776944cfb
       if (rs.next()) {
         Member m = new Member();
         m.setNo(rs.getInt("member_no"));
         m.setName(rs.getString("name"));
         m.setEmail(rs.getString("email"));
         m.setGender(rs.getString("gender").charAt(0));
-<<<<<<< HEAD
-
-=======
->>>>>>> a2d5e80f777e7e289e43b38904d2414776944cfb
         return m;
       }
 
@@ -97,18 +85,6 @@ public class MySQLMemberDao implements MemberDao {
 
       return stmt.executeUpdate(String.format(
           "update myapp_member set"
-<<<<<<< HEAD
-          + " name='%s',"
-          + " email='%s',"
-          + " password='%s',"
-          + " gender='%c'"
-          + " where member_no=%d",
-          member.getName(),
-          member.getEmail(),
-          member.getPassword(),
-          member.getGender(),
-          member.getNo()));
-=======
               + " name='%s',"
               + " email='%s',"
               + " password='%s',"
@@ -119,7 +95,6 @@ public class MySQLMemberDao implements MemberDao {
               member.getPassword(),
               member.getGender(),
               member.getNo()));
->>>>>>> a2d5e80f777e7e289e43b38904d2414776944cfb
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -131,12 +106,8 @@ public class MySQLMemberDao implements MemberDao {
     try (Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate(String.format(
-<<<<<<< HEAD
-          "delete from myapp_member where member_no=%d", no));
-=======
           "delete from myapp_member where member_no=%d",
           no));
->>>>>>> a2d5e80f777e7e289e43b38904d2414776944cfb
 
     } catch (Exception e) {
       throw new RuntimeException(e);
