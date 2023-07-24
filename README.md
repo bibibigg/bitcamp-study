@@ -421,3 +421,26 @@
 - 자바 프로그래밍
   - JDBC 프로그래밍(com.eomcs.jdbc)
     - SQL - DQL 사용법: 조인, 서브쿼리, 그룹 
+
+### 43일(7/21,금)
+
+- 자바 프로그래밍
+  - 자바 코딩 문제집(001)
+    - 제네릭, 중첩클래스, Map.compute(), BiFunction 인터페이스 사용법
+  - JDBC 프로그래밍(com.eomcs.jdbc)
+    - JDBC API와 Driver 개념
+    - JDBC 드라이버 로딩 원리
+    - select/insert/update/delete 프로그래밍
+- 프로젝트 실습
+  - 46. DBMS 도입하기
+
+### 43일(7/24,월)
+
+- 자바 프로그래밍
+  - JDBC 프로그래밍(com.eomcs.jdbc)
+    - PreparedStatement 사용법
+- 프로젝트 실습
+  - 46. DBMS 도입하기(계속)
+  - 47. SQL 삽입 공격 차단하기
+  - 48. 외부키(Foreign Key) 사용하기
+  - 49. 로그인 적용하기
