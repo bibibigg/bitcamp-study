@@ -119,13 +119,13 @@ public class MySQLBoardDao implements BoardDao {
   @Override
   public int update(Board board) {
     try (PreparedStatement stmt = con.prepareStatement("update gym_board set" + " title=?,"
-        + " content=?" + " where category=? and board_no=? and password=sha1(?)")) {
+        + " content=?" + " where category=? and board_no=? and writer=?")) {
 
       stmt.setString(1, board.getTitle());
       stmt.setString(2, board.getContent());
       stmt.setInt(3, this.category);
       stmt.setInt(4, board.getNo());
-      stmt.setString(5, board.getPassword());
+      stmt.setInt(5, board.getWriter().getNo());
 
       return stmt.executeUpdate();
 
@@ -137,11 +137,11 @@ public class MySQLBoardDao implements BoardDao {
   @Override
   public int delete(Board board) {
     try (PreparedStatement stmt = con.prepareStatement(
-        "delete from gym_board where category=? and board_no=? and password=sha1(?)")) {
+        "delete from gym_board" + " where category=? and board_no=? and writer=?")) {
 
       stmt.setInt(1, this.category);
       stmt.setInt(2, board.getNo());
-      stmt.setString(3, board.getPassword());
+      stmt.setInt(3, board.getWriter().getNo());
 
       return stmt.executeUpdate();
 
