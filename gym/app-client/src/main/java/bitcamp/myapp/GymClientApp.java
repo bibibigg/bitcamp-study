@@ -2,8 +2,8 @@ package bitcamp.myapp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import bitcamp.Dao.MySQLBoardDao;
-import bitcamp.Dao.MySQLMemberDao;
+import bitcamp.dao.MySQLBoardDao;
+import bitcamp.dao.MySQLMemberDao;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.handler.GymBoardAddListener;
@@ -17,11 +17,15 @@ import bitcamp.myapp.handler.GymMemberDeleteListener;
 import bitcamp.myapp.handler.GymMemberDetailListener;
 import bitcamp.myapp.handler.GymMemberListListener;
 import bitcamp.myapp.handler.GymMemberUpdateListener;
+import bitcamp.myapp.handler.LoginListener;
+import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
 public class GymClientApp {
+
+  public static Member loginUser;
 
   MemberDao memberDao;
   BoardDao boardDao;
@@ -67,6 +71,9 @@ public class GymClientApp {
 
   public void excute() {
     GymprintTitle();
+
+    new LoginListener(memberDao).service(prompt);
+
     mainMenu.execute(prompt);
 
   }

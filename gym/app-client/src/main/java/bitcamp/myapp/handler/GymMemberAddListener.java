@@ -16,8 +16,8 @@ public class GymMemberAddListener implements MemberActionListener {
   public void service(BreadcrumbPrompt prompt) {
     Member m = new Member();
     m.setName(prompt.inputString("이름? "));
-    m.setAge(prompt.inputInt("나이? "));
     m.setPhoneNumber(prompt.inputString("핸드폰번호? "));
+    m.setAge(prompt.inputInt("나이? "));
     m.setPassword(prompt.inputString("암호? "));
     m.setPer(MemberActionListener.inputPer(0, prompt));
     memberDao.insert((m));

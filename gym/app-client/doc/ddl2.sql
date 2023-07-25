@@ -28,7 +28,7 @@ alter table gym_member
   modify column member_no int not null auto_increment;
 
   alter table gym_member
-  add constraint myapp_member_uk unique (phone_number);
+  add constraint gym_member_uk unique (phone_number);
   
 -- 게시판 작성자에 대해 외부키 설정
 alter table gym_board
