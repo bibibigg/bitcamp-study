@@ -1,25 +1,25 @@
 package bitcamp.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
+import bitcamp.util.DataSource;
 
 public class MySQLMemberDao implements MemberDao {
 
-  Connection con;
+  DataSource ds;
 
-  public MySQLMemberDao(Connection con) {
-    this.con = con;
+  public MySQLMemberDao(DataSource ds) {
+    this.ds = ds;
   }
 
   @Override
   public void insert(Member member) {
-    try (PreparedStatement stmt =
-        con.prepareStatement("insert into gym_member(name,phone_number,age,password,per)"
+    try (PreparedStatement stmt = ds.getConnection(false)
+        .prepareStatement("insert into gym_member(name,phone_number,age,password,per)"
             + " values(?,?,?,sha1(?),?)")) {
 
       stmt.setString(1, member.getName());
@@ -39,7 +39,7 @@ public class MySQLMemberDao implements MemberDao {
   @Override
   public List<Member> list() {
     try (
-        PreparedStatement stmt = con.prepareStatement(
+        PreparedStatement stmt = ds.getConnection(false).prepareStatement(
             "select member_no, name, phone_number, age, per from gym_member order by name asc");
         ResultSet rs = stmt.executeQuery()) {
 
@@ -65,8 +65,8 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public Member findBy(int no) {
-    try (PreparedStatement stmt =
-        con.prepareStatement("select member_no, name, phone_number, age, per, created_date"
+    try (PreparedStatement stmt = ds.getConnection(false)
+        .prepareStatement("select member_no, name, phone_number, age, per, created_date"
             + " from gym_member where member_no=?")) {
 
       stmt.setInt(1, no);
@@ -92,8 +92,8 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public Member findByPhoneAndPassword(Member param) {
-    try (PreparedStatement stmt =
-        con.prepareStatement("select member_no, name, phone_number, age, per, created_date"
+    try (PreparedStatement stmt = ds.getConnection(false)
+        .prepareStatement("select member_no, name, phone_number, age, per, created_date"
             + " from gym_member" + " where phone_number=? and password=sha1(?)")) {
 
       stmt.setString(1, param.getPhoneNumber());
@@ -120,8 +120,8 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int update(Member member) {
-    try (PreparedStatement stmt =
-        con.prepareStatement("update gym_member set" + " name=?," + " phone_number=?," + " age=?,"
+    try (PreparedStatement stmt = ds.getConnection(false)
+        .prepareStatement("update gym_member set" + " name=?," + " phone_number=?," + " age=?,"
             + " password=sha1(?)," + " per=?" + " where member_no=?")) {
 
       stmt.setString(1, member.getName());
@@ -140,8 +140,8 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int delete(int no) {
-    try (
-        PreparedStatement stmt = con.prepareStatement("delete from gym_member where member_no=?")) {
+    try (PreparedStatement stmt =
+        ds.getConnection(false).prepareStatement("delete from gym_member where member_no=?")) {
 
       stmt.setInt(1, no);
 

@@ -5,8 +5,6 @@ import java.io.DataOutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import bitcamp.dao.MySQLBoardDao;
@@ -27,14 +25,15 @@ import bitcamp.myapp.handler.GymMemberUpdateListener;
 import bitcamp.myapp.handler.LoginListener;
 import bitcamp.myapp.net.NetProtocol;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.DataSource;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
 public class GymServerApp {
 
-  ExecutorService threadPool = Executors.newFixedThreadPool(10);
+  ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
-  Connection con;
+  DataSource ds = new DataSource("jdbc:mysql://localhost:3306/studydb", "study", "1111");
   MemberDao memberDao;
   BoardDao boardDao;
   BoardDao readingDao;
@@ -46,20 +45,14 @@ public class GymServerApp {
   public GymServerApp(int port) throws Exception {
     this.port = port;
 
-    con = DriverManager.getConnection("jdbc:mysql://study:1111@localhost:3306/studydb" // JDBC
-    // URL
-    );
-
-    this.memberDao = new MySQLMemberDao(con);
-    this.boardDao = new MySQLBoardDao(con, 1);
-    this.readingDao = new MySQLBoardDao(con, 2);
+    this.memberDao = new MySQLMemberDao(ds);
+    this.boardDao = new MySQLBoardDao(ds, 1);
+    this.readingDao = new MySQLBoardDao(ds, 2);
 
     prepareMenu();
   }
 
-  public void close() throws Exception {
-    con.close();
-  }
+  public void close() throws Exception {}
 
   public static void main(String[] args) throws Exception {
 
@@ -92,7 +85,7 @@ public class GymServerApp {
       InetSocketAddress clientAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
       System.out.printf("%s 클라이언트 접속함!\n", clientAddress.getHostString());
 
-      out.writeUTF("[나의 목록 관리 시스템]\n" + "-----------------------------------------");
+      out.writeUTF("[Bitcamp Gym]\n" + "-----------------------------------------");
 
       new LoginListener(memberDao).service(prompt);
 
@@ -102,6 +95,8 @@ public class GymServerApp {
     } catch (Exception e) {
       System.out.println("클라이언트 통신 오류!");
       e.printStackTrace();
+    } finally {
+      ds.clean();
     }
   }
 
@@ -117,7 +112,7 @@ public class GymServerApp {
     mainMenu.add(memberMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시글");
-    boardMenu.add(new Menu("등록", new GymBoardAddListener(boardDao)));
+    boardMenu.add(new Menu("등록", new GymBoardAddListener(boardDao, ds)));
     boardMenu.add(new Menu("목록", new GymBoardListListener(boardDao)));
     boardMenu.add(new Menu("조회", new GymBoardDetailListener(boardDao)));
     boardMenu.add(new Menu("변경", new GymBoardUpdateListener(boardDao)));
@@ -125,7 +120,7 @@ public class GymServerApp {
     mainMenu.add(boardMenu);
 
     MenuGroup readingMenu = new MenuGroup("운동일지");
-    readingMenu.add(new Menu("등록", new GymBoardAddListener(readingDao)));
+    readingMenu.add(new Menu("등록", new GymBoardAddListener(readingDao, ds)));
     readingMenu.add(new Menu("목록", new GymBoardListListener(readingDao)));
     readingMenu.add(new Menu("조회", new GymBoardDetailListener(readingDao)));
     readingMenu.add(new Menu("변경", new GymBoardUpdateListener(readingDao)));
