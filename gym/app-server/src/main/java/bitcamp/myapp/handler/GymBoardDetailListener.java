@@ -5,13 +5,16 @@ import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.DataSource;
 
 public class GymBoardDetailListener implements ActionListener {
 
+  DataSource ds;
   BoardDao boardDao;
 
-  public GymBoardDetailListener(BoardDao boardDao) {
+  public GymBoardDetailListener(BoardDao boardDao, DataSource ds) {
     this.boardDao = boardDao;
+    this.ds = ds;
   }
 
   public void service(BreadcrumbPrompt prompt) throws IOException {
@@ -29,6 +32,16 @@ public class GymBoardDetailListener implements ActionListener {
     prompt.printf("조회수: %s\n", board.getViewCount());
     prompt.printf("등록일: %tY-%1$tm-%1$td\n", board.getCreatedDate());
     board.setViewCount(board.getViewCount() + 1);
-    boardDao.update(board);
+
+    try {
+      boardDao.update(board);
+      ds.getConnection().commit();
+    } catch (Exception e) {
+      try {
+        ds.getConnection().rollback();
+      } catch (Exception e2) {
+      }
+      throw new RuntimeException(e);
+    }
   }
 }

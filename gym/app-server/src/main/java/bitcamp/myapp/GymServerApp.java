@@ -103,28 +103,28 @@ public class GymServerApp {
   private void prepareMenu() {
 
     MenuGroup memberMenu = new MenuGroup("회원");
-    memberMenu.add(new Menu("등록", new GymMemberAddListener(memberDao)));
+    memberMenu.add(new Menu("등록", new GymMemberAddListener(memberDao, ds)));
     memberMenu.add(new Menu("목록", new GymMemberListListener(memberDao)));
     memberMenu.add(new Menu("조회", new GymMemberDetailListener(memberDao)));
-    memberMenu.add(new Menu("변경", new GymMemberUpdateListener(memberDao)));
+    memberMenu.add(new Menu("변경", new GymMemberUpdateListener(memberDao, ds)));
     memberMenu.add(new Menu("기간 조회", new GymMemberDateListener(memberDao)));
-    memberMenu.add(new Menu("삭제", new GymMemberDeleteListener(memberDao)));
+    memberMenu.add(new Menu("삭제", new GymMemberDeleteListener(memberDao, ds)));
     mainMenu.add(memberMenu);
 
     MenuGroup boardMenu = new MenuGroup("게시글");
     boardMenu.add(new Menu("등록", new GymBoardAddListener(boardDao, ds)));
     boardMenu.add(new Menu("목록", new GymBoardListListener(boardDao)));
-    boardMenu.add(new Menu("조회", new GymBoardDetailListener(boardDao)));
-    boardMenu.add(new Menu("변경", new GymBoardUpdateListener(boardDao)));
-    boardMenu.add(new Menu("삭제", new GymBoardDeleteListener(boardDao)));
+    boardMenu.add(new Menu("조회", new GymBoardDetailListener(boardDao, ds)));
+    boardMenu.add(new Menu("변경", new GymBoardUpdateListener(boardDao, ds)));
+    boardMenu.add(new Menu("삭제", new GymBoardDeleteListener(boardDao, ds)));
     mainMenu.add(boardMenu);
 
     MenuGroup readingMenu = new MenuGroup("운동일지");
     readingMenu.add(new Menu("등록", new GymBoardAddListener(readingDao, ds)));
     readingMenu.add(new Menu("목록", new GymBoardListListener(readingDao)));
-    readingMenu.add(new Menu("조회", new GymBoardDetailListener(readingDao)));
-    readingMenu.add(new Menu("변경", new GymBoardUpdateListener(readingDao)));
-    readingMenu.add(new Menu("삭제", new GymBoardDeleteListener(readingDao)));
+    readingMenu.add(new Menu("조회", new GymBoardDetailListener(readingDao, ds)));
+    readingMenu.add(new Menu("변경", new GymBoardUpdateListener(readingDao, ds)));
+    readingMenu.add(new Menu("삭제", new GymBoardDeleteListener(readingDao, ds)));
     mainMenu.add(readingMenu);
 
   }

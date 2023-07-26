@@ -6,13 +6,16 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.DataSource;
 
 public class GymBoardUpdateListener implements ActionListener {
 
+  DataSource ds;
   BoardDao boardDao;
 
-  public GymBoardUpdateListener(BoardDao boardDao) {
+  public GymBoardUpdateListener(BoardDao boardDao, DataSource ds) {
     this.boardDao = boardDao;
+    this.ds = ds;
   }
 
   public void service(BreadcrumbPrompt prompt) throws IOException {
@@ -27,11 +30,20 @@ public class GymBoardUpdateListener implements ActionListener {
     board.setContent(prompt.inputString("내용(%s)? ", board.getContent()));
     board.setWriter((Member) prompt.getAttribute("loginUser"));
 
-    if (boardDao.update(board) == 0) {
-      prompt.println("게시글 변경 권한이 없습니다.");
-    } else {
-      prompt.println("변경했습니다!");
-    }
+    try {
+      if (boardDao.update(board) == 0) {
+        prompt.println("게시글 변경 권한이 없습니다.");
+      } else {
+        prompt.println("변경했습니다!");
+      }
+      ds.getConnection().commit();
 
+    } catch (Exception e) {
+      try {
+        ds.getConnection().rollback();
+      } catch (Exception e2) {
+      }
+      throw new RuntimeException(e);
+    }
   }
 }

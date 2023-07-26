@@ -4,13 +4,16 @@ import java.io.IOException;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.DataSource;
 
 public class GymMemberUpdateListener implements MemberActionListener {
 
+  DataSource ds;
   MemberDao memberDao;
 
-  public GymMemberUpdateListener(MemberDao memberDao) {
+  public GymMemberUpdateListener(MemberDao memberDao, DataSource ds) {
     this.memberDao = memberDao;
+    this.ds = ds;
   }
 
   public void service(BreadcrumbPrompt prompt) throws IOException {
@@ -27,6 +30,16 @@ public class GymMemberUpdateListener implements MemberActionListener {
     m.setPhoneNumber(prompt.inputString("핸드폰번호(%s) ", m.getPhoneNumber()));
     m.setPassword(prompt.inputString("새암호? "));
     m.setPer(MemberActionListener.inputPer(m.getPer(), prompt));
-    memberDao.update(m);
+
+    try {
+      memberDao.update(m);
+      ds.getConnection().commit();
+    } catch (Exception e) {
+      try {
+        ds.getConnection().rollback();
+      } catch (Exception e2) {
+      }
+      throw new RuntimeException(e);
+    }
   }
 }
