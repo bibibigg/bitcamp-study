@@ -1,19 +1,21 @@
-package bitcamp.dao;
+package bitcamp.myapp.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
-import bitcamp.myapp.dao.MemberDao;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.DataSource;
 
 public class MySQLMemberDao implements MemberDao {
 
+  SqlSessionFactory sqlSesstionFactory;
   DataSource ds;
 
-  public MySQLMemberDao(DataSource ds) {
+  public MySQLMemberDao(SqlSessionFactory sqlSesstionFactory, DataSource ds) {
     this.ds = ds;
+    this.sqlSesstionFactory = sqlSesstionFactory;
   }
 
   @Override
@@ -35,29 +37,9 @@ public class MySQLMemberDao implements MemberDao {
   }
 
   @Override
-  public List<Member> list() {
-    try (
-        PreparedStatement stmt = ds.getConnection(false).prepareStatement(
-            "select member_no, name, email, gender" + " from myapp_member" + " order by name asc");
-        ResultSet rs = stmt.executeQuery()) {
-
-      List<Member> list = new ArrayList<>();
-
-      while (rs.next()) {
-        Member m = new Member();
-        m.setNo(rs.getInt("member_no"));
-        m.setName(rs.getString("name"));
-        m.setEmail(rs.getString("email"));
-        m.setGender(rs.getString("gender").charAt(0));
-
-        list.add(m);
-      }
-
-      return list;
-
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+  public List<Member> findAll() {
+    SqlSession sqlSession = sqlSesstionFactory.openSession(true);
+    return sqlSession.selectList("bitcamp.myapp.dao.MemberDao.findAll");
   }
 
   @Override
