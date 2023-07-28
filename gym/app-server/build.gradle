@@ -16,6 +16,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     implementation 'com.google.guava:guava:31.1-jre'
+    //Mybatis 라이브러리
+
+implementation 'org.mybatis:mybatis:3.5.13'
 }
 
 java {

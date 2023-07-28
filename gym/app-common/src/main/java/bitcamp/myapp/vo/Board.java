@@ -15,7 +15,7 @@ public class Board implements Serializable {
   private String password;
   private int viewCount;
   private Timestamp createdDate;
-  private int categoty;
+  private int category;
 
   @Override
   public int hashCode() {
@@ -90,12 +90,12 @@ public class Board implements Serializable {
     this.createdDate = createdDate;
   }
 
-  public int getCategoty() {
-    return categoty;
+  public int getCategory() {
+    return category;
   }
 
-  public void setCategoty(int categoty) {
-    this.categoty = categoty;
+  public void setCategory(int categoty) {
+    this.category = categoty;
   }
 
 }

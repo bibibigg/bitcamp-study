@@ -8,6 +8,7 @@ import bitcamp.util.BreadcrumbPrompt;
 
 public class MemberDetailListener implements ActionListener {
 
+
   MemberDao memberDao;
 
   public MemberDetailListener(MemberDao memberDao) {
