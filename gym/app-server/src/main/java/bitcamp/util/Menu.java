@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 public class Menu {
 
+  private String path;
   private String title;
   private ArrayList<ActionListener> listeners = new ArrayList<>();
 
-  public Menu(String title) {
+  public Menu(String path, String title) {
+    this.path = path;
     this.title = title;
   }
 
-  public Menu(String title, ActionListener listener) {
-    this(title);
+  public Menu(String path, String title, ActionListener listener) {
+    this(path, title);
     this.addActionListener(listener);
   }
 
@@ -30,6 +32,8 @@ public class Menu {
 
   public void execute(BreadcrumbPrompt prompt) {
     try {
+      prompt.setAttribute("menuPath", this.path);
+
       for (int i = 0; i < listeners.size(); i++) {
         ActionListener listener = listeners.get(i);
         listener.service(prompt);
@@ -37,6 +41,7 @@ public class Menu {
     } catch (Exception e) {
       prompt.clear();
       prompt.println(e.getMessage());
+
     } finally {
       try {
         prompt.end();

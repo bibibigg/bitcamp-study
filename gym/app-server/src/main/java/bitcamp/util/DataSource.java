@@ -55,6 +55,8 @@ public class DataSource {
     Connection con = connectionBox.get();
 
     if (con != null) {
+      try {con.rollback();} catch (Exception e) {}
+      
       connectionPool.add(con);
       System.out.printf("[%s] - 커넥션풀에 DB 커넥션 저장!\n", Thread.currentThread().getName());
 

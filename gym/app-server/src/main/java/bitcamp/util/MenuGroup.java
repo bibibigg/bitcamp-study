@@ -6,13 +6,17 @@ public class MenuGroup extends Menu {
 
   ArrayList<Menu> childs;
 
-  public MenuGroup(String title) {
-    super(title);
+  public MenuGroup(String path, String title) {
+    super(path, title);
     this.childs = new ArrayList<>();
   }
 
   public void add(Menu menu) {
     this.childs.add(menu);
+  }
+
+  public void add(String menuPath, String title, ActionListener listener) {
+    this.childs.add(new Menu(menuPath, title, listener));
   }
 
   @Override
@@ -32,6 +36,7 @@ public class MenuGroup extends Menu {
           int menuNo = Integer.parseInt(input);
           if (menuNo < 0 || menuNo > childs.size()) {
             prompt.println("메뉴 번호가 옳지 않습니다!");
+            prompt.end();
           } else if (menuNo == 0) {
             prompt.removeBreadcrumb();
             return;

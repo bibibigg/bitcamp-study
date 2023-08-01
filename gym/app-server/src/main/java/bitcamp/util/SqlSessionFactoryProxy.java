@@ -15,10 +15,6 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
     this.original = original;
   }
 
-  public SqlSession openSession() {
-    return original.openSession();
-  }
-
   public void clean() {
     SqlSession sqlSession = sqlSessionBox.get();
     if (sqlSession != null) {
@@ -27,15 +23,22 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
     }
   }
 
+  public SqlSession openSession() {
+    return original.openSession();
+  }
+
   public SqlSession openSession(boolean autoCommit) {
     if (!autoCommit) {
       SqlSession sqlSession = sqlSessionBox.get();
+
       if (sqlSession == null) {
         sqlSession = original.openSession(false);
         sqlSessionBox.set(sqlSession);
       }
+
       return sqlSession;
     }
+
     return original.openSession(autoCommit);
   }
 

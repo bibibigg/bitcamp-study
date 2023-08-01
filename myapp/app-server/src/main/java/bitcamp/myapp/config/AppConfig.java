@@ -18,5 +18,4 @@ public class AppConfig {
     return new SqlSessionFactoryProxy(new SqlSessionFactoryBuilder()
         .build(Resources.getResourceAsStream("bitcamp/myapp/config/mybatis-config.xml")));
   }
-
 }
