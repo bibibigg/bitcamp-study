@@ -5,7 +5,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.Component;
 
+@Component("/member/delete")
 public class GymMemberDeleteListener implements ActionListener {
 
   SqlSessionFactory sqlSessionFactory;

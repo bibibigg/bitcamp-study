@@ -7,14 +7,14 @@ import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.Component;
 
+@Component("/board/list")
 public class GymBoardListListener implements ActionListener {
-  int category;
   BoardDao boardDao;
   SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-  public GymBoardListListener(int category, BoardDao boardDao) {
-    this.category = category;
+  public GymBoardListListener(BoardDao boardDao) {
     this.boardDao = boardDao;
   }
 
@@ -23,6 +23,7 @@ public class GymBoardListListener implements ActionListener {
     prompt.println("번호, 제목, 작성자, 조회수, 등록일");
     prompt.println("---------------------------------------");
 
+    int category = Integer.parseInt((String) prompt.getAttribute("category"));
     List<Board> list = boardDao.findAll(category);
 
     for (Board board : list) {

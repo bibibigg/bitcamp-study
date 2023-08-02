@@ -7,16 +7,15 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.Component;
 
+@Component("/board/update")
 public class GymBoardUpdateListener implements ActionListener {
 
-  int category;
   BoardDao boardDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public GymBoardUpdateListener(int category, BoardDao boardDao,
-      SqlSessionFactory sqlSessionFactory) {
-    this.category = category;
+  public GymBoardUpdateListener(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
     this.boardDao = boardDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }
@@ -24,7 +23,8 @@ public class GymBoardUpdateListener implements ActionListener {
   public void service(BreadcrumbPrompt prompt) throws IOException {
     int boardNo = prompt.inputInt("번호? ");
 
-    Board board = boardDao.findBy(category, boardNo);
+    Board board =
+        boardDao.findBy(Integer.parseInt((String) prompt.getAttribute("category")), boardNo);
     if (board == null) {
       prompt.println("해당 번호의 게시글이 없습니다!");
       return;

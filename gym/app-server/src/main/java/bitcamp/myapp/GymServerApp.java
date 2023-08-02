@@ -7,7 +7,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.apache.ibatis.session.SqlSessionFactory;
+import bitcamp.myapp.config.AppConfig;
 import bitcamp.myapp.net.NetProtocol;
+import bitcamp.util.ApplicationContext;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.DispatcherListener;
 import bitcamp.util.MenuGroup;
@@ -18,25 +21,27 @@ public class GymServerApp {
   ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
   MenuGroup mainMenu = new MenuGroup("/", "메인");
-  DispatcherListener facadeListener = new DispatcherListener();
+  ApplicationContext iocContainer;
+  DispatcherListener facadeListener;
 
   int port;
 
   public GymServerApp(int port) throws Exception {
     this.port = port;
+    iocContainer = new ApplicationContext(AppConfig.class);
+    facadeListener = new DispatcherListener(iocContainer);
     prepareMenu();
   }
 
   public void close() throws Exception {}
 
   public static void main(String[] args) throws Exception {
-
     GymServerApp app = new GymServerApp(8888);
-    app.excute();
+    app.execute();
     app.close();
   }
 
-  public void excute() {
+  public void execute() {
     try (ServerSocket serverSocket = new ServerSocket(this.port)) {
       System.out.println("서버 실행중...");
 
@@ -62,9 +67,8 @@ public class GymServerApp {
 
       out.writeUTF("[Bitcamp Gym]\n" + "-----------------------------------------");
 
-      prompt.setAttribute("menuPath", "login");
+      prompt.setAttribute("menuPath", "/auth/login");
       facadeListener.service(prompt);
-
       mainMenu.execute(prompt);
       out.writeUTF(NetProtocol.NET_END);
 
@@ -73,36 +77,36 @@ public class GymServerApp {
       e.printStackTrace();
     } finally {
       SqlSessionFactoryProxy sqlSessionFactoryProxy =
-          (SqlSessionFactoryProxy) facadeListener.getBean("sqlSessionFactory");
+          (SqlSessionFactoryProxy) iocContainer.getBean(SqlSessionFactory.class);
       sqlSessionFactoryProxy.clean();
     }
   }
 
   private void prepareMenu() {
 
-    MenuGroup memberMenu = new MenuGroup("member", "회원");
-    memberMenu.add("member/add", "등록", facadeListener);
-    memberMenu.add("member/list", "목록", facadeListener);
-    memberMenu.add("member/detail", "조회", facadeListener);
-    memberMenu.add("member/update", "변경", facadeListener);
-    memberMenu.add("member/date", "기간조회", facadeListener);
-    memberMenu.add("member/delete", "삭제", facadeListener);
+    MenuGroup memberMenu = new MenuGroup("/member", "회원");
+    memberMenu.add("/member/add", "등록", facadeListener);
+    memberMenu.add("/member/list", "목록", facadeListener);
+    memberMenu.add("/member/detail", "조회", facadeListener);
+    memberMenu.add("/member/update", "변경", facadeListener);
+    memberMenu.add("/member/date", "기간조회", facadeListener);
+    memberMenu.add("/member/delete", "삭제", facadeListener);
     mainMenu.add(memberMenu);
 
-    MenuGroup boardMenu = new MenuGroup("board", "게시글");
-    boardMenu.add("board/add", "등록", facadeListener);
-    boardMenu.add("board/list", "목록", facadeListener);
-    boardMenu.add("board/detail", "조회", facadeListener);
-    boardMenu.add("board/update", "변경", facadeListener);
-    boardMenu.add("board/delete", "삭제", facadeListener);
+    MenuGroup boardMenu = new MenuGroup("/board", "게시글");
+    boardMenu.add("/board/add?category=1", "등록", facadeListener);
+    boardMenu.add("/board/list?category=1", "목록", facadeListener);
+    boardMenu.add("/board/detail?category=1", "조회", facadeListener);
+    boardMenu.add("/board/update?category=1", "변경", facadeListener);
+    boardMenu.add("/board/delete?category=1", "삭제", facadeListener);
     mainMenu.add(boardMenu);
 
-    MenuGroup readingMenu = new MenuGroup("reading", "운동일지");
-    readingMenu.add("reading/add", "등록", facadeListener);
-    readingMenu.add("reading/list", "목록", facadeListener);
-    readingMenu.add("reading/detail", "조회", facadeListener);
-    readingMenu.add("reading/update", "변경", facadeListener);
-    readingMenu.add("reading/delete", "삭제", facadeListener);
+    MenuGroup readingMenu = new MenuGroup("/reading", "운동일지");
+    readingMenu.add("/board/add?category=2", "등록", facadeListener);
+    readingMenu.add("/board/list?category=2", "목록", facadeListener);
+    readingMenu.add("/board/detail?category=2", "조회", facadeListener);
+    readingMenu.add("/board/update?category=2", "변경", facadeListener);
+    readingMenu.add("/board/delete?category=2", "삭제", facadeListener);
     mainMenu.add(readingMenu);
 
   }

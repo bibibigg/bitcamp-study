@@ -23,10 +23,10 @@ public class GymClientApp {
     }
 
     GymClientApp app = new GymClientApp(args[0], Integer.parseInt(args[1]));
-    app.excute();
+    app.execute();
   }
 
-  public void excute() {
+  public void execute() {
     try (Scanner keyscan = new Scanner(System.in);
         Socket socket = new Socket(this.ip, this.port);
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());

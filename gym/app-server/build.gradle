@@ -18,6 +18,10 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-jre'
     //Mybatis 라이브러리
 
+    implementation platform('io.projectreactor:reactor-bom:2022.0.9') 
+    implementation 'io.projectreactor.netty:reactor-netty-core' 
+    implementation 'io.projectreactor.netty:reactor-netty-http'
+
 implementation 'org.mybatis:mybatis:3.5.13'
 }
 

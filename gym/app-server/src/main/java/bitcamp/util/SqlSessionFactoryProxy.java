@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
 public class SqlSessionFactoryProxy implements SqlSessionFactory {
+
   SqlSessionFactory original;
   ThreadLocal<SqlSession> sqlSessionBox = new ThreadLocal<>();
 

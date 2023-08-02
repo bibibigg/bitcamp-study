@@ -32,7 +32,17 @@ public class Menu {
 
   public void execute(BreadcrumbPrompt prompt) {
     try {
-      prompt.setAttribute("menuPath", this.path);
+      String[] values = this.path.split("[?]");
+      prompt.setAttribute("menuPath", values[0]);
+
+      if (values.length > 1) {
+        String[] params = values[1].split("&");
+
+        for (String param : params) {
+          String[] kv = param.split("=");
+          prompt.setAttribute(kv[0], kv[1]);
+        }
+      }
 
       for (int i = 0; i < listeners.size(); i++) {
         ActionListener listener = listeners.get(i);
