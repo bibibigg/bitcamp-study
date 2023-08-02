@@ -31,13 +31,13 @@ public class MySQLBoardDao implements BoardDao {
 
   @Override
   public List<Board> findAll(int category) {
-    SqlSession sqlSession = sqlSesstionFactory.openSession(true);
+    SqlSession sqlSession = sqlSesstionFactory.openSession(false);
     return sqlSession.selectList("bitcamp.myapp.dao.BoardDao.findAll", category);
   }
 
   @Override
   public Board findBy(int category, int no) {
-    SqlSession sqlSession = sqlSesstionFactory.openSession(true);
+    SqlSession sqlSession = sqlSesstionFactory.openSession(false);
 
     Map<String, Object> paramMap = new HashMap<>();
     paramMap.put("categoryNo", category);

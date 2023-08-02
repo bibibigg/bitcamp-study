@@ -1,14 +1,16 @@
 package bitcamp.myapp.handler;
 
-import java.io.IOException;
+import java.io.PrintWriter;
 import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Component;
+import bitcamp.util.HttpServletRequest;
+import bitcamp.util.HttpServletResponse;
+import bitcamp.util.Servlet;
 
 @Component("/member/update")
-public class MemberUpdateListener implements MemberActionListener {
+public class MemberUpdateListener implements Servlet {
 
   MemberDao memberDao;
   SqlSessionFactory sqlSessionFactory;
@@ -19,28 +21,41 @@ public class MemberUpdateListener implements MemberActionListener {
   }
 
   @Override
-  public void service(BreadcrumbPrompt prompt) throws IOException {
-    int memberNo = prompt.inputInt("번호? ");
+  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    Member m = memberDao.findBy(memberNo);
-    if (m == null) {
-      prompt.println("해당 번호의 회원이 없습니다!");
-      return;
-    }
+    Member m = new Member();
+    m.setNo(Integer.parseInt(request.getParameter("no")));
+    m.setName(request.getParameter("name"));
+    m.setEmail(request.getParameter("email"));
+    m.setPassword(request.getParameter("password"));
+    m.setGender(request.getParameter("gender").charAt(0));
 
-    m.setName(prompt.inputString("이름(%s)? ", m.getName()));
-    m.setEmail(prompt.inputString("이메일(%s)? ", m.getEmail()));
-    m.setPassword(prompt.inputString("새암호? "));
-    m.setGender(MemberActionListener.inputGender(m.getGender(), prompt));
+    response.setContentType("text/html;charset=UTF-8");
+    PrintWriter out = response.getWriter();
+    out.println("<!DOCTYPE html>");
+    out.println("<html>");
+    out.println("<head>");
+    out.println("<meta charset='UTF-8'>");
+    out.println("<meta http-equiv='refresh' content='1;url=/member/list'>");
+    out.println("<title>회원</title>");
+    out.println("</head>");
+    out.println("<body>");
+    out.println("<h1>회원 변경</h1>");
 
     try {
-      memberDao.update(m);
-      sqlSessionFactory.openSession(false).commit();
-
+      if (memberDao.update(m) == 0) {
+        out.println("<p>회원이 없습니다.</p>");
+      } else {
+        sqlSessionFactory.openSession(false).commit();
+        out.println("<p>변경했습니다!</p>");
+      }
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
-      throw new RuntimeException(e);
+      out.println("<p>변경 실패입니다!</p>");
+      e.printStackTrace();
     }
+    out.println("</body>");
+    out.println("</html>");
   }
 
 }

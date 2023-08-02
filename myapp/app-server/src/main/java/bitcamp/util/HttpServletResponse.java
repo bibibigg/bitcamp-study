@@ -30,6 +30,7 @@ import reactor.netty.http.websocket.WebsocketInbound;
 import reactor.netty.http.websocket.WebsocketOutbound;
 
 public class HttpServletResponse {
+
   HttpServerResponse original;
 
   // 서블릿이 클라이언트에게 응답할 때 사용할 출력 스트림 도구
@@ -38,7 +39,6 @@ public class HttpServletResponse {
 
   // 응답 콘텐트의 타입
   String contentType = "text/plain;charset=ISO-8859-1";
-
 
   public HttpServletResponse(HttpServerResponse original) {
     this.original = original;
@@ -60,6 +60,7 @@ public class HttpServletResponse {
       // 출력 스트림을 사용한 상태라면 콘텐트 설정을 무시한다.
       return;
     }
+
     this.contentType = contentType;
   }
 

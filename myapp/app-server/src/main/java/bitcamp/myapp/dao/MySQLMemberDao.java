@@ -23,18 +23,18 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public List<Member> findAll() {
-    SqlSession sqlSession = sqlSesstionFactory.openSession();
+    SqlSession sqlSession = sqlSesstionFactory.openSession(false);
     return sqlSession.selectList("bitcamp.myapp.dao.MemberDao.findAll");
   }
 
   @Override
   public Member findBy(int no) {
-    SqlSession sqlSession = sqlSesstionFactory.openSession();
+    SqlSession sqlSession = sqlSesstionFactory.openSession(false);
     return sqlSession.selectOne("bitcamp.myapp.dao.MemberDao.findBy", no);
   }
 
   public Member findByEmailAndPassword(Member member) {
-    SqlSession sqlSession = sqlSesstionFactory.openSession();
+    SqlSession sqlSession = sqlSesstionFactory.openSession(false);
     return sqlSession.selectOne("bitcamp.myapp.dao.MemberDao.findByEmailAndPassword", member);
   }
 
