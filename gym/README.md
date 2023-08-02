@@ -331,14 +331,21 @@
 ## 51. DB 커넥션 풀을 이용한 Connection 재사용하기
 
 - 여러 스레드에서 DB 커넥션 객체를 공유할 때의 문제점 이해
-- ThreadLocal을 이용하여 스레드 전용 변수를 만드는 방법
-- 풀링 기법을 이용하여 커넥션 재사용하는 방법
+- ThreadLocal을 이용하여 스레드 전용 객체를 보관하고 꺼내는 방법
+- 풀링 기법을 이용하여 DB 커넥션을 재사용하는 방법
 
 ## 52. Mybatis SQL-mapper 프레임워크 사용하기
 
 - mybatis 프레임워크의 구동 원리 및 사용법
+- GoF의 Proxy 패턴을 이용하여 SqlSessionFactory 객체의 기능을 변경하는 방법
 
-## 53. IoC 컨테이너 적용하기
+## 53. 리스너 실행에 Facade 패턴 적용하기
+
+- GoF의 Facade 패턴의 동작원리 이해와 적용하는 방법
+- ActionListener 실행에 Facade 객체를 사용
+
+## 54. IoC 컨테이너 적용하기
 
 - IoC 컨테이너의 구동 원리와 구현
 - 리스너 객체를 IoC 컨테이너로 관리하기
+

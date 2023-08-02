@@ -29,27 +29,27 @@
 
 - if ~ else ~ 조건문 활용
 - switch 활용
-- break 활용
+- break 활용 
 - while 활용
 
 ## 7. 기능 단위로 명령문 묶기 : 메서드 사용법
 
-- static 메서드를 정의하고 호출하는 방법
+- static 메서드를 정의하고 호출하는 방법 
 
-## 8. 메서드 간의 변수 공유하기 : 스태틱 변수 사용법
+## 8. 메서드 간에 변수 공유하기 : 스태틱 변수 사용법
 
 - static 변수를 정의하고 사용하는 방법
 - 리팩토링
-  - 사용자에게서 입력 받는 부분을 메서드로 분리하여 정의(method 문법 활용)
-  - 남, 녀 식별 값을 상수로 정의(fianl 문법 활용)
+  - 사용자에게서 입력 받는 기능을 메서드로 분리하여 정의(메서드 문법 활용)
+  - 남, 녀 식별 값을 상수로 선언(final 문법 활용)
 
 ## 9. 메서드를 역할에 따라 분류하기 : 클래스 및 패키지 사용법
 
- - 클래스 및 패키지 사용법 (스태틱 클래스)
- - import 명령문 사용법
- - public 접근 제어 사용법
- - 스태틱 변수가 생성되고 제거되는 시점, 메모리 영역
-
+- 클래스 및 패키지 사용법(스태틱 클래스)
+- import 명령문 사용법
+- public 접근 제어 사용법
+- 스태틱 변수가 생성되고 제거되는 시점, 메모리 영역
+ 
 ## 10. 메뉴 구성 및 CRUD 구현
 
 - 회원정보를 다루는 메뉴 구성하기
@@ -64,21 +64,21 @@
 
 ## 12. 생성자, 셋터, 겟터 도입하기
 
-- 인스턴스 필드를 초기화시키는 방법 : 생성자
-- 인스턴스 필드에 직접 접근하는 것을 막는 방법 : private
-- 인스턴스 필드에 값을 저장하고 꺼내는 방법 : stetter/getter
+- 인스턴스 필드를 초기화시키는 방법: 생성자
+- 인스턴스 필드에 직접 접근하는 것을 막는 방법: private
+- 인스턴스 필드에 값을 저장하고 꺼내는 방법: setter/getter
 - 스태틱 필드 및 생성자 활용
-- 스태틱 상수 필드 활용 + GRASP 패턴의 Information Expert
+- 스태틱 상수 필드 활용 + GRASP 패턴의 Information Expert 
 
 ## 13. 복사/붙여넣기를 이용한 CRUD 구현
 
 - 게시글 CRUD 기능 추가
-- value object, Handler 클래스 추가
+- Value Object, Handler 클래스 추가
 - Prompt 클래스 리팩토링
 
 ## 14. 스태틱 필드의 한계 확인
 
-- BoardHandler 클래스틀 복제하여 독서록 게시판 추가
+- BoardHandler 클래스를 복제하여 독서록 게시판 추가
 - 클래스 코드 복제의 문제점 확인
 
 ## 15. 인스턴스 필드와 인스턴스 메서드, 생성자와 의존 객체 주입
@@ -180,7 +180,7 @@
 
 - 목록을 다루는 기존 클래스를 자바 컬렉션 API 로 교체
 
-## 27. file I/O API를 이용하여 데이터를 바이너리 형식으로 입출력하기
+## 27. File I/O API를 이용하여 데이터를 바이너리 형식으로 입출력하기
 
 - FileInputStream/FileOutputStream 사용법
 - 바이너리 형식으로 데이터를 입출력하는 방법
@@ -191,7 +191,7 @@
   - DataInputStream = FileInputStream 클래스 + primitive type/String 값 읽기
   - DataOutputStream = FileOutputStream 클래스 + primitive type/String 값 쓰기
 
-## 29. 입출력에 성능을 높이기 위해 버퍼 기능 추가하기
+## 29. 입출력 성능을 높이기 위해 버퍼 기능 추가하기
 
 - 기존의 클래스에 버퍼 기능을 추가한다.
   - BufferedDataInputStream = DataInputStream + 버퍼 기능
@@ -203,17 +203,17 @@
   - 기존 코드를 손대지 않고 기능 확장하는 방법
   - 상속: 기능 확장 용이
   - Decorator: 기능 확장 및 기능 제거 용이
-- BufferdDataInputStream 분해
-  - BufferdInputStream, DataInputStream, FileInputStream
-- BufferdDataOutputStream 분해
-  - BufferdOutputStream, DataOutputStream, FileOutputStream
+- BufferedDataInputStream 분해
+  - BufferedInputStream, DataInputStream, FileInputStream
+- BufferedDataOutputStream 분해
+  - BufferedOutputStream, DataOutputStream, FileOutputStream
 
-  ## 31. Java Stream API 로 교체하기
+## 31. Java Stream API 로 교체하기
 
 - 입출력 관련 클래스를 자바 스트림 클래스로 교체
   - java.io.* 패키지의 클래스 사용
-  
-  ## 32. 인스턴스를 통째로 입출력하기(객체 직렬화)
+
+## 32. 인스턴스를 통째로 입출력하기(객체 직렬화)
 
 - ObjectInputStream/ObjectOutputStream 사용법
   - java.io.Serializable 인터페이스 사용법
@@ -238,11 +238,10 @@
 - JSON 형식으로 데이터를 읽고 쓰는 법
 - Gson 라이브러리 사용법
 
-## 37. 네트워킹을 이용하여 데이터 공유하기 : Client/Server 아키텍처로 전환
+## 36. 데이터의 등록, 조회, 수정, 삭제 기능을 캡슐화하기 : DAO 객체 도입
 
-- 네트워크 프로그래밍 방법
-  - Client와 Server 개념
-  - 프로토콜에 따라 애플리케이션 간에 데이터를 주고 받기
+- XxxListener에서 데이터를 조작하는 코드를 캡슐화하여 별도의 클래스로 분리
+- 인터페이스로 DAO 객체 사용법을 정의
 
 ## 37. 네트워킹을 이용하여 데이터 공유하기 : Client/Server 아키텍처로 전환
 
@@ -332,15 +331,27 @@
 ## 51. DB 커넥션 풀을 이용한 Connection 재사용하기
 
 - 여러 스레드에서 DB 커넥션 객체를 공유할 때의 문제점 이해
-- ThreadLocal을 이용하여 스레드 전용 변수를 만드는 방법
-- 풀링 기법을 이용하여 커넥션 재사용하는 방법
+- ThreadLocal을 이용하여 스레드 전용 객체를 보관하고 꺼내는 방법
+- 풀링 기법을 이용하여 DB 커넥션을 재사용하는 방법
 
 ## 52. Mybatis SQL-mapper 프레임워크 사용하기
 
 - mybatis 프레임워크의 구동 원리 및 사용법
+- GoF의 Proxy 패턴을 이용하여 SqlSessionFactory 객체의 기능을 변경하는 방법
 
-## 53. IoC 컨테이너 적용하기
+## 53. 리스너 실행에 Facade 패턴 적용하기
+
+- GoF의 Facade 패턴의 동작원리 이해와 적용하는 방법
+- ActionListener 실행에 Facade 객체를 사용
+
+## 54. IoC 컨테이너 적용하기
 
 - IoC 컨테이너의 구동 원리와 구현
 - 리스너 객체를 IoC 컨테이너로 관리하기
+
+## 55. 웹 애플리케이션 서버 구조로 전환하기 - 웹 기술 도입
+
+- 웹 기술을 도입하여 애플리케이션 서버 / 클라이언트를 구축하는 방법
+- Netty 라이브러리를 사용하여 웹서버를 구축하는 방법
+- 웹브라우저를 이용하여 클라이언트를 구축하는 방법
 
