@@ -10,11 +10,11 @@ import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
 @Component("/member/list")
-public class MemberListListener implements Servlet {
+public class MemberListServlet implements Servlet {
 
   MemberDao memberDao;
 
-  public MemberListListener(MemberDao memberDao) {
+  public MemberListServlet(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
 

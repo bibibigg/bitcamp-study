@@ -8,12 +8,12 @@ import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
 @Component("/member/delete")
-public class MemberDeleteListener implements Servlet {
+public class MemberDeleteServlet implements Servlet {
 
   MemberDao memberDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public MemberDeleteListener(MemberDao memberDao, SqlSessionFactory sqlSessionFactory) {
+  public MemberDeleteServlet(MemberDao memberDao, SqlSessionFactory sqlSessionFactory) {
     this.memberDao = memberDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }

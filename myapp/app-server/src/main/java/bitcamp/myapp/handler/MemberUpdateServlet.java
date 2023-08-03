@@ -10,12 +10,12 @@ import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
 @Component("/member/update")
-public class MemberUpdateListener implements Servlet {
+public class MemberUpdateServlet implements Servlet {
 
   MemberDao memberDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public MemberUpdateListener(MemberDao memberDao, SqlSessionFactory sqlSessionFactory) {
+  public MemberUpdateServlet(MemberDao memberDao, SqlSessionFactory sqlSessionFactory) {
     this.memberDao = memberDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }

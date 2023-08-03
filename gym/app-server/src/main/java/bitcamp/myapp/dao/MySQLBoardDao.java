@@ -1,4 +1,4 @@
-package bitcamp.dao;
+package bitcamp.myapp.dao;
 
 import java.util.HashMap;
 import java.util.List;

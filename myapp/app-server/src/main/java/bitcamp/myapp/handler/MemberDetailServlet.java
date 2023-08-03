@@ -9,12 +9,12 @@ import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
 @Component("/member/detail")
-public class MemberDetailListener implements Servlet {
+public class MemberDetailServlet implements Servlet {
 
 
   MemberDao memberDao;
 
-  public MemberDetailListener(MemberDao memberDao) {
+  public MemberDetailServlet(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
 

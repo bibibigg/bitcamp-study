@@ -23,7 +23,7 @@ public class GymMemberUpdateListener implements MemberActionListener {
 
     Member m = memberDao.findBy(memberNo);
     if (m == null) {
-      System.out.println("해당 번호의 회원이 없습니다!");
+      prompt.println("해당 번호의 회원이 없습니다!");
       return;
     }
 
@@ -36,6 +36,7 @@ public class GymMemberUpdateListener implements MemberActionListener {
     try {
       memberDao.update(m);
       sqlSessionFactory.openSession(false).commit();
+
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
