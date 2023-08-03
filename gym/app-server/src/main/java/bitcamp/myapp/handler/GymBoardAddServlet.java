@@ -10,13 +10,13 @@ import bitcamp.util.HttpServletRequest;
 import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
-@Component("/board/update")
-public class BoardUpdateServlet implements Servlet {
+@Component("/board/add")
+public class GymBoardAddServlet implements Servlet {
 
   BoardDao boardDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public BoardUpdateServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
+  public GymBoardAddServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
     this.boardDao = boardDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }
@@ -33,7 +33,6 @@ public class BoardUpdateServlet implements Servlet {
     int category = Integer.parseInt(request.getParameter("category"));
 
     Board board = new Board();
-    board.setNo(Integer.parseInt(request.getParameter("no")));
     board.setTitle(request.getParameter("title"));
     board.setContent(request.getParameter("content"));
     board.setWriter(loginUser);
@@ -49,24 +48,19 @@ public class BoardUpdateServlet implements Servlet {
     out.println("<title>게시글</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>게시글 변경</h1>");
-
+    out.println("<h1>게시글 등록</h1>");
     try {
-      if (boardDao.update(board) == 0) {
-        out.println("게시글이 없거나 변경 권한이 없습니다.");
-      } else {
-        out.println("변경했습니다!");
-      }
+      boardDao.insert(board);
       sqlSessionFactory.openSession(false).commit();
+      out.println("<p>등록 성공입니다!</p>");
 
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
-      out.println("게시글 변경 실패입니다!");
+      out.println("<p>등록 실패입니다!</p>");
       e.printStackTrace();
     }
     out.println("</body>");
     out.println("</html>");
+
   }
 }
-
-

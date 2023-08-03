@@ -1,26 +1,28 @@
 package bitcamp.myapp.handler;
 
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Component;
+import bitcamp.util.DateCalc;
 import bitcamp.util.HttpServletRequest;
 import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
 @Component("/member/detail")
-public class MemberDetailServlet implements Servlet {
+public class GymMemberDetailServlet implements Servlet {
 
-
+  DateCalc dateCalc;
   MemberDao memberDao;
 
-  public MemberDetailServlet(MemberDao memberDao) {
+  public GymMemberDetailServlet(MemberDao memberDao, DateCalc dateCalc) {
     this.memberDao = memberDao;
+    this.dateCalc = dateCalc;
   }
 
   @Override
   public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 
     Member m = memberDao.findBy(Integer.parseInt(request.getParameter("no")));
 
@@ -46,15 +48,18 @@ public class MemberDetailServlet implements Servlet {
       out.printf("<tr><th>이름</th>" + " <td><input type='text' name='name' value='%s'></td></tr>\n",
           m.getName());
       out.printf(
-          "<tr><th>이메일</th>" + " <td><input type='email' name='email' value='%s'></td></tr>\n",
-          m.getEmail());
+          "<tr><th>핸드폰번호</th>"
+              + " <td><input type='tel' name='phone_number' value='%s'></td></tr>\n",
+          m.getPhoneNumber());
       out.println("<tr><th>암호</th>" + " <td><input type='password' name='password'></td></tr>");
-      out.println("<tr><th>성별</th><td>");
-      out.printf("<input type='radio' name='gender' value='M' %s>남성",
-          (m.getGender() == 'M' ? "checked" : ""));
-      out.printf("<input type='radio' name='gender' value='F' %s>여성",
-          (m.getGender() == 'F' ? "checked" : ""));
-      out.println("</td></tr>");
+      out.printf(
+          "<tr><th>등록개월</th>\n" + " <td><select name='per'>\n"
+              + " <option value='1' %s>1개월</option>\n" + " <option value='3' %s>3개월</option>\n"
+              + " <option value='6' %s>6개월</option></select></td></tr>\n",
+          (m.getPer() == '1' ? "selected" : ""), (m.getPer() == '3' ? "selected" : ""),
+          (m.getPer() == '6' ? "selected" : ""));
+      out.println("<tr><th>종료일</th><td>" + dateCalc.calculateEndDate(m) + "</td></tr>");
+      out.println("<tr><th>남은 기간</th><td>" + dateCalc.calculateRemainingDays(m) + "일</td></tr>");
       out.println("</table>");
 
       out.println("<div>");
@@ -64,9 +69,16 @@ public class MemberDetailServlet implements Servlet {
       out.println("<a href='/member/list'>목록</a>\n");
       out.println("</div>");
       out.println("</form>");
-
     }
     out.println("</body>");
     out.println("</html>");
+  }
+
+  private void printEndDateAndRemainingDays(Member m, PrintWriter out) {
+    LocalDate endDate = dateCalc.calculateEndDate(m);
+    long remainingDays = dateCalc.calculateRemainingDays(m);
+
+    out.println("<p>종료일: " + endDate + "</p>");
+    out.println("<p>남은 기간: " + remainingDays + "일</p>");
   }
 }

@@ -10,6 +10,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 public class SqlSessionFactoryProxy implements SqlSessionFactory {
 
   SqlSessionFactory original;
+
   ThreadLocal<SqlSession> sqlSessionBox = new ThreadLocal<>();
 
   public SqlSessionFactoryProxy(SqlSessionFactory original) {
@@ -19,28 +20,24 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
   public void clean() {
     SqlSession sqlSession = sqlSessionBox.get();
     if (sqlSession != null) {
+      sqlSession.close();
       sqlSession.rollback();
       sqlSessionBox.remove();
+      System.out.println("스레드에서 SqlSession 제거!");
     }
   }
 
   public SqlSession openSession() {
-    return original.openSession();
+    return openSession(true);
   }
 
   public SqlSession openSession(boolean autoCommit) {
-    if (!autoCommit) {
-      SqlSession sqlSession = sqlSessionBox.get();
-
-      if (sqlSession == null) {
-        sqlSession = original.openSession(false);
-        sqlSessionBox.set(sqlSession);
-      }
-
-      return sqlSession;
+    SqlSession sqlSession = sqlSessionBox.get();
+    if (sqlSession == null) {
+      sqlSession = original.openSession(autoCommit);
+      sqlSessionBox.set(sqlSession);
     }
-
-    return original.openSession(autoCommit);
+    return sqlSession;
   }
 
   public SqlSession openSession(Connection connection) {
@@ -70,5 +67,4 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
   public Configuration getConfiguration() {
     return original.getConfiguration();
   }
-
 }

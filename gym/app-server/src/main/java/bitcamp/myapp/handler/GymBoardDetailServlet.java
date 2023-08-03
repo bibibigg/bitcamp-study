@@ -10,19 +10,18 @@ import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
 @Component("/board/detail")
-public class BoardDetailServlet implements Servlet {
+public class GymBoardDetailServlet implements Servlet {
 
   BoardDao boardDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public BoardDetailServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
+  public GymBoardDetailServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
     this.boardDao = boardDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
     Board board = boardDao.findBy(Integer.parseInt(request.getParameter("category")),
         Integer.parseInt(request.getParameter("no")));
 
@@ -77,7 +76,6 @@ public class BoardDetailServlet implements Servlet {
 
     out.println("</body>");
     out.println("</html>");
-
   }
 }
 

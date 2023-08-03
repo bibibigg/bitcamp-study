@@ -25,6 +25,7 @@ import reactor.netty.http.server.HttpServerResponse;
 public class ServerApp {
 
   public static final String MYAPP_SESSION_ID = "myapp_session_id";
+
   ApplicationContext iocContainer;
   DispatcherServlet dispatcherServlet;
   Map<String, HttpSession> sessionMap = new HashMap<>();
@@ -57,6 +58,7 @@ public class ServerApp {
   }
 
   private NettyOutbound processRequest(HttpServerRequest request, HttpServerResponse response) {
+
     HttpServletRequest request2 = new HttpServletRequest(request);
     HttpServletResponse response2 = new HttpServletResponse(response);
 
@@ -71,7 +73,7 @@ public class ServerApp {
         // 세션ID가 있으면 이 값을 가지고 클라이언트를 구분한다.
         sessionId = cookies.get(0).value();
       } else {
-        // 세션ID가 없으면 이 클라이언트를 구분하기 위해 새 새션ID를 발급한다.
+        // 세션ID가 없으면 이 클라이언트를 구분하기 위해 새 세션ID를 발급한다.
         sessionId = UUID.randomUUID().toString();
         firstVisit = true;
       }
@@ -79,7 +81,7 @@ public class ServerApp {
       // 세션ID로 클라이언트에게 배정된 HttpSession 객체를 찾는다.
       HttpSession session = sessionMap.get(sessionId);
       if (session == null) {
-        // 현재 클라이언트가 사용할 Httpsession 객체가 배정되지 않았다면, 새로 만든다.
+        // 현재 클라이언트가 사용할 HttpSession 객체가 배정되지 않았다면, 새로 만든다.
         session = new HttpSession(sessionId);
 
         // 새로 만든 세션 객체를 세션ID를 사용하여 맵에 보관한다.
@@ -87,7 +89,7 @@ public class ServerApp {
       }
 
       // 서블릿에서 HttpSession 보관소를 사용할 수 있도록 HttpServletRequest에 담아 둔다.
-      request2.SetSession(session);
+      request2.setSession(session);
 
       if (firstVisit) {
         // 세션ID가 없는 클라이언트를 위해 새로 발급한 세션ID를 쿠키로 보낸다.
@@ -98,28 +100,40 @@ public class ServerApp {
       String servletPath = request2.getServletPath();
 
       // favicon.ico 요청에 대한 응답
-      if (request2.getServletPath().equals("/favicon.ico")) {
+      if (servletPath.equals("/favicon.ico")) {
         response.addHeader("Content-Type", "image/vnd.microsoft.icon");
         return response
             .sendFile(Path.of(ServerApp.class.getResource("/static/favicon.ico").toURI()));
       }
 
-      // welcome 파일 또는 HTML 파일을 요청할 떄
+      // welcome 파일 또는 HTML 파일을 요청할 때
       if (servletPath.endsWith("/") || servletPath.endsWith(".html")) {
-        String resourcePath = String.format("/static/%s%s", servletPath,
+        String resourcePath = String.format("/static%s%s", servletPath,
             (servletPath.endsWith("/") ? "index.html" : ""));
+
         response.addHeader("Content-Type", "text/html;charset=UTF-8");
         return response.sendFile(Path.of(ServerApp.class.getResource(resourcePath).toURI()));
       }
 
-      System.out.println(request2.getServletPath());
-      dispatcherServlet.service(request2, response2);
+      if (request.isFormUrlencoded()) {
+        // POST 방식으로 요청했다면,
+        return response.sendString(request.receive().aggregate().asString().map(body -> {
+          try {
+            request2.parseFormBody(body);
+            dispatcherServlet.service(request2, response2);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+          response.addHeader("Content-Type", response2.getContentType());
+          return response2.getContent();
+        }));
 
-      // HTTP 응답 프로토콜의 헤더 설정
-      response.addHeader("Content-Type", response2.getContentType());
-
-      // 서블릿이 출력한 문자열을 버퍼에서 꺼내 HTTP 프로토콜에 맞춰 응답한다.
-      return response.sendString(Mono.just(response2.getContent()));
+      } else {
+        // GET 방식으로 요청했다면,
+        dispatcherServlet.service(request2, response2);
+        response.addHeader("Content-Type", response2.getContentType());
+        return response.sendString(Mono.just(response2.getContent()));
+      }
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -130,5 +144,7 @@ public class ServerApp {
           (SqlSessionFactoryProxy) iocContainer.getBean(SqlSessionFactory.class);
       sqlSessionFactoryProxy.clean();
     }
+
   }
+
 }

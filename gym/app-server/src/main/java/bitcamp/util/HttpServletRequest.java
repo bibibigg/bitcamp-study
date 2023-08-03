@@ -33,7 +33,6 @@ public class HttpServletRequest {
   HttpSession session;
   String servletPath;
 
-
   public HttpServletRequest(HttpServerRequest original) {
     this.original = original;
     QueryStringDecoder qsDecoder = new QueryStringDecoder(original.uri());

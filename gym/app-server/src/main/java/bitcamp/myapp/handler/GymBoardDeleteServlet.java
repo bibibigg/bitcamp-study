@@ -10,12 +10,12 @@ import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
 @Component("/board/delete")
-public class BoardDeleteServlet implements Servlet {
+public class GymBoardDeleteServlet implements Servlet {
 
   BoardDao boardDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public BoardDeleteServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
+  public GymBoardDeleteServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
     this.boardDao = boardDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }
@@ -43,12 +43,10 @@ public class BoardDeleteServlet implements Servlet {
         response.sendRedirect("/board/list?category=" + category);
       }
       sqlSessionFactory.openSession(false).commit();
+
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
-
     }
   }
 }
-
-

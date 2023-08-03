@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Component;
 
@@ -31,13 +30,13 @@ public class MySQLBoardDao implements BoardDao {
 
   @Override
   public List<Board> findAll(int category) {
-    SqlSession sqlSession = sqlSesstionFactory.openSession(true);
+    SqlSession sqlSession = sqlSesstionFactory.openSession(false);
     return sqlSession.selectList("bitcamp.myapp.dao.BoardDao.findAll", category);
   }
 
   @Override
   public Board findBy(int category, int no) {
-    SqlSession sqlSession = sqlSesstionFactory.openSession(true);
+    SqlSession sqlSession = sqlSesstionFactory.openSession(false);
 
     Map<String, Object> paramMap = new HashMap<>();
     paramMap.put("categoryNo", category);
