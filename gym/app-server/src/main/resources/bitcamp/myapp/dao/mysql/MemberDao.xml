@@ -64,6 +64,7 @@ values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per})
   <update id="update" parameterType="member">
     update gym_member set
       name=#{name},
+      age=#{age},
       phone_number=#{phoneNumber},
       password=sha1(#{password}),
       per=#{per}
