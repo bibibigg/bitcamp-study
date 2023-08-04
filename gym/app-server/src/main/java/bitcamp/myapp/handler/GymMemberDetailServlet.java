@@ -1,11 +1,12 @@
 package bitcamp.myapp.handler;
 
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Component;
-import bitcamp.util.DateCalc;
 import bitcamp.util.HttpServletRequest;
 import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
@@ -13,12 +14,10 @@ import bitcamp.util.Servlet;
 @Component("/member/detail")
 public class GymMemberDetailServlet implements Servlet {
 
-  DateCalc dateCalc;
   MemberDao memberDao;
 
-  public GymMemberDetailServlet(MemberDao memberDao, DateCalc dateCalc) {
+  public GymMemberDetailServlet(MemberDao memberDao) {
     this.memberDao = memberDao;
-    this.dateCalc = dateCalc;
   }
 
   @Override
@@ -40,6 +39,22 @@ public class GymMemberDetailServlet implements Servlet {
     if (m == null) {
       out.println("<p>해당 번호의 회원이 없습니다!</p>");
     } else {
+
+      int inputDate = m.getPer(); // 입력한 개월 수,
+
+      // java.sql.Date를 java.time.LocalDate로 변환
+      LocalDate localCreatedDate = m.getCreatedDate().toLocalDate();
+
+
+      // 등록일에서 입력한 개월 수를 더하여 종료일 계산
+      LocalDate endDate = localCreatedDate.plusMonths(inputDate);
+      Date calculatedEndDate = Date.valueOf(endDate);
+      // java.time.LocalDate를 다시 java.sql.Date로 변환
+      LocalDate currentDate = LocalDate.now();
+
+      // 남은 기간 계산
+      long remainingDays = ChronoUnit.DAYS.between(currentDate, endDate);
+
       out.println("<form action='/member/update' method='post'>");
       out.println("<table border='1'>");
       out.printf("<tr><th style='width:120px;'>번호</th>"
@@ -58,8 +73,8 @@ public class GymMemberDetailServlet implements Servlet {
               + " <option value='6' %s>6개월</option></select></td></tr>\n",
           (m.getPer() == '1' ? "selected" : ""), (m.getPer() == '3' ? "selected" : ""),
           (m.getPer() == '6' ? "selected" : ""));
-      out.println("<tr><th>종료일</th><td>" + dateCalc.calculateEndDate(m) + "</td></tr>");
-      out.println("<tr><th>남은 기간</th><td>" + dateCalc.calculateRemainingDays(m) + "일</td></tr>");
+      out.println("<tr><th>종료일</th><td>" + calculatedEndDate + "</td></tr>");
+      out.println("<tr><th>남은 기간</th><td>" + remainingDays + "일</td></tr>");
       out.println("</table>");
 
       out.println("<div>");
@@ -72,13 +87,5 @@ public class GymMemberDetailServlet implements Servlet {
     }
     out.println("</body>");
     out.println("</html>");
-  }
-
-  private void printEndDateAndRemainingDays(Member m, PrintWriter out) {
-    LocalDate endDate = dateCalc.calculateEndDate(m);
-    long remainingDays = dateCalc.calculateRemainingDays(m);
-
-    out.println("<p>종료일: " + endDate + "</p>");
-    out.println("<p>남은 기간: " + remainingDays + "일</p>");
   }
 }

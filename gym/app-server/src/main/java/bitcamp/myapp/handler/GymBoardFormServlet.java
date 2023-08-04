@@ -11,6 +11,7 @@ public class GymBoardFormServlet implements Servlet {
 
   @Override
   public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
     int category = Integer.parseInt(request.getParameter("category"));
 
     response.setContentType("text/html;charset=UTF-8");
@@ -33,3 +34,5 @@ public class GymBoardFormServlet implements Servlet {
     out.println("</html>");
   }
 }
+
+

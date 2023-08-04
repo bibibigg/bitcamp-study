@@ -12,6 +12,7 @@ import bitcamp.util.Servlet;
 
 @Component("/board/list")
 public class GymBoardListServlet implements Servlet {
+
   BoardDao boardDao;
   SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -21,6 +22,7 @@ public class GymBoardListServlet implements Servlet {
 
   @Override
   public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
     int category = Integer.parseInt(request.getParameter("category"));
 
     response.setContentType("text/html;charset=UTF-8");
@@ -58,4 +60,7 @@ public class GymBoardListServlet implements Servlet {
     out.println("</body>");
     out.println("</html>");
   }
+
 }
+
+

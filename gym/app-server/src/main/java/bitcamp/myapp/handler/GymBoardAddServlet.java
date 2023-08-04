@@ -61,6 +61,7 @@ public class GymBoardAddServlet implements Servlet {
     }
     out.println("</body>");
     out.println("</html>");
-
   }
 }
+
+

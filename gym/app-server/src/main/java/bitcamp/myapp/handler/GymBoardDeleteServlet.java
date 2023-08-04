@@ -50,3 +50,5 @@ public class GymBoardDeleteServlet implements Servlet {
     }
   }
 }
+
+

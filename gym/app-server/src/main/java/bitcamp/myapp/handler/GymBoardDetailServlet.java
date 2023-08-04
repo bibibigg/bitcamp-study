@@ -22,6 +22,7 @@ public class GymBoardDetailServlet implements Servlet {
 
   @Override
   public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
     Board board = boardDao.findBy(Integer.parseInt(request.getParameter("category")),
         Integer.parseInt(request.getParameter("no")));
 
@@ -76,6 +77,7 @@ public class GymBoardDetailServlet implements Servlet {
 
     out.println("</body>");
     out.println("</html>");
+
   }
 }
 

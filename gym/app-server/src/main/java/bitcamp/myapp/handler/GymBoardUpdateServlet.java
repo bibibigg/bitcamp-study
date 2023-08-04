@@ -67,3 +67,5 @@ public class GymBoardUpdateServlet implements Servlet {
     out.println("</html>");
   }
 }
+
+
