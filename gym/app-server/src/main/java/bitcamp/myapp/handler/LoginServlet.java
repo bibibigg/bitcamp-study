@@ -25,7 +25,7 @@ public class LoginServlet implements Servlet {
 
     Member loginUser = memberDao.findByPhoneAndPassword(m);
     if (loginUser != null) {
-      request.getSession().setAttribute("LoginUser", loginUser);
+      request.getSession().setAttribute("loginUser", loginUser);
       response.sendRedirect("/");
       return;
     }

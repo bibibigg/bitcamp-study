@@ -62,6 +62,8 @@ public class GymMemberDetailServlet implements Servlet {
           m.getNo());
       out.printf("<tr><th>이름</th>" + " <td><input type='text' name='name' value='%s'></td></tr>\n",
           m.getName());
+      out.printf("<tr><th>나이</th>" + " <td><input type='number' name='age' value='%s'></td></tr>\n",
+          m.getAge());
       out.printf(
           "<tr><th>핸드폰번호</th>"
               + " <td><input type='tel' name='phone_number' value='%s'></td></tr>\n",

@@ -26,7 +26,7 @@ public class GymMemberAddServlet implements Servlet {
 
     Member m = new Member();
     m.setName(request.getParameter("name"));
-    m.setPhoneNumber(request.getParameter("phone_nember"));
+    m.setPhoneNumber(request.getParameter("phone_number"));
     m.setAge(Integer.parseInt(request.getParameter("age")));
     m.setPassword(request.getParameter("password"));
     m.setPer(Integer.parseInt(request.getParameter("per")));
