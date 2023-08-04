@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BITCAMP GYM</title>
+</head>
+<body>
+  <h1>회원</h1>
+  <form action="/member/add" method="post">
+    <table border="1">
+      <tr>
+    <th>이름</th>  <td style="width:200px;"><input type='text' name='name'></td>
+    </tr>
+    <tr>
+      <th>나이</th> <td><input type="number" name="age"></td>
+    </tr>
+    <tr>
+      <th>핸드폰번호</th> <td><input type="tel" name="phone_number"></td>
+    </tr>
+    <tr>
+      <th>비밀번호</th> <td><input type="password" name="password"></td>
+    </tr>
+    <tr>
+      <th>등록개월</th>
+      <td>
+        <select name="per">
+          <option value="1">1개월</option>
+          <option value="3">3개월</option>
+          <option value="6">6개월</option>
+        </select>
+      </td>
+    </tr>
+         </table>
+    <button type="submit">등록</button>
+  </form>
+</body>
+</html>

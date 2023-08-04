@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.MemberDao">
+
+<resultMap type="member" id="memberMap">
+  <id     column="member_no"             property="no"/>
+  <result column="name"                 property="name"/>
+  <result column="age"                  property="age"/>
+  <result column="phone_number"         property="phoneNumber"/>
+  <result column="password"             property="password"/>
+  <result column="per"                  property="per"/>
+  <result column="created_date"         property="createdDate"/>
+
+</resultMap>
+
+<insert id="insert" parameterType="member">
+insert into gym_member(name,phone_number,age,password,per)
+values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per})
+</insert>
+  
+  <select id="findAll" resultMap="memberMap">
+    select
+      member_no,
+      name,
+      age,
+      per
+    from
+      gym_member
+    order by
+      name asc
+  </select>
+  
+  <select id="findBy" parameterType="int" resultMap="memberMap">
+    select
+      member_no,
+      name,
+      phone_number,
+      age,
+      per,
+      created_date
+    from
+      gym_member
+    where
+      member_no=#{no}
+  </select>
+  
+  <select id="findByPhoneAndPassword" parameterType="member" resultMap="memberMap">
+    select
+      member_no,
+      name,
+      phone_number,
+      age,
+      per,
+      created_date
+    from
+      gym_member
+    where
+      phone_number=#{phoneNumber}
+      and password=sha1(#{password})
+  </select>
+  
+  <update id="update" parameterType="member">
+    update gym_member set
+      name=#{name},
+      age=#{age},
+      phone_number=#{phoneNumber},
+      password=sha1(#{password}),
+      per=#{per}
+    where 
+      member_no=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from gym_member
+    where 
+      member_no=#{no}
+  </delete>
+  
+</mapper>
