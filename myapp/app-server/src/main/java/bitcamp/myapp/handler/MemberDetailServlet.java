@@ -1,28 +1,24 @@
 package bitcamp.myapp.handler;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import bitcamp.myapp.dao.MemberDao;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.Component;
-import bitcamp.util.HttpServletRequest;
-import bitcamp.util.HttpServletResponse;
-import bitcamp.util.Servlet;
 
-@Component("/member/detail")
-public class MemberDetailServlet implements Servlet {
+@WebServlet("/member/detail")
+public class MemberDetailServlet extends HttpServlet {
 
-
-  MemberDao memberDao;
-
-  public MemberDetailServlet(MemberDao memberDao) {
-    this.memberDao = memberDao;
-  }
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  protected void service(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
-
-    Member m = memberDao.findBy(Integer.parseInt(request.getParameter("no")));
+    Member m = InitServlet.memberDao.findBy(Integer.parseInt(request.getParameter("no")));
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();

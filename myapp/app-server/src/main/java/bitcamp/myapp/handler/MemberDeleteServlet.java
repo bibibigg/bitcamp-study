@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/member/delete")
-public class GymMemberDeleteServlet extends HttpServlet {
+public class MemberDeleteServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
 
@@ -29,4 +29,5 @@ public class GymMemberDeleteServlet extends HttpServlet {
       throw new RuntimeException(e);
     }
   }
+
 }

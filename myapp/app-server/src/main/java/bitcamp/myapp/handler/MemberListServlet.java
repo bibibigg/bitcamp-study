@@ -1,25 +1,23 @@
 package bitcamp.myapp.handler;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import bitcamp.myapp.dao.MemberDao;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.Component;
-import bitcamp.util.HttpServletRequest;
-import bitcamp.util.HttpServletResponse;
-import bitcamp.util.Servlet;
 
-@Component("/member/list")
-public class MemberListServlet implements Servlet {
+@WebServlet("/member/list")
+public class MemberListServlet extends HttpServlet {
 
-  MemberDao memberDao;
-
-  public MemberListServlet(MemberDao memberDao) {
-    this.memberDao = memberDao;
-  }
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  protected void service(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -39,12 +37,10 @@ public class MemberListServlet implements Servlet {
     out.println("  <tr><th>번호</th> <th>이름</th> <th>이메일</th></tr>");
     out.println("</thead>");
 
-    List<Member> list = memberDao.findAll();
+    List<Member> list = InitServlet.memberDao.findAll();
 
     for (Member m : list) {
-      out.printf("<tr>"
-    + "<td>%d</td>"
-          + " <td><a href='/member/detail?no=%d'>%s</td>"
+      out.printf("<tr>" + "<td>%d</td>" + " <td><a href='/member/detail?no=%d'>%s</td>"
           + " <td>%s</td></tr>\n", m.getNo(), m.getNo(), m.getName(), m.getEmail());
     }
     out.println("</tbody>");

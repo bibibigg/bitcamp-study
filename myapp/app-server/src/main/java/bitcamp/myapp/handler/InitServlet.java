@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -14,14 +15,12 @@ import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.dao.MySQLBoardDao;
 import bitcamp.myapp.dao.MySQLMemberDao;
-import bitcamp.util.AbstractServlet;
 import bitcamp.util.SqlSessionFactoryProxy;
 
-@WebServlet(
-    value="/init",
-    loadOnStartup = 1)
-public class InitServlet extends AbstractServlet {
+@WebServlet(value = "/init", loadOnStartup = 1)
+public class InitServlet extends HttpServlet {
 
+  private static final long serialVersionUID = 1L;
   public static SqlSessionFactory sqlSessionFactory;
   public static BoardDao boardDao;
   public static MemberDao memberDao;
@@ -30,14 +29,14 @@ public class InitServlet extends AbstractServlet {
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
     System.out.println("InitServlet.init() 호출됨!");
-    
+
     try {
-    sqlSessionFactory = new SqlSessionFactoryProxy(new SqlSessionFactoryBuilder()
-        .build(Resources.getResourceAsStream("bitcamp/myapp/config/mybatis-config.xml")));
-    
-    boardDao = new MySQLBoardDao(sqlSessionFactory);
-    memberDao = new MySQLMemberDao(sqlSessionFactory);
-    
+      sqlSessionFactory = new SqlSessionFactoryProxy(new SqlSessionFactoryBuilder()
+          .build(Resources.getResourceAsStream("bitcamp/myapp/config/mybatis-config.xml")));
+
+      boardDao = new MySQLBoardDao(sqlSessionFactory);
+      memberDao = new MySQLMemberDao(sqlSessionFactory);
+
     } catch (Exception e) {
       System.out.println("InitServlet.init() 실행 중 오류 발생!");
       e.printStackTrace();
@@ -46,9 +45,8 @@ public class InitServlet extends AbstractServlet {
 
 
   @Override
-  public void service(ServletRequest request, ServletResponse response)
+  protected void service(HttpServletRequest requestq, HttpServletResponse response)
       throws ServletException, IOException {
-
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
