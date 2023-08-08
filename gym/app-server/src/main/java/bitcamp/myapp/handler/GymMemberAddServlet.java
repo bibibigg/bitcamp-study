@@ -15,8 +15,10 @@ public class GymMemberAddServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  protected void service(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
+    request.setCharacterEncoding("UTF-8");
 
     Member m = new Member();
     m.setName(request.getParameter("name"));
@@ -24,6 +26,7 @@ public class GymMemberAddServlet extends HttpServlet {
     m.setAge(Integer.parseInt(request.getParameter("age")));
     m.setPassword(request.getParameter("password"));
     m.setPer(Integer.parseInt(request.getParameter("per")));
+
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();

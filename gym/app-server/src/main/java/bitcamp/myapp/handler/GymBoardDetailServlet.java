@@ -15,7 +15,7 @@ public class GymBoardDetailServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  protected void service(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
     Board board = InitServlet.boardDao.findBy(Integer.parseInt(request.getParameter("category")),
@@ -55,8 +55,9 @@ public class GymBoardDetailServlet extends HttpServlet {
       out.println("<div>");
       out.println("<button>변경</button>");
       out.println("<button type='reset'>초기화</button>");
-      out.printf("<a href='/board/delete?category=%d&no=%d'>삭제</a>\n", board.getCategory(),
-          board.getNo());
+      out.printf(
+          "<a href='/board/delete?category=%d&no=%d' onclick='return confirm(\"정말로 삭제하시겠습니까?\")'>삭제</a>\n",
+          board.getCategory(), board.getNo());
       out.printf("<a href='/board/list?category=%d'>목록</a>\n", board.getCategory());
       out.println("</div>");
       out.println("</form>");

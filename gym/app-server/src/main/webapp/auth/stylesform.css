@@ -1,0 +1,60 @@
+
+body {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.main {
+    width: 650px;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.logo {
+    margin-top: 0px;
+    margin-bottom: 40px;
+     font-size: 36px;
+     color: #35428C;
+}
+
+#buttonform {
+    width: 100%;
+    background-color: #35428C;
+    border-color: transparent;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.add{
+     display: block;
+    margin-bottom: 10px; /* 정보 입력란 간격 키우기 */
+    padding: 10px; /* 정보 입력란 내용과 경계 간격 조정 */
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    width: 100%; /* 입력란 폭을 100%로 설정하여 전체 너비에 맞춤 */
+    font-size: 18px; /* 입력란 텍스트 크기 키우기 */
+    box-sizing: border-box;
+}
+
+.contentadd{
+     display: block;
+    margin-bottom: 10px;
+    padding: 10px; 
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    width: 500px;
+    height: 200px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
