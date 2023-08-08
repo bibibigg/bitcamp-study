@@ -37,10 +37,15 @@ public class GymBoardFormServlet extends HttpServlet {
     out.println("<textarea name='content' placeholder='내용' class='contentadd'></textarea><br>");
     out.printf("<input type='hidden' name='category' value='%d'>\n", category);
     out.println("<button id='buttonform' class='add'>등록</button>");
-    out.println("<a href='/board/list?category=" + category + "'>취소</a>"); // 취소 버튼 추가
+    out.println("<button id='cancelButton' type='button' class='add'>취소</button>");
     out.println("</form>");
     out.println("</div>");
     out.println("</div>");
+    out.println("<script>");
+    out.println("document.getElementById('cancelButton').addEventListener('click', function() {"
+            + "      window.location.href = '/board/list?category=" + category + "';"
+            + "    });");
+    out.println("</script>");
     out.println("</body>");
     out.println("</html>");
   }

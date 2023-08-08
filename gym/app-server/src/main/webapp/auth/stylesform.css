@@ -36,6 +36,16 @@ body {
     margin-top: 10px;
 }
 
+#cancelButton {
+    width: 100%;
+    background-color: #35428C;
+    border-color: transparent;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
 .add{
      display: block;
     margin-bottom: 10px; /* 정보 입력란 간격 키우기 */
