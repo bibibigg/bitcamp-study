@@ -18,8 +18,6 @@ public class LoginServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
-
     Member m = new Member();
     m.setPhoneNumber(request.getParameter("phone_number"));
     m.setPassword(request.getParameter("password"));
@@ -30,7 +28,6 @@ public class LoginServlet extends HttpServlet {
       response.sendRedirect("/");
       return;
     }
-
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();

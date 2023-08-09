@@ -28,6 +28,7 @@ public class GymBoardDetailServlet extends HttpServlet {
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
     out.println("<title>게시글</title>");
+    out.println("<link rel=\"stylesheet\" href=\"/detail.css\">");
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>게시글</h1>");
@@ -52,7 +53,7 @@ public class GymBoardDetailServlet extends HttpServlet {
       out.printf("<tr><th>등록일</th> <td>%tY-%1$tm-%1$td</td></tr>\n", board.getCreatedDate());
       out.println("</table>");
 
-      out.println("<div>");
+      out.println("<div class='button-container'>");
       out.println("<button>변경</button>");
       out.println("<button type='reset'>초기화</button>");
       out.printf(

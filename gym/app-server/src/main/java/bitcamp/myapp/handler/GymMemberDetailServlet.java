@@ -30,6 +30,7 @@ public class GymMemberDetailServlet extends HttpServlet {
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
     out.println("<title>회원</title>");
+    out.println("<link rel=\"stylesheet\" href=\"/detail.css\">");
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>회원</h1>");
@@ -77,7 +78,7 @@ public class GymMemberDetailServlet extends HttpServlet {
       out.println("<tr><th>남은 기간</th><td>" + remainingDays + "일</td></tr>");
       out.println("</table>");
 
-      out.println("<div>");
+      out.println("<div class='button-container'>");
       out.println("<button>변경</button>");
       out.println("<button type='reset'>초기화</button>");
       out.printf(
@@ -85,6 +86,7 @@ public class GymMemberDetailServlet extends HttpServlet {
           m.getNo());
       out.println("<a href='/member/list'>목록</a>\n");
       out.println("</div>");
+
       out.println("</form>");
     }
     out.println("</body>");
