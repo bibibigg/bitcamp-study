@@ -1,16 +1,22 @@
 package bitcamp.myapp.handler;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import bitcamp.util.Component;
-import bitcamp.util.HttpServletRequest;
-import bitcamp.util.HttpServletResponse;
-import bitcamp.util.Servlet;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@Component("/board/form")
-public class GymBoardFormServlet implements Servlet {
+@WebServlet("/board/form")
+public class GymBoardFormServlet extends HttpServlet {
+
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
     int category = Integer.parseInt(request.getParameter("category"));
 
     response.setContentType("text/html;charset=UTF-8");
@@ -20,16 +26,29 @@ public class GymBoardFormServlet implements Servlet {
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
     out.println("<title>비트캠프</title>");
+    out.println("<link rel=\"stylesheet\" href=\"../auth/stylesform.css\">");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>게시글</h1>");
+    out.println("<div class='main'>");
+    out.println("<h1 class='logo'>게시글</h1>");
+    out.println("<div class='container'>");
     out.println("<form action='/board/add' method='post'>");
-    out.println("제목 <input type='text' name='title'><br>");
-    out.println("내용 <textarea name='content'></textarea><br>");
+    out.println("<input type='text' name='title' placeholder='제목' class='add'><br>");
+    out.println("<textarea name='content' placeholder='내용' class='contentadd'></textarea><br>");
     out.printf("<input type='hidden' name='category' value='%d'>\n", category);
-    out.println("<button>등록</button>");
+    out.println("<button id='buttonform' class='add'>등록</button>");
+    out.println("<button id='cancelButton' type='button' class='add'>취소</button>");
     out.println("</form>");
+    out.println("</div>");
+    out.println("</div>");
+    out.println("<script>");
+    out.println("document.getElementById('cancelButton').addEventListener('click', function() {"
+            + "      window.location.href = '/board/list?category=" + category + "';"
+            + "    });");
+    out.println("</script>");
     out.println("</body>");
     out.println("</html>");
   }
 }
+
+

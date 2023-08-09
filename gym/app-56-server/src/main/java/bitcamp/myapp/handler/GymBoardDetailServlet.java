@@ -1,28 +1,24 @@
 package bitcamp.myapp.handler;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import org.apache.ibatis.session.SqlSessionFactory;
-import bitcamp.myapp.dao.BoardDao;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Board;
-import bitcamp.util.Component;
-import bitcamp.util.HttpServletRequest;
-import bitcamp.util.HttpServletResponse;
-import bitcamp.util.Servlet;
 
-@Component("/board/detail")
-public class GymBoardDetailServlet implements Servlet {
+@WebServlet("/board/detail")
+public class GymBoardDetailServlet extends HttpServlet {
 
-  BoardDao boardDao;
-  SqlSessionFactory sqlSessionFactory;
-
-  public GymBoardDetailServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
-    this.boardDao = boardDao;
-    this.sqlSessionFactory = sqlSessionFactory;
-  }
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    Board board = boardDao.findBy(Integer.parseInt(request.getParameter("category")),
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
+    Board board = InitServlet.boardDao.findBy(Integer.parseInt(request.getParameter("category")),
         Integer.parseInt(request.getParameter("no")));
 
     response.setContentType("text/html;charset=UTF-8");
@@ -32,6 +28,7 @@ public class GymBoardDetailServlet implements Servlet {
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
     out.println("<title>게시글</title>");
+    out.println("<link rel=\"stylesheet\" href=\"/detail.css\">");
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>게시글</h1>");
@@ -56,26 +53,28 @@ public class GymBoardDetailServlet implements Servlet {
       out.printf("<tr><th>등록일</th> <td>%tY-%1$tm-%1$td</td></tr>\n", board.getCreatedDate());
       out.println("</table>");
 
-      out.println("<div>");
+      out.println("<div class='button-container'>");
       out.println("<button>변경</button>");
       out.println("<button type='reset'>초기화</button>");
-      out.printf("<a href='/board/delete?category=%d&no=%d'>삭제</a>\n", board.getCategory(),
-          board.getNo());
+      out.printf(
+          "<a href='/board/delete?category=%d&no=%d' onclick='return confirm(\"정말로 삭제하시겠습니까?\")'>삭제</a>\n",
+          board.getCategory(), board.getNo());
       out.printf("<a href='/board/list?category=%d'>목록</a>\n", board.getCategory());
       out.println("</div>");
       out.println("</form>");
       try {
         board.setViewCount(board.getViewCount() + 1);
-        boardDao.updateCount(board);
-        sqlSessionFactory.openSession(false).commit();
+        InitServlet.boardDao.updateCount(board);
+        InitServlet.sqlSessionFactory.openSession(false).commit();
 
       } catch (Exception e) {
-        sqlSessionFactory.openSession(false).rollback();
+        InitServlet.sqlSessionFactory.openSession(false).rollback();
       }
     }
 
     out.println("</body>");
     out.println("</html>");
+
   }
 }
 

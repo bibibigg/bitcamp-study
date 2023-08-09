@@ -1,28 +1,23 @@
 package bitcamp.myapp.handler;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import org.apache.ibatis.session.SqlSessionFactory;
-import bitcamp.myapp.dao.BoardDao;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.Component;
-import bitcamp.util.HttpServletRequest;
-import bitcamp.util.HttpServletResponse;
-import bitcamp.util.Servlet;
 
-@Component("/board/add")
-public class GymBoardAddServlet implements Servlet {
+@WebServlet("/board/add")
+public class GymBoardAddServlet extends HttpServlet {
 
-  BoardDao boardDao;
-  SqlSessionFactory sqlSessionFactory;
-
-  public GymBoardAddServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
-    this.boardDao = boardDao;
-    this.sqlSessionFactory = sqlSessionFactory;
-  }
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -38,6 +33,7 @@ public class GymBoardAddServlet implements Servlet {
     board.setWriter(loginUser);
     board.setCategory(category);
 
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<!DOCTYPE html>");
@@ -50,17 +46,18 @@ public class GymBoardAddServlet implements Servlet {
     out.println("<body>");
     out.println("<h1>게시글 등록</h1>");
     try {
-      boardDao.insert(board);
-      sqlSessionFactory.openSession(false).commit();
+      InitServlet.boardDao.insert(board);
+      InitServlet.sqlSessionFactory.openSession(false).commit();
       out.println("<p>등록 성공입니다!</p>");
 
     } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
+      InitServlet.sqlSessionFactory.openSession(false).rollback();
       out.println("<p>등록 실패입니다!</p>");
       e.printStackTrace();
     }
     out.println("</body>");
     out.println("</html>");
-
   }
 }
+
+

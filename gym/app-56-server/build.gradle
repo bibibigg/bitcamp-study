@@ -1,10 +1,7 @@
 plugins {
-id 'java'
-
-id 'eclipse'
-
-id 'war'
-
+    id 'java'
+    id 'eclipse-wtp'
+    id 'war'
 }
 
 repositories {
@@ -12,20 +9,23 @@ repositories {
 }
 
 dependencies {
-  implementation project(':app-common')
-  
+    // 서브 프로젝트의 클래스를 사용하기
+    implementation project(':app-common')
+    
     // MySQL JDBC Driver
-  implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    
+    // Google JSON 라이브러리
+    //implementation 'com.google.code.gson:gson:2.10.1'
   
-    implementation 'com.google.code.gson:gson:2.10.1'
+    // Mybatis 라이브러리
+    implementation 'org.mybatis:mybatis:3.5.13'
+  
+    // Servlet API 
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+        
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     implementation 'com.google.guava:guava:31.1-jre'
-
-//Mybatis 라이브러리
-implementation 'org.mybatis:mybatis:3.5.13'
-
-providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
-
 }
 
 java {
@@ -34,20 +34,16 @@ java {
     }
 }
 
-
 tasks.named('test') {
     useJUnitPlatform()
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8' 
-
     sourceCompatibility = '17'
-
     targetCompatibility = '17'
 }
 
-// eclipse 프로젝트 이름을 설정하기
 eclipse {
     project {
         name = "gym-server"
@@ -57,9 +53,18 @@ eclipse {
       targetCompatibility = 17
       javaRuntimeName = "JavaSE-17"
     }
-    
-    war {
-archiveBaseName = "gym"
+    wtp {
+        facet {
+            facet name: 'jst.java', version: '17'
+            //facet name: 'jst.web', version: '4.0'
+        }
+        component {
+            contextPath = '/'
+            //deployName = 'web'
+        }
+    }
 }
-    
+
+war {
+    archiveBaseName = "gym"
 }

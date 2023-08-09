@@ -1,27 +1,22 @@
 package bitcamp.myapp.handler;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import bitcamp.myapp.dao.BoardDao;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.Component;
-import bitcamp.util.HttpServletRequest;
-import bitcamp.util.HttpServletResponse;
-import bitcamp.util.Servlet;
 
-@Component("/board/delete")
-public class GymBoardDeleteServlet implements Servlet {
+@WebServlet("/board/delete")
+public class GymBoardDeleteServlet extends HttpServlet {
 
-  BoardDao boardDao;
-  SqlSessionFactory sqlSessionFactory;
-
-  public GymBoardDeleteServlet(BoardDao boardDao, SqlSessionFactory sqlSessionFactory) {
-    this.boardDao = boardDao;
-    this.sqlSessionFactory = sqlSessionFactory;
-  }
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -37,16 +32,18 @@ public class GymBoardDeleteServlet implements Servlet {
     b.setCategory(category);
 
     try {
-      if (boardDao.delete(b) == 0) {
+      if (InitServlet.boardDao.delete(b) == 0) {
         throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
       } else {
         response.sendRedirect("/board/list?category=" + category);
       }
-      sqlSessionFactory.openSession(false).commit();
+      InitServlet.sqlSessionFactory.openSession(false).commit();
 
     } catch (Exception e) {
-      sqlSessionFactory.openSession(false).rollback();
+      InitServlet.sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }
 }
+
+
