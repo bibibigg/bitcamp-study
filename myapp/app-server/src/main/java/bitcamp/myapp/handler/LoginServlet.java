@@ -18,19 +18,18 @@ public class LoginServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
-
     Member m = new Member();
     m.setEmail(request.getParameter("email"));
     m.setPassword(request.getParameter("password"));
 
     Member loginUser = InitServlet.memberDao.findByEmailAndPassword(m);
     if (loginUser != null) {
-      // 로그인 정보를 다른 요청에서도 사용할 수 있도록 세션 보관소에 담아 둔다.
+      // 로그인 정보를 다른 요청에서도 사용할 있도록 세션 보관소에 담아 둔다.
       request.getSession().setAttribute("loginUser", loginUser);
       response.sendRedirect("/");
       return;
     }
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<!DOCTYPE html>");
@@ -45,6 +44,6 @@ public class LoginServlet extends HttpServlet {
     out.println("<p>회원 정보가 일치하지 않습니다.</p>");
     out.println("</body>");
     out.println("</html>");
+
   }
 }
-
