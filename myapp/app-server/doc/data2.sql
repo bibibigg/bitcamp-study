@@ -10,7 +10,7 @@ insert into myapp_member(member_no, name, email, password, gender)
 insert into myapp_member(member_no, name, email, password, gender) 
   values(5, 'eee', 'eee@test.com', sha1('1111'), 'W');
 insert into myapp_member(member_no, name, email, password, gender) 
-  values(6, 'fff', 'fff@test.com',sha1('1111'), 'M');
+  values(6, 'fff', 'fff@test.com', sha1('1111'), 'M');
 
 -- myapp_board 테이블 예제 데이터
 insert into myapp_board(board_no, title, content, writer, password, category)

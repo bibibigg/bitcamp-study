@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
 public class SqlSessionFactoryProxy implements SqlSessionFactory {
+
   SqlSessionFactory original;
+
   ThreadLocal<SqlSession> sqlSessionBox = new ThreadLocal<>();
 
   public SqlSessionFactoryProxy(SqlSessionFactory original) {
@@ -30,20 +32,11 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
   }
 
   public SqlSession openSession(boolean autoCommit) {
-    // 수동 커밋으로 동작하는 Sqlsession 을 원한다는 것은
-    // 여러 데이터 변경 작업을 묶어서 다루겠다는 의미다.
-    // 그렇게 하려면 동일한 SqlSession 객체를 사용해야 한다.
-    // 이를위해 스레드에 Sqlsession 객체를 보관해두고 리턴한다.
-
-    // 1) 스레드에 보관된 Sqlsession 객체를 꺼낸다
     SqlSession sqlSession = sqlSessionBox.get();
     if (sqlSession == null) {
-      // 2) 아직 스레드에 보관된 객체가 없다면 새로 만들어 보관한다.
       sqlSession = original.openSession(autoCommit);
       sqlSessionBox.set(sqlSession);
     }
-
-    // 3) 스레드에 보관된 SqlSession 객체를 리턴한다.
     return sqlSession;
   }
 
@@ -74,5 +67,4 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
   public Configuration getConfiguration() {
     return original.getConfiguration();
   }
-
 }

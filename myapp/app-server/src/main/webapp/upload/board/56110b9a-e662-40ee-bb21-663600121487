@@ -1,0 +1,47 @@
+[root@son ~]# sqlite3
+SQLite version 3.34.1 2021-01-20 14:10:07
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .open myDB
+sqlite> create table score(name, kor, mat, eng);
+sqlite> insert into score values("kim", 40, 50, 60,);
+Error: near ")": syntax error
+sqlite> insert into score values("kim", 40, 50, 60);
+sqlite> insert into score values("chio", 50, 90, 30);
+sqlite>
+sqlite> .mode col
+sqlite> .hed on
+Error: unknown command or invalid arguments:  "hed". Enter ".help" for help
+sqlite> .head on
+sqlite> select * from score;
+name  kor  mat  eng
+----  ---  ---  ---
+kim   40   50   60
+chio  50   90   30
+
+
+sqlite-autoconf-3410200.tar.gz 파일 설치
+위 파일이 있는 홈페이지에서 파일 링크 복사
+wget 우클릭 시 wget 링크주소 붙음
+wget은 링크를 가져오는 명령어로 다운로드에 많이 사용
+
+tar명령어를 사용하여 압축풀기
+tar xf sqlite-autoconf-3410200.tar.gz를 입력하여 압축해제
+이후 cd sqlite-autoconf-3410200로 이동
+./cinfigure --prefix=/zs3 \  -> \(역슬래시)를 입력하는 이유는 밑줄에 이어쓰겠다는 의미
+> && make && make install
+을 입력하여 파일 다운로드
+
+
+
+ [root@son ~/down]# tar xf sqlite-autoconf-3410200.tar.gz
+[root@son ~/down]# cd sqlite-autoconf-3410200
+[root@son ~/down/sqlite-autoconf-3410200]# ./configure --prefix=/s3 \
+> && make && make install
+
+prefix를 사용하지 않고 주소없이 설치 시
+보통 usr/local 로 설치됨
+
+/dev/mapper/rl_son-data
+

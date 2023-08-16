@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/board/form")
 public class BoardFormServlet extends HttpServlet {
+
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -37,7 +38,17 @@ public class BoardFormServlet extends HttpServlet {
     out.println("</form>");
     out.println("</body>");
     out.println("</html>");
+
   }
 }
+
+
+
+
+
+
+
+
+
 
 

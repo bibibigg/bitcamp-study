@@ -18,14 +18,12 @@ public class MemberUpdateServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
-
-    Member m = new Member();
-    m.setNo(Integer.parseInt(request.getParameter("no")));
-    m.setName(request.getParameter("name"));
-    m.setEmail(request.getParameter("email"));
-    m.setPassword(request.getParameter("password"));
-    m.setGender(request.getParameter("gender").charAt(0));
+    Member member = new Member();
+    member.setNo(Integer.parseInt(request.getParameter("no")));
+    member.setName(request.getParameter("name"));
+    member.setEmail(request.getParameter("email"));
+    member.setPassword(request.getParameter("password"));
+    member.setGender(request.getParameter("gender").charAt(0));
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -40,7 +38,7 @@ public class MemberUpdateServlet extends HttpServlet {
     out.println("<h1>회원 변경</h1>");
 
     try {
-      if (InitServlet.memberDao.update(m) == 0) {
+      if (InitServlet.memberDao.update(member) == 0) {
         out.println("<p>회원이 없습니다.</p>");
       } else {
         InitServlet.sqlSessionFactory.openSession(false).commit();
@@ -51,6 +49,7 @@ public class MemberUpdateServlet extends HttpServlet {
       out.println("<p>변경 실패입니다!</p>");
       e.printStackTrace();
     }
+
     out.println("</body>");
     out.println("</html>");
   }

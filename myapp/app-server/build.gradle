@@ -17,16 +17,22 @@ dependencies {
     
     // Google JSON 라이브러리
     //implementation 'com.google.code.gson:gson:2.10.1'
-    
-    //Mybatis 라이브러리
+  
+    // Mybatis 라이브러리
     implementation 'org.mybatis:mybatis:3.5.13'
-    
-    // servlet API 
+  
+    // Servlet API 
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
-
+        
     // multipart/form-data 처리 라이브러리
-    implementation 'commons-fileupload:commons-fileupload:1.5'
-
+    //implementation 'commons-fileupload:commons-fileupload:1.5' // Servlet API로 대체    
+        
+    // 임베디드 Tomcat 서버
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.79'
+    
+    // Amazon AWS Java SDK s3
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.530'
+    
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     implementation 'com.google.guava:guava:31.1-jre'
 }
@@ -37,25 +43,16 @@ java {
     }
 }
 
-
 tasks.named('test') {
     useJUnitPlatform()
 }
 
-// 자바 소스를 컴파일 할 때 적용할 옵션
 tasks.withType(JavaCompile) {
-    // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
-    // $javac -encoding UTF-8 ..
     options.encoding = 'UTF-8' 
-
-    // 소스 파일을 작성할 때 사용할 자바 버전
     sourceCompatibility = '17'
-
-    // 자바 클래스를 실행시킬 JVM의 최소 버전
     targetCompatibility = '17'
 }
 
-// eclipse 프로젝트 이름을 설정하기
 eclipse {
     project {
         name = "myapp-server"
@@ -64,22 +61,19 @@ eclipse {
       sourceCompatibility = 17
       targetCompatibility = 17
       javaRuntimeName = "JavaSE-17"
-      
+    }
     wtp {
         facet {
             facet name: 'jst.java', version: '17'
             //facet name: 'jst.web', version: '4.0'
         }
         component {
-             contextPath = '/'
+            contextPath = '/'
             //deployName = 'web'
         }
     }
-      
-    }
-    
-        war {
-    archiveBaseName = "myapp"
 }
-    
+
+war {
+    archiveBaseName = "myapp"
 }

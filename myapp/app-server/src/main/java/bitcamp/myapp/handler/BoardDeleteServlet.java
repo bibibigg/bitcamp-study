@@ -38,12 +38,21 @@ public class BoardDeleteServlet extends HttpServlet {
         response.sendRedirect("/board/list?category=" + category);
       }
       InitServlet.sqlSessionFactory.openSession(false).commit();
+
     } catch (Exception e) {
       InitServlet.sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
-
     }
   }
 }
+
+
+
+
+
+
+
+
+
 
 

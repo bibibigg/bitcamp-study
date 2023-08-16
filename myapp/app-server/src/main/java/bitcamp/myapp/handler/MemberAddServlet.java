@@ -18,8 +18,6 @@ public class MemberAddServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
-
     Member m = new Member();
     m.setName(request.getParameter("name"));
     m.setEmail(request.getParameter("email"));
@@ -41,13 +39,14 @@ public class MemberAddServlet extends HttpServlet {
     try {
       InitServlet.memberDao.insert(m);
       InitServlet.sqlSessionFactory.openSession(false).commit();
-      out.println("<p>회원 등록 성공입니다!</p>");
+      out.println("<p>등록 성공입니다!</p>");
 
     } catch (Exception e) {
       InitServlet.sqlSessionFactory.openSession(false).rollback();
-      out.println("<p>회원 등록 실패입니다!</p>");
+      out.println("<p>등록 실패입니다!</p>");
       e.printStackTrace();
     }
+
     out.println("</body>");
     out.println("</html>");
   }

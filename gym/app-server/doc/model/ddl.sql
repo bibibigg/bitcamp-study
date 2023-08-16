@@ -28,6 +28,12 @@ DROP TABLE IF EXISTS gym_gxapp RESTRICT;
 -- 새 테이블
 DROP TABLE IF EXISTS gym_employ_type RESTRICT;
 
+-- 게시글첨부파일
+DROP TABLE IF EXISTS gym_board_file RESTRICT;
+
+-- 게시판유형
+DROP TABLE IF EXISTS gym_board_category RESTRICT;
+
 -- 트레이너
 CREATE TABLE gym_trainer (
   member_no INTEGER     NOT NULL COMMENT '트레이너번호', -- 트레이너번호
@@ -78,11 +84,11 @@ ALTER TABLE gym_manager
 
 -- 회원
 CREATE TABLE gym_member (
-  member_no    INTEGER     NOT NULL COMMENT '회원번호', -- 회원번호
-  name         VARCHAR(60) NOT NULL COMMENT '이름', -- 이름
-  phone_number VARCHAR(30) NOT NULL COMMENT '핸드폰번호', -- 핸드폰번호
-  age          VARCHAR(10) NOT NULL COMMENT '나이', -- 나이
-  password     INTEGER     NOT NULL COMMENT '비밀번호' -- 비밀번호
+  member_no    INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+  name         VARCHAR(60)  NOT NULL COMMENT '이름', -- 이름
+  phone_number VARCHAR(30)  NOT NULL COMMENT '핸드폰번호', -- 핸드폰번호
+  age          INTEGER      NOT NULL COMMENT '나이', -- 나이
+  password     VARCHAR(100) NOT NULL COMMENT '비밀번호' -- 비밀번호
 )
 COMMENT '회원';
 
@@ -149,13 +155,12 @@ ALTER TABLE gym_ptapp
 -- 게시판
 CREATE TABLE gym_board (
   board_no     INTEGER      NOT NULL COMMENT '게시판번호', -- 게시판번호
-  member_no    INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
   title        VARCHAR(255) NOT NULL COMMENT '제목', -- 제목
   content      MEDIUMTEXT   NOT NULL COMMENT '내용', -- 내용
-  password     INTEGER      NOT NULL COMMENT '비밀번호', -- 비밀번호
   view_count   INTEGER      NOT NULL COMMENT '조회수', -- 조회수
   created_date DATE         NOT NULL COMMENT '등록일', -- 등록일
-  category     INTEGER      NOT NULL COMMENT '카테고리' -- 카테고리
+  writer       INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+  category     INTEGER      NULL     COMMENT '번호' -- 번호
 )
 COMMENT '게시판';
 
@@ -235,6 +240,35 @@ ALTER TABLE gym_employ_type
 
 ALTER TABLE gym_employ_type
   MODIFY COLUMN gtno INTEGER NOT NULL AUTO_INCREMENT COMMENT '고용형태변호';
+
+-- 게시글첨부파일
+CREATE TABLE gym_board_file (
+  board_file_no INTEGER      NOT NULL COMMENT '번호', -- 번호
+  filepath      VARCHAR(255) NOT NULL COMMENT '파일경로', -- 파일경로
+  board_no      INTEGER      NOT NULL COMMENT '게시글번호' -- 게시글번호
+)
+COMMENT '게시글첨부파일';
+
+-- 게시글첨부파일
+ALTER TABLE gym_board_file
+  ADD CONSTRAINT PK_gym_board_file -- 게시글첨부파일 기본키
+  PRIMARY KEY (
+  board_file_no -- 번호
+  );
+
+-- 게시판유형
+CREATE TABLE gym_board_category (
+  board_category_no INTEGER     NOT NULL COMMENT '번호', -- 번호
+  name              VARCHAR(60) NOT NULL COMMENT '게시판이름' -- 게시판이름
+)
+COMMENT '게시판유형';
+
+-- 게시판유형
+ALTER TABLE gym_board_category
+  ADD CONSTRAINT PK_gym_board_category -- 게시판유형 기본키
+  PRIMARY KEY (
+  board_category_no -- 번호
+  );
 
 -- 트레이너
 ALTER TABLE gym_trainer
@@ -320,10 +354,20 @@ ALTER TABLE gym_ptapp
 ALTER TABLE gym_board
   ADD CONSTRAINT FK_gym_member_TO_gym_board -- 회원 -> 게시판
   FOREIGN KEY (
-  member_no -- 회원번호
+  writer -- 회원번호
   )
   REFERENCES gym_member ( -- 회원
   member_no -- 회원번호
+  );
+
+-- 게시판
+ALTER TABLE gym_board
+  ADD CONSTRAINT FK_gym_board_category_TO_gym_board -- 게시판유형 -> 게시판
+  FOREIGN KEY (
+  category -- 번호
+  )
+  REFERENCES gym_board_category ( -- 게시판유형
+  board_category_no -- 번호
   );
 
 -- GX프로그램
@@ -354,4 +398,14 @@ ALTER TABLE gym_gxapp
   )
   REFERENCES gym_gymmember ( -- 헬스장회원
   member_no -- 헬스장회원번호
+  );
+
+-- 게시글첨부파일
+ALTER TABLE gym_board_file
+  ADD CONSTRAINT FK_gym_board_TO_gym_board_file -- 게시판 -> 게시글첨부파일
+  FOREIGN KEY (
+  board_no -- 게시글번호
+  )
+  REFERENCES gym_board ( -- 게시판
+  board_no -- 게시판번호
   );
