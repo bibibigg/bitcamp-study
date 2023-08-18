@@ -19,6 +19,7 @@ public class Member implements Serializable {
   private String password;
   private int per;
   private Date createdDate;
+  private String photo;
 
 
   @Override
@@ -93,6 +94,14 @@ public class Member implements Serializable {
 
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+  }
+
+  public String getPhoto() {
+    return photo;
+  }
+
+  public void setPhoto(String photo) {
+    this.photo = photo;
   }
 
 

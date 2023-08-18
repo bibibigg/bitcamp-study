@@ -12,12 +12,12 @@
   <result column="password"             property="password"/>
   <result column="per"                  property="per"/>
   <result column="created_date"         property="createdDate"/>
-
+  <result column="photo"        property="photo"/>
 </resultMap>
 
 <insert id="insert" parameterType="member">
 insert into gym_member(name,phone_number,age,password,per)
-values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per})
+values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per},#{photo})
 </insert>
   
   <select id="findAll" resultMap="memberMap">
@@ -25,7 +25,8 @@ values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per})
       member_no,
       name,
       age,
-      per
+      per,
+      photo
     from
       gym_member
     order by
@@ -39,7 +40,8 @@ values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per})
       phone_number,
       age,
       per,
-      created_date
+      created_date,
+      photo
     from
       gym_member
     where
@@ -53,7 +55,8 @@ values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per})
       phone_number,
       age,
       per,
-      created_date
+      created_date,
+      photo
     from
       gym_member
     where
@@ -68,6 +71,9 @@ values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per})
       phone_number=#{phoneNumber},
       password=sha1(#{password}),
       per=#{per}
+      <if test="photo != null">
+      ,photo=#{photo}
+      </if>
     where 
       member_no=#{no}
   </update>
