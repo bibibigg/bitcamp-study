@@ -54,8 +54,16 @@ public class GymMemberDetailServlet extends HttpServlet {
       // 남은 기간 계산
       long remainingDays = ChronoUnit.DAYS.between(currentDate, endDate);
 
-      out.println("<form action='/member/update' method='post'>");
+      out.println("<form action='/member/update' method='post' enctype='multipart/form-data'>");
       out.println("<table border='1'>");
+      out.printf("<tr><th style='width:120px;'>사진</th>"
+              + " <td style='width:300px;'>"
+              + (m.getPhoto() == null ? "<img style='height:80px' src='/images/avatar.png'>" :
+                "<a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-13/member/%s'>"
+                + "<img src='http://eptvhysxbghp19010745.cdn.ntruss.com/member/%1$s?type=f&w=60&h=80&faceopt=true&ttype=jpg'>"
+                + "</a>")
+              + " <input type='file' name='photo'>"
+              + "</td></tr>\n", m.getPhoto());
       out.printf("<tr><th style='width:120px;'>번호</th>"
           + " <td style='width:300px;'><input type='text' name='no' value='%d' readonly></td></tr>\n",
           m.getNo());

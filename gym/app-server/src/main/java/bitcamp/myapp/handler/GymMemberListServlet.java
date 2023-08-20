@@ -74,9 +74,13 @@ public class GymMemberListServlet extends HttpServlet {
       // 검색어가 없거나 이름에 검색어가 포함되어 있다면 출력
       if (searchKeyword == null || m.getName().contains(searchKeyword)) {
         out.printf(
-            "<tr>" + " <td>%d</td>" + "<td><a href='/member/detail?no=%d'>%s</a></td>"
+            "<tr>"
+        + " <td>%d</td>"
+            		+ "<td>"
+            		 + "<img src='http://eptvhysxbghp19010745.cdn.ntruss.com/member/%s?type=f&w=30&h=40&faceopt=true&ttype=jpg'>"
+            		+ "<a href='/member/detail?no=%d'>%s</a></td>"
                 + "<td>%d</td>" + "<td>%s</td></tr>\n",
-            m.getNo(), m.getNo(), m.getName(), m.getAge(),
+            m.getNo(), m.getPhoto(), m.getNo(), m.getName(), m.getAge(),
             m.getPer() == 1 ? "1개월" : m.getPer() == 3 ? "3개월" : "6개월");
       }
     }
