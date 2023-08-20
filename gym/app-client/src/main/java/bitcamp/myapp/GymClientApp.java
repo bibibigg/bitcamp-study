@@ -1,10 +1,10 @@
 package bitcamp.myapp;
-
+/*
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
-import bitcamp.myapp.net.NetProtocol;
+//import bitcamp.net.NetProtocol;
 
 public class GymClientApp {
 
@@ -53,3 +53,5 @@ public class GymClientApp {
     }
   }
 }
+
+ */
