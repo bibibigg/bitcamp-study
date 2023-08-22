@@ -62,6 +62,5 @@ public class App {
             System.out.println("서버 종료중!");
             tomcat.stop();
         }
-        System.out.println("서버 종료!");
-    }
+        System.out.println("서버 종료!");    }
 }
