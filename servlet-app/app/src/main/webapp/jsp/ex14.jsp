@@ -24,7 +24,7 @@ names.add("윤봉길");
 pageContext.setAttribute("list", names);
 %>
 
-<jsp:useBean id="list" type="java.util.List<String>" scope="page"/>
+<jsp:useBean id="list" class="java.util.List<String>" scope="page"/>
 <%-- type에는 인터페이스를 지정할 수 있다.
   java.util.List<String> list = 
     (java.util.List<String>) pageContext.getAttribute("list");
