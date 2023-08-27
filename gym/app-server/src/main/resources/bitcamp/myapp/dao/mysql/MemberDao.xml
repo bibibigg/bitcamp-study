@@ -16,7 +16,7 @@
 </resultMap>
 
 <insert id="insert" parameterType="member">
-insert into gym_member(name,phone_number,age,password,per)
+insert into gym_member(name,phone_number,age,password,per,photo)
 values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per},#{photo})
 </insert>
   

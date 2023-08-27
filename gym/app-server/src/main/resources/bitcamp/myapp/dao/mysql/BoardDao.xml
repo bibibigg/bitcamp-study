@@ -122,6 +122,13 @@
     where 
       board_file_no=#{no}
   </delete>
+
+  <delete id="deleteFiles" parameterType="int">
+    delete from gym_board_file
+    where
+    board_no=#{no}
+  </delete>
+
 </mapper>
 
 
