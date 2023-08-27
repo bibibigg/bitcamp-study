@@ -19,7 +19,7 @@
     <form action='/auth/login.jsp' method="post">
       <input type='tel' name='phone_number' placeholder="PhoneNumber" class="add">
       <input type='password' name='password' placeholder="Password" class="add">
-      <button button id="buttonform" class="add">login</button>
+      <button id='buttonform' class="add">login</button>
 
     </form>
     </div>

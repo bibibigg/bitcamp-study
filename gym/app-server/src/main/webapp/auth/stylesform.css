@@ -34,16 +34,7 @@ body {
     font-size: 18px;
     padding: 10px;
     margin-top: 10px;
-}
-
-#cancelButton {
-    width: 100%;
-    background-color: #35428C;
-    border-color: transparent;
-    color: white;
-    font-size: 18px;
-    padding: 10px;
-    margin-top: 10px;
+    cursor: pointer;
 }
 
 .add{
