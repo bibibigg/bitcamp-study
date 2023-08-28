@@ -602,4 +602,37 @@ https://whaleon.us/o/CSrtk1/001aa759f29c46b985e32dd8562f594a
 - 프로젝트 실습
   - 62. forward/include/refresh/redirect 다루기
 
+### 64일(8/23,수)
+
+- 서블릿 프로그래밍
+  - 보관소 사용법: ServletContext, HttpSession, ServletRequest, JspContext
+  - 쿠키 사용법
+  - 세션 사용법
+- 프로젝트 실습
+  - 62. forward/include/refresh/redirect 다루기(계속)
+  - 63. 쿠키와 ServletContext 보관소 활용하기
+  - 64. JSP를 이용하여 MVC 모델1 구조로 변경하기
+
+### 65일(8/24,목)
+
+- 서블릿 프로그래밍
+  - JSP 사용법
+- 프로젝트 실습
+  - 64. JSP를 이용하여 MVC 모델1 구조로 변경하기(계속)
+
+### 66일(8/25,금)
+
+- 서블릿 프로그래밍
+  - JSP 사용법(계속)
+  - EL 사용법
+- 프로젝트 실습
+  - 64. JSP를 이용하여 MVC 모델1 구조로 변경하기(계속)
+
+### 67일(8/28,월)
+
+- 서블릿 프로그래밍
+  - JSTL 사용법
+- 프로젝트 실습
+  - 64. JSP를 이용하여 MVC 모델1 구조로 변경하기(계속)
+
 
