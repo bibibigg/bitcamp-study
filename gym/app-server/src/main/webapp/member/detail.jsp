@@ -75,7 +75,7 @@
       <div class='button-container'>
       <button>변경</button>
       <button type='reset'>초기화</button>
-      <a href='/member/delete.jsp?no=${member.no}' onclick='return confirm(\"정말로 삭제하시겠습니까?\")'>삭제</a>
+      <a href='/member/delete.jsp?no=${member.no}' onclick='return confirm("정말로 삭제하시겠습니까?")'>삭제</a>
       <a href='/member/list.jsp'>목록</a>
       </div>
       </form>

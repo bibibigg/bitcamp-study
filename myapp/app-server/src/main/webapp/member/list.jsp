@@ -1,9 +1,8 @@
 <%@ page
     language="java"
     pageEncoding="UTF-8"
-    contentType="text/html;charset=UTF-8"%> <%-- directive element --%>
-    <%@ page import="java.util.List"%>
-    <%@ page import="bitcamp.myapp.vo.Member"%>
+    contentType="text/html;charset=UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="memberDao" type="bitcamp.myapp.dao.MemberDao" scope="application"/>
 
@@ -26,18 +25,13 @@
 <tr><th>번호</th> <th>이름</th> <th>이메일</th></tr>
 </thead>
 
-<%
-    List<Member> list = memberDao.findAll();
-    for (Member member : list) {
-    pageContext.setAttribute("member", member);
-%>
+<c:set var="list" value="${memberDao.findAll()}" scope="page"/>
+<tbody>
+<c:forEach items="${list}" var="member">
 <tr><td>${member.no}</td><td>
 <img src='http://eptvhysxbghp19010745.cdn.ntruss.com/member/${member.photo}?type=f&w=30&h=40&faceopt=true&ttype=jpg'>
 <a href='/member/detail.jsp?no=${member.no}'>${member.name}</a></td><td>${member.email}</td></tr>
-
-<%
-    }
-%>
+</c:forEach>
 </tbody>
 </table>
 <a href='/'>메인</a>

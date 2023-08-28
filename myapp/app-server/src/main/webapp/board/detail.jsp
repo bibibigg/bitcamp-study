@@ -4,19 +4,13 @@
     contentType="text/html;charset=UTF-8"
     trimDirectiveWhitespaces="true"
     errorPage="/error.jsp"%>
-    <%@ page import="bitcamp.myapp.vo.Board"%>
-    <%@ page import="bitcamp.myapp.vo.AttachedFile"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <jsp:useBean id="boardDao" type="bitcamp.myapp.dao.BoardDao" scope="application"/>
-    <jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
+<c:set var="refresh" value="2;url=list.jsp?category=${param.category}" scope="request"/>
+<jsp:useBean id="boardDao" type="bitcamp.myapp.dao.BoardDao" scope="application"/>
+<jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
+<c:set var="board" value="${boardDao.findBy(param.category,param.no)}"/>
 
-<%
-    request.setAttribute("refresh", "2;Url=list.jsp?category=" + request.getParameter("category"));
-    Board board = boardDao.findBy(
-        Integer.parseInt(request.getParameter("category")),
-        Integer.parseInt(request.getParameter("no")));
-    pageContext.setAttribute("board", board);
-%>
    <!DOCTYPE html>
     <html>
     <head>
@@ -29,13 +23,10 @@
 
     <h1>게시글</h1>
 
-<%
-    if (board == null) {
-%>
-      <p>해당 번호의 게시글이 없습니다!</p>
-<%
-    } else {
-%>
+<c:if test="${empty board}">
+    <p>해당 번호의 게시글이 없습니다!</p>
+</c:if>
+ <c:if test="${not empty board}">
       <form action='/board/update.jsp' method='post' enctype='multipart/form-data'>
      <input type='hidden' name='category' value='${board.category}'>
      <table border='1'>
@@ -49,20 +40,15 @@
      <tr><th>조회수</th> <td>${board.viewCount}</td></tr>
       <tr><th>등록일</th> <td>${simpleDateFormatter.format(board.createdDate)}</td></tr>
      <tr><th>첨부파일</th><td>
-
-<%
-      for (AttachedFile file : board.getAttachedFiles()) {
-      pageContext.setAttribute("file", file);
-%>
+     <c:forEach items="${board.attachedFiles}" var="file">
         <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-13/board/${file.filePath}'>${file.filePath}</a>
         [<a href='/board/fileDelete.jsp?category=${param.category}&no=${file.no}'>삭제</a>]
         <br>
-<%
-      }
-%>
+        </c:forEach>
       <input type='file' name='files' multiple>
       </td></tr>
       </table>
+
       <div>
       <button>변경</button>
      <button type='reset'>초기화</button>
@@ -70,18 +56,10 @@
       <a href='/board/list.jsp?category=${param.category}'>목록</a>
       </div>
      </form>
-
-<%
-      try {
-        board.setViewCount(board.getViewCount() + 1);
-        boardDao.updateCount(board);
-        sqlSessionFactory.openSession(false).commit();
-
-      } catch (Exception e) {
-        sqlSessionFactory.openSession(false).rollback();
-      }
-    }
-%>
+    <c:set target="${pageScope.board}" property="viewCount" value="${board.viewCount + 1}"/>
+    <c:set var="updateCount" value="${boardDao.updateCount(board)}"/>
+    <% sqlSessionFactory.openSession(false).commit(); %>
+ </c:if>
 
 <jsp:include page="../footer.jsp"/>
 

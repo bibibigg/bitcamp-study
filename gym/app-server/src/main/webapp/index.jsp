@@ -8,14 +8,15 @@
            <head>
            <meta charset='UTF-8'>
            <title>BITCAMP GYM</title>
-           <link rel="stylesheet" href="indexstyles.css">
+           <link rel="stylesheet" href="/css/indexstyles.css">
            </head>
            <body>
-           <jsp:include page="header.jsp"/>
+          <jsp:include page="header.jsp"/>
+          <br>
 
            <img src="bit_logo.jpg" alt="BIT Logo">
            <h1>BITCAMP GYM</h1>
-
-           <jsp:include page="footer.jsp"/>
+           <br>
+          <jsp:include page="footer.jsp"/>
            </body>
            </html>

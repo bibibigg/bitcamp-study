@@ -8,7 +8,7 @@
     <head>
     <meta charset="UTF-8">
     <title>BITCAMP GYM</title>
-    <link rel="stylesheet" href="../auth/stylesform.css">
+    <link rel="stylesheet" href="/css/stylesform.css">
     </head>
     <body>
     <jsp:include page="../header.jsp"/>

@@ -15,7 +15,7 @@
     <head>
     <meta charset='UTF-8'>
     <title>회원</title>
-    <link rel="stylesheet" href="/list.css">
+    <link rel="stylesheet" href="/css/list.css">
     </head>
     <body>
     <jsp:include page="../header.jsp"/>
