@@ -9,29 +9,24 @@
 <jsp:useBean id="memberDao" type="bitcamp.myapp.dao.MemberDao" scope="application"/>
 <jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
 <jsp:useBean id="ncpObjectStorageService" type="bitcamp.util.NcpObjectStorageService" scope="application"/>
-
 <%
-    request.setAttribute("refresh", "2;url=list.jsp");
-
-    Member member = new Member();
-    member.setNo(Integer.parseInt(request.getParameter("no")));
-    member.setName(request.getParameter("name"));
-    member.setEmail(request.getParameter("email"));
-    member.setPassword(request.getParameter("password"));
-    member.setGender(request.getParameter("gender").charAt(0));
-
+    Member m = new Member();
+    m.setNo(Integer.parseInt(request.getParameter("no")));
+    m.setName(request.getParameter("name"));
+    m.setAge(Integer.parseInt(request.getParameter("age")));
+    m.setPhoneNumber(request.getParameter("phone_number"));
+    m.setPassword(request.getParameter("password"));
+    m.setPer(Integer.parseInt(request.getParameter("per")));
     Part photoPart = request.getPart("photo");
     if (photoPart.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
           "bitcamp-nc7-bucket-13", "member/", photoPart);
-      member.setPhoto(uploadFileUrl);
+      m.setPhoto(uploadFileUrl);
     }
-
-    if (memberDao.update(member) == 0) {
-        throw new Exception("회원이 없습니다.");
-    } else {
+      if (memberDao.update(m) == 0) {
+        out.println("<p>회원이 없습니다.</p>");
+      } else {
         sqlSessionFactory.openSession(false).commit();
         response.sendRedirect("list.jsp");
-    }
-
+      }
 %>

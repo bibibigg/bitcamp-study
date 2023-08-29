@@ -6,9 +6,9 @@
     errorPage="/error.jsp"%>
 <%@ page import="bitcamp.myapp.vo.Board"%>
 
-    <jsp:useBean id="boardDao" type="bitcamp.myapp.dao.BoardDao" scope="application"/>
-    <jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
-    <jsp:useBean id="loginUser" class="bitcamp.myapp.vo.Member" scope="session"/>
+<jsp:useBean id="boardDao" type="bitcamp.myapp.dao.BoardDao" scope="application"/>
+<jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
+<jsp:useBean id="loginUser" class="bitcamp.myapp.vo.Member" scope="session"/>
 <%
     if (loginUser.getNo() == 0) {
       response.sendRedirect("/auth/form.jsp");

@@ -12,18 +12,18 @@
 <jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
 <jsp:useBean id="ncpObjectStorageService" type="bitcamp.util.NcpObjectStorageService" scope="application"/>
 <jsp:useBean id="loginUser" class="bitcamp.myapp.vo.Member" scope="session"/>
+
 <%
     if (loginUser.getNo() == 0) {
       response.sendRedirect("/auth/form.jsp");
       return;
     }
 
+    // 오류가 발생했을 때 refresh 할 URL을 미리 지정한다.
     request.setAttribute("refresh", "2;url=list.jsp?category=" + request.getParameter("category"));
-
 
     Board board = new Board();
     board.setWriter(loginUser);
-    board.setNo(Integer.parseInt(request.getParameter("no")));
     board.setTitle(request.getParameter("title"));
     board.setContent(request.getParameter("content"));
     board.setCategory(Integer.parseInt(request.getParameter("category")));
@@ -40,19 +40,14 @@
     }
     board.setAttachedFiles(attachedFiles);
 
-    if (boardDao.update(board) == 0) {
-        throw new Exception("게시글이 없거나 변경 권한이 없습니다.");
-    } else {
-        if (attachedFiles.size() > 0) {
-          int count = boardDao.insertFiles(board);
-          System.out.println(count);
-        }
-
-        sqlSessionFactory.openSession(false).commit();
-        response.sendRedirect("list.jsp?category=" + request.getParameter("category"));
+    boardDao.insert(board);
+    if (attachedFiles.size() > 0) {
+        boardDao.insertFiles(board);
     }
-%>
 
+    sqlSessionFactory.openSession(false).commit();
+    response.sendRedirect("list.jsp?category=" + request.getParameter("category"));
+%>
 
 
 
