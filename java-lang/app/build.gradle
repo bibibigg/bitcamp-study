@@ -115,6 +115,9 @@ dependencies {
   // jackson-databind JSON 라이브러리
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 
+  // Spring IoC 컨테이너
+  implementation 'org.springframework:spring-context:6.0.11'
+  
   // Apache HTTP 통신 라이브러리
   //implementation 'org.apache.httpcomponents.client5:httpclient5:5.0'
   //implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.0'
