@@ -3,6 +3,7 @@ package bitcamp.myapp.filter;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
+import java.util.Date;
 
 @WebFilter("/*")
 public class CharacterEncodingFilter implements Filter {
