@@ -77,8 +77,9 @@ dependencies {
   // implementation 'com.drewnoakes:metadata-extractor:2.18.0'
   // Spring IoC 컨테이너
   // implementation 'org.springframework:spring-context:5.3.13'
+  
   // @Resource 애노테이션이 들어 있는 API
-  // implementation 'javax.annotation:javax.annotation-api:1.3.2'
+   implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
   // Spring JDBC 보조 라이브러리
   // - DataSource 구현체가 들어 있다.
@@ -115,6 +116,9 @@ dependencies {
   // jackson-databind JSON 라이브러리
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 
+  // Spring IoC 컨테이너
+  implementation 'org.springframework:spring-context:6.0.11'
+  
   // Apache HTTP 통신 라이브러리
   //implementation 'org.apache.httpcomponents.client5:httpclient5:5.0'
   //implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.0'

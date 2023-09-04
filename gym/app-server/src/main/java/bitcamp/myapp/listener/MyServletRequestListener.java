@@ -1,5 +1,7 @@
 package bitcamp.myapp.listener;
 
+import bitcamp.util.SqlSessionFactoryProxy;
+
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;

@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.header-container {
+    height: 50px;
+    background-color: orange;
+    margin: 0; /* 좌우 마진을 0으로 설정 */
+    width: 100%
+}
+
+/* 링크에 스타일 적용 */
+.header-link {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    margin: 0 10px; /* 링크 사이 여백 추가 */
+    color: white; /* 링크 글자색을 흰색으로 설정 */
+}
+
+/* 이미지 스타일 적용 */
+.header-img {
+    height: 40px;
+    margin-right: 5px; /* 이미지 오른쪽 여백 추가 */
+}
+
+.footer-container {
+    text-align: center;
+    background-color: gray;
+    color: white;
+    padding: 10px;
+    margin: 0; /* 좌우 마진을 0으로 설정 */
+    width: 100%
+}
+
+.footer-text {
+    font-size: 90%;
+    margin: 0;
+}
+
+.footer-address {
+    font-size: x-small;
+    font-style: italic;
+}
