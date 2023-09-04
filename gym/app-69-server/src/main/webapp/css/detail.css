@@ -1,0 +1,80 @@
+/* detail.css */
+
+/* 기본 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* 테이블 스타일 */
+table {
+  width: 50%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+/* 입력 폼 스타일 */
+input[type="text"], input[type="number"], input[type="tel"], input[type="password"], select {
+  width: 90%;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* 버튼 컨테이너 스타일 */
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button, a {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button {
+  background-color: #35428C;
+}
+
+button[type="reset"] {
+  background-color: #ccc;
+}
+
+a {
+  background-color: #333;
+}
+
+/* 삭제 링크 스타일 */
+a.delete-link {
+  background-color: #e74c3c;
+}
+
+/* 목록 링크 스타일 */
+a.list-link {
+  background-color: #3498db;
+}
