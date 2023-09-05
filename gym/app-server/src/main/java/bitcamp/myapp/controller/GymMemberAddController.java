@@ -1,17 +1,10 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Member;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +33,7 @@ public class GymMemberAddController implements PageController {
     m.setAge(Integer.parseInt(request.getParameter("age")));
     m.setPassword(request.getParameter("password"));
     m.setPer(Integer.parseInt(request.getParameter("per")));
+    m.setCalculatedEndDate(Date.valueOf(request.getParameter("calculated_endDate")));
     Part photoPart = request.getPart("photo");
     if (photoPart.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(

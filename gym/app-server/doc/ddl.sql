@@ -19,7 +19,8 @@ create table gym_member(
   age int not null,
   password varchar(100) not null,
   per int not null,
-  created_date date default (current_date())
+  created_date date default (current_date()),
+  calculated_EndDate date not null
 );
 
 alter table gym_member

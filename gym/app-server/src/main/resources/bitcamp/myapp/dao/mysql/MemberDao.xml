@@ -12,12 +12,13 @@
   <result column="password"             property="password"/>
   <result column="per"                  property="per"/>
   <result column="created_date"         property="createdDate"/>
+  <result column="calculated_endDate"   property="calculatedEndDate"/>
   <result column="photo"        property="photo"/>
 </resultMap>
 
 <insert id="insert" parameterType="member">
-insert into gym_member(name,phone_number,age,password,per,photo)
-values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per},#{photo})
+insert into gym_member(name,phone_number,age,password,per,photo,calculated_endDate)
+values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per},#{photo},DATE_ADD(#{createdDate}, INTERVAL #{per} MONTH))
 </insert>
   
   <select id="findAll" resultMap="memberMap">
