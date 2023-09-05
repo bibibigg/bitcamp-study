@@ -74,10 +74,10 @@ public class DispatcherServlet extends HttpServlet {
     if (requestHandlerMapping == null) {
       throw new ServletException("요청을 처리할 핸들러가 없습니다!");
     }
+      Map<String, Object> model = new HashMap<>();
 
     // request handler 호출하기
     try {
-      Map<String, Object> model = new HashMap<>();
       Object[] arguments = prepareArguments(requestHandlerMapping.handler, request, response, model);
 
       // request handler 호출

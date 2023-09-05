@@ -1,0 +1,70 @@
+@charset "UTF-8";
+/* 전체 컨텐츠 가운데 정렬 */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 상단과 하단 여백을 줌 */
+  align-items: center;
+  min-height: 100vh; /* 최소 화면 높이까지 늘어남 */
+  margin: 0;
+  padding: 0; /* 좌우 패딩을 0으로 설정 */
+}
+
+.header-container {
+    height: 50px;
+    background-color: orange;
+    margin: 0; /* 좌우 마진을 0으로 설정 */
+    width: 100%
+}
+
+/* 링크에 스타일 적용 */
+.header-link {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    margin: 0 10px; /* 링크 사이 여백 추가 */
+    color: white; /* 링크 글자색을 흰색으로 설정 */
+}
+
+/* 이미지 스타일 적용 */
+.header-img {
+    height: 40px;
+    margin-right: 5px; /* 이미지 오른쪽 여백 추가 */
+}
+
+.footer-container {
+    text-align: center;
+    background-color: gray;
+    color: white;
+    padding: 10px;
+    margin: 0; /* 좌우 마진을 0으로 설정 */
+    width: 100%
+}
+
+.footer-text {
+    font-size: 90%;
+    margin: 0;
+}
+
+.footer-address {
+    font-size: x-small;
+    font-style: italic;
+}
+
+/* 헤더 가운데 정렬 */
+h1 {
+  text-align: center;
+  margin-bottom: 20px; /* 제목 아래 여백 추가 */
+}
+
+/* 링크 리스트 가운데 정렬 */
+ul {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 10px 0; /* 각 아이템 사이 여백 추가 */
+}
