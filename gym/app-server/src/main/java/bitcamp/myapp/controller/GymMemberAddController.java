@@ -16,6 +16,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.sql.Date;
 
 @Controller("/member/add")
 public class GymMemberAddController implements PageController {
@@ -39,7 +40,6 @@ public class GymMemberAddController implements PageController {
     m.setAge(Integer.parseInt(request.getParameter("age")));
     m.setPassword(request.getParameter("password"));
     m.setPer(Integer.parseInt(request.getParameter("per")));
-
     Part photoPart = request.getPart("photo");
     if (photoPart.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(

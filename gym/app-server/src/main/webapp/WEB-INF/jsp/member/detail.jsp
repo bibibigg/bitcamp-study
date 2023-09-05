@@ -47,6 +47,7 @@
       <option value='1' ${member.getPer() == '1' ? "selected" : ""}>1개월</option>
       <option value='3' ${member.getPer() == '3' ? "selected" : ""}>3개월</option>
       <option value='6' ${member.getPer() == '6' ? "selected" : ""}>6개월</option></select></td></tr>
+      <tr><th>최초등록일</th><td>${member.createdDate}</td></tr>
       <tr><th>종료일</th><td>${member.calculatedEndDate}</td></tr>
       <tr><th>남은 기간</th><td>${member.remainingDays}일</td></tr>
       </table>
