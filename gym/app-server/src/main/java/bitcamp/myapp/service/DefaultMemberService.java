@@ -43,6 +43,7 @@ public class DefaultMemberService implements MemberService {
     LocalDate currentDate = LocalDate.now();
     long remainingDays = ChronoUnit.DAYS.between(currentDate, endDate);
 
+
     member.setCalculatedEndDate(calculatedEndDate);
     member.setRemainingDays(remainingDays);
 

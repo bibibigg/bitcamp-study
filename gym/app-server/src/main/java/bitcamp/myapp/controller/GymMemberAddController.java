@@ -33,7 +33,6 @@ public class GymMemberAddController implements PageController {
     m.setAge(Integer.parseInt(request.getParameter("age")));
     m.setPassword(request.getParameter("password"));
     m.setPer(Integer.parseInt(request.getParameter("per")));
-    m.setCalculatedEndDate(Date.valueOf(request.getParameter("calculated_endDate")));
     Part photoPart = request.getPart("photo");
     if (photoPart.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
