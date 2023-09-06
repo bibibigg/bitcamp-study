@@ -425,3 +425,51 @@
 ## 69. Mybatis + Spring IoC 컨테이너 = DAO 구현체 자동 생성
 
 - Mybatis의 Spring 연동 플러그인을 사용하여 DAO를 자동 생성하는 방법
+- Mybatis의 Log4j 활성화 하기
+
+## 70. Controller에서 비즈니스 로직 분리하기: 서비스 컴포넌트 도입
+
+- Controller에서 비즈니스 로직을 분리하는 이유
+- 서비스 컴포넌트의 역할 이해
+
+## 71. 트랜잭션 제어 코드를 캡슐화하기: Spring의 TransactionTemplate 모방 구현
+
+- 트랜잭션 제어 코드를 캡슐화하여 반복적인 코드 작업을 줄이는 방법
+- Spring의 TransactionTemplate 클래스를 모방하여 내부 메커니즘을 이해하기
+
+## 72. Spring의 TransactionTemplate 으로 교체하기
+
+- 직접 만든 TransactionTemplate 대신 Spring에서 제공하는 클래스 사용하기
+
+## 73. 애노테이션을 사용하여 트랜잭션 제어하기
+
+- 프록시 패턴 기술을 사용하여 트랜잭션 코드를 삽입하기
+
+## 74. Spring의 @Transactional 로 교체하기
+
+- 직접 제작한 트랜잭션 프록시 객체 대신 Spring에서 제공하는 클래스 및 애노테이션 사용하기
+
+## 75. 애노테이션으로 request handler 표시하기
+
+- PageController 인터페이스를 사용하는 대신에 애노테이션으로 호출될 메서드를 표시하는 방법
+
+## 76. CRUD 기능을 한 개의 페이지 컨트롤러로 합치기
+
+- CRUD 관련 메서드를 한 개의 클래스로 합치는 방법
+- 요청 별로 메서드를 구분하여 호출하는 방법
+
+## 77. 요청 파라미터를 자동 주입하기
+
+- 클라이언트가 보낸 요청 파라미터를 요청 핸들러에 자동으로 주입하는 방법
+
+## 78. Spring WebMVC 프레임워크 도입하기
+
+- Spring WebMVC 프레임워크 사용법
+- DispatcherServlet을 등록하는 다양한 방법
+- WebApplicationInitializer 동작 메커니즘 이해
+
+## 79. Spring IoC 컨테이너를 Root Context와 Servlet Context로 분리하기
+
+- ContextLoaderListener의 IoC 컨테이너 역할 이해
+- DispatcherServlet의 IoC 컨테이너의 역할 이해
+- 설정하는 방법

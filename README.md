@@ -667,3 +667,23 @@ https://whaleon.us/o/CSrtk1/001aa759f29c46b985e32dd8562f594a
 - 프로젝트 실습
   - 69. Mybatis + Spring IoC 컨테이너 = DAO 구현체 자동 생성
 
+### 72일(9/4,월)
+
+- 프로젝트 실습
+  - 70. Controller에서 비즈니스 로직 분리하기: 서비스 컴포넌트 도입
+  - 71. 트랜잭션 제어 코드를 캡슐화하기: Spring의 TransactionTemplate 모방 구현
+  - 72. Spring의 TransactionTemplate 으로 교체하기
+  - 73. 애노테이션을 사용하여 트랜잭션 제어하기
+
+### 73일(9/5,화)
+
+- 프로젝트 실습
+  - 74. Spring의 @Transactional 로 교체하기
+  - 75. 애노테이션으로 request handler 표시하기
+  - 76. CRUD 기능을 한 개의 페이지 컨트롤러로 합치기
+  - 77. 요청 파라미터를 자동 주입하기
+
+### 74일(9/6,수)
+
+- 프로젝트 실습
+  - 78. Spring WebMVC 프레임워크 도입하기
