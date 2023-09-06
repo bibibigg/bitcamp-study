@@ -7,7 +7,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -39,12 +38,10 @@ public class DefaultMemberService implements MemberService {
     int inputMonths = member.getPer();
     LocalDate localCreatedDate = member.getCreatedDate().toLocalDate();
     LocalDate endDate = localCreatedDate.plusMonths(inputMonths);
-    Date calculatedEndDate = Date.valueOf(endDate);
     LocalDate currentDate = LocalDate.now();
     long remainingDays = ChronoUnit.DAYS.between(currentDate, endDate);
 
 
-    member.setCalculatedEndDate(calculatedEndDate);
     member.setRemainingDays(remainingDays);
 
     return member;

@@ -9,15 +9,17 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 
 // Application을 실행하는데 필요한 객체를 설정하는 일을 한다.
 //
-@ComponentScan(basePackages = "bitcamp.myapp.controller",
-        excludeFilters = @ComponentScan.Filter(
-                type = FilterType.REGEX,
-                pattern = "bitcamp.myapp.controller.MemberController"
-        )
+@ComponentScan(
+        basePackages = "bitcamp.myapp.controller",
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*BoardController"),
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*HomeController"),
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*AuthController")
+        }
 )
-public class AppConfig {
-  public AppConfig() {
-    System.out.println("AppConfig() 호출됨!");
+public class AdminConfig {
+  public AdminConfig() {
+    System.out.println("AdminConfig() 호출됨!");
   }
 
   @Bean

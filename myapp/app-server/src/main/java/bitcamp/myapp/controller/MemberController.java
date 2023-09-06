@@ -2,16 +2,20 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.NcpObjectStorageService;
-import bitcamp.myapp.servlet.RequestParam;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Part;
 import java.util.Map;
 
 @Controller
 public class MemberController {
+
+  {
+    System.out.println("MemberController 생성됨!");
+  }
 
   @Autowired
   MemberService memberService;
@@ -20,14 +24,14 @@ public class MemberController {
   NcpObjectStorageService ncpObjectStorageService;
 
   @RequestMapping("/member/form")
-  public String add() {
+  public String form() {
     return "/WEB-INF/jsp/member/form.jsp";
   }
 
   @RequestMapping("/member/add")
   public String add(
           Member member,
-          @RequestParam("photofile") Part photofile,
+          Part photofile,
           Map<String, Object> model) throws Exception {
 
     try {
@@ -55,13 +59,13 @@ public class MemberController {
   }
 
   @RequestMapping("/member/detail")
-  public String detail(@RequestParam("no") int no, Map<String, Object> model) throws Exception {
+  public String detail(int no, Map<String, Object> model) throws Exception {
     model.put("member", memberService.get(no));
     return "/WEB-INF/jsp/member/detail.jsp";
   }
 
   @RequestMapping("/member/delete")
-  public String delete(@RequestParam("no") int no, Map<String, Object> model) throws Exception {
+  public String delete(int no, Map<String, Object> model) throws Exception {
 
     try {
       if (memberService.delete(no) == 0) {
@@ -79,7 +83,7 @@ public class MemberController {
   @RequestMapping("/member/update")
   public String update(
           Member member,
-          @RequestParam("photofile") Part photofile,
+          Part photofile,
           Map<String, Object> model) throws Exception {
 
     try {

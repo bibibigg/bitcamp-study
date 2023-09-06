@@ -42,7 +42,8 @@ values(#{name},#{phoneNumber},#{age},sha1(#{password}),#{per},#{photo},DATE_ADD(
       age,
       per,
       created_date,
-      photo
+      photo,
+      calculated_endDate
     from
       gym_member
     where
