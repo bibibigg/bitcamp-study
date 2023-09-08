@@ -4,6 +4,7 @@ package bitcamp.app1;
 import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -22,15 +23,17 @@ public class Controller04_6 {
   @GetMapping("h1")
   @ResponseBody
   public void handler1(
-      PrintWriter out,
-      @RequestHeader("Accept") String accept,
-      @RequestHeader("User-Agent") String userAgent) {
+          PrintWriter out,
+          @RequestHeader("Accept") String accept,
+          @RequestHeader("User-Agent") String userAgent) {
 
     out.printf("Accept=%s\n", accept);
     out.printf("User-Agent=%s\n", userAgent);
 
     if (userAgent.matches(".*Edg.*")) {
       out.println("Edge");
+    } else if (userAgent.matches(".*Whale.*")) {
+      out.println("Whale");
     } else if (userAgent.matches(".*Chrome.*")) {
       out.println("chrome");
     } else if (userAgent.matches(".*Safari.*")) {
@@ -44,7 +47,7 @@ public class Controller04_6 {
 
   public static void main(String[] args) {
     String str =
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36";
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36";
     // String str = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML,
     // like Gecko) Version/12.1 Safari/605.1.15";
     // String str = "AA BB Aa Ba $12,000";
