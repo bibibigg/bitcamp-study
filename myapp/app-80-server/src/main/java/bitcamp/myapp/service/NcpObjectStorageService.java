@@ -1,6 +1,6 @@
 package bitcamp.myapp.service;
 
-import bitcamp.myapp.NcpConfig;
+import bitcamp.myapp.config.NcpConfig;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
