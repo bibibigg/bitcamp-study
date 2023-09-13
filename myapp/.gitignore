@@ -3,3 +3,6 @@
 
 # Ignore Gradle build output directory
 build
+
+# application-db.properties 파일을 무시
+application-db.properties
