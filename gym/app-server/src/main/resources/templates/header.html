@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>BITCAMP GYM</title>
+    <link href="/css/headfoot.css" rel="stylesheet">
+</head>
+<body>
+<div class="header-container">
+    <img class="header-img" src='https://www.ncloud.com/public/img/logo-m.png'>
+    <a class="header-link" href='/member/list'>회원</a>
+    <a class="header-link" href='/board/list?category=1'>게시글</a>
+    <a class="header-link" href='/board/list?category=2'>운동일지</a>
+
+    <c:choose>
+        <c:when test="${empty sessionScope.loginUser}">
+            <a class="header-link" href='/auth/form'>로그인</a>
+        </c:when>
+        <c:otherwise>
+            <c:if test="${empty sessionScope.loginUser.photo}">
+                <img class="header-img" src='/images/avatar.png'>
+            </c:if>
+            <c:if test="${not empty sessionScope.loginUser.photo}">
+                <img class="header-img"
+                     src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/${loginUser.photo}?type=f&w=30&h=40&faceopt=true&ttype=jpg'>
+            </c:if>
+            ${loginUser.name} <a class="header-link" href='/auth/logout'>로그아웃</a>
+        </c:otherwise>
+    </c:choose>
+</div>
+</body>
+</html>

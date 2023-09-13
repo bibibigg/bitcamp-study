@@ -473,3 +473,16 @@
 - ContextLoaderListener의 IoC 컨테이너 역할 이해
 - DispatcherServlet의 IoC 컨테이너의 역할 이해
 - 설정하는 방법
+
+## 80. Spring WebMVC 활용하기
+
+- Spring WebMVC 사용법
+
+## 81. SpringBoot(2.7.x) 적용하기
+
+- SpringBoot 사용법
+
+## 82. 뷰 템플릿 기술을 Thymeleaf 로 교체하기
+
+- Thymeleaf 사용법
+
