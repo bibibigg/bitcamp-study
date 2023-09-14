@@ -506,3 +506,5 @@ gradle-app.setting
 *.exe
 node_modules/
 temp/
+# Ignore Gradle build output directory
+build
